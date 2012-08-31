@@ -38,3 +38,4 @@ GET     /favicon.ico                            staticFile:/public/favicon.ico
 
 # Catch all
 #*       /{controller}/{action}                  {controller}.{action}
+
