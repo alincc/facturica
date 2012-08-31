@@ -2,11 +2,14 @@ define([
     'utils/Navigation',
     'views/HomeView',
 
+    'models/factura/Factura',
     'models/factura/FacturiCollection',
     'views/factura/FacturiListPage',
     'views/factura/FacturaEditView',
+    'views/factura/FacturaDetailView',
+
 ],
-        function(nav, HomeView, FacturiCollection, FacturiListPage, FacturaEditView)
+        function(nav, HomeView, Factura, FacturiCollection, FacturiListPage, FacturaEditView, FacturaDetailView)
         {
             "use strict";
 
@@ -90,13 +93,13 @@ define([
 
                     nav.update("#facturi");
 
-                    var factura = new FacturaModel();
+                    var factura = new Factura();
                     factura.set({"id": id});
 
                     factura.fetch({
                         success: function()
                         {
-                            me.view = new FacturaDetail({model: factura});
+                            me.view = new FacturaDetailView({model: factura});
                             me.showView(me.view);
                         },
                         error: function()
@@ -111,7 +114,7 @@ define([
 
                     nav.update("#facturi");
 
-                    var factura = new FacturaModel();
+                    var factura = new Factura();
                     factura.set("id", id);
                     factura.fetch({
                         success: function()
