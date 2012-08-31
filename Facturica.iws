@@ -23,7 +23,7 @@
     </list>
     <ignored path="Facturica.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="$PROJECT_DIR$/Facturica.iws" changelist="7dbde27b-066a-4ebb-8b31-d3a7fc3413e1" time="1346454987585" ignored="false" />
+    <file path="$PROJECT_DIR$/Facturica.iws" changelist="7dbde27b-066a-4ebb-8b31-d3a7fc3413e1" time="1346455023844" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -480,6 +480,11 @@
       <created>1346440369973</created>
       <updated>1346440369973</updated>
     </task>
+    <task id="LOCAL-00001" summary="Changes to invoice and client">
+      <created>1346455011283</created>
+      <updated>1346455011283</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
