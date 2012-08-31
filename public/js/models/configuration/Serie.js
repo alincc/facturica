@@ -1,9 +1,9 @@
-define(function()
+define(function ()
 {
     var SerieModel = Backbone.Model.extend({
         urlRoot:"api/configSeries",
 
-        url: function()
+        url:function ()
         {
             if (this.isNew())
             {
@@ -15,22 +15,21 @@ define(function()
             }
         },
 
-        validation:
-        {
+        validation:{
             currentNumber:{
-                required: true,
-                min: 0
+                required:true,
+                min:0
             }
         },
 
         defaults:{
-            docType: 'FAC',
-            prefix: '',
-            suffix: '',
-            currentNumber: '0'
+            docType:'FAC',
+            prefix:'',
+            suffix:'',
+            currentNumber:'0'
         },
 
-        getNextPossible: function()
+        getNextPossible:function ()
         {
             var me = this;
 
@@ -39,7 +38,7 @@ define(function()
             return me.get('prefix') + nextInt.toString() + me.get('suffix');
         },
 
-        getSample: function()
+        getSample:function ()
         {
             var me = this;
 

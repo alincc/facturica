@@ -1,7 +1,8 @@
-define(function(){
+define(function ()
+{
 
     var navigation = {
-        update: function(newMenu)
+        update:function (newMenu)
         {
             console.log("Switching menu to ", newMenu)
             $("li a").parent().removeClass('active');

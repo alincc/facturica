@@ -1,8 +1,7 @@
 window.Item = Backbone.Model.extend({
-   defaults:
-   {
+    defaults:{
 
-   }
+    }
 });
 
 //window.ItemsCollection = Backbone.Collection.extend({

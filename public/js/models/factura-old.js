@@ -2,8 +2,7 @@ window.FacturaModel = Backbone.NestedModel.extend({
 
     urlRoot:"api/facturi",
 
-    validation:
-    {
+    validation:{
 
     },
 
@@ -12,14 +11,14 @@ window.FacturaModel = Backbone.NestedModel.extend({
         "docDate":"",
         "docDueDate":"",
 
-        nraviz: "",
-        numeDelegat: "",
-        ciSeria: "",
-        ciNumar: "",
-        cnp: "",
-        detaliuTransport: "",
-        expDate: "",
-        note: ""
+        nraviz:"",
+        numeDelegat:"",
+        ciSeria:"",
+        ciNumar:"",
+        cnp:"",
+        detaliuTransport:"",
+        expDate:"",
+        note:""
     },
 
     initialize:function ()
@@ -34,28 +33,28 @@ window.FacturaModel = Backbone.NestedModel.extend({
         }
     },
 
-    initNew: function()
+    initNew:function ()
     {
         console.log("FacturaModel:initNew");
 
         // init empty client details
         var emptyClient = {};
         emptyClient.name = "";
-        this.set("client",emptyClient);
+        this.set("client", emptyClient);
         this.client = emptyClient;
 
         // add two empty rows
         var emptyItems = [new FacturaItem(), new FacturaItem()];
-        this.set("items",emptyItems);
+        this.set("items", emptyItems);
         this.items = emptyItems;
     },
 
-    parse: function(response)
+    parse:function (response)
     {
         if (response != null)
         {
             var items = new Array();
-            _.each(response.items, function(item)
+            _.each(response.items, function (item)
             {
                 var fi = new FacturaItem();
                 fi.id = item.id;
@@ -83,11 +82,13 @@ window.FacturaModel = Backbone.NestedModel.extend({
 });
 
 
-function S4() {
-   return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+function S4()
+{
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
 }
-function guid() {
-   return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+function guid()
+{
+    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
 }
 
 function FacturaItem()
@@ -107,7 +108,7 @@ function FacturaItem()
 }
 ;
 
-FacturaItem.prototype.calculate = function()
+FacturaItem.prototype.calculate = function ()
 {
     try
     {
@@ -119,7 +120,7 @@ FacturaItem.prototype.calculate = function()
 
         //console.log(this.subtotal, this.vatAmount, this.total, this.vat);
     }
-    catch(e)
+    catch (e)
     {
     }
 }
@@ -175,5 +176,5 @@ window.FacturiCollection = Backbone.Collection.extend({
 
 
 window.FacturiStatsCollection = Backbone.Collection.extend({
-    url: "api/facturi/stats"
+    url:"api/facturi/stats"
 })

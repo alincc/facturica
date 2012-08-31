@@ -5,9 +5,11 @@
 
             <div class="page-header">
                 <% if (!hasOwnProperty("id")) {%>
-                    <h3>Client nou <small>Creaza un nou client</small></h3>
+                <h3>Client nou
+                    <small>Creaza un nou client</small>
+                </h3>
                 <% } else {%>
-                    <h3>Modificare</h3>
+                <h3>Modificare</h3>
                 <% } %>
             </div>
 
@@ -24,7 +26,8 @@
 
                         <div class="controls">
                             <div class="input-append">
-                                <input type="text" class="input-xlarge" id="name" name="partner.name" value="<%=partner.name%>"/>
+                                <input type="text" class="input-xlarge" id="name" name="partner.name"
+                                       value="<%=partner.name%>"/>
                             </div>
                         </div>
                     </div>
@@ -45,7 +48,8 @@
 
                         <div class="controls">
                             <div class="input-append">
-                                <input type="text" class="input-large" id="regcom" name="partner.regcom" value="<%=partner.regcom%>"/>
+                                <input type="text" class="input-large" id="regcom" name="partner.regcom"
+                                       value="<%=partner.regcom%>"/>
                             </div>
                         </div>
                     </div>
@@ -86,7 +90,8 @@
                     <label class="control-label" for="bankName">Banca</label>
 
                     <div class="controls">
-                        <input type="text" class="input-large" id="bankName" name="partner.bankName" value="<%=partner.bankName%>">
+                        <input type="text" class="input-large" id="bankName" name="partner.bankName"
+                               value="<%=partner.bankName%>">
                     </div>
                 </div>
 
@@ -96,7 +101,8 @@
                     <label class="control-label" for="contact">Persoana Contact</label>
 
                     <div class="controls">
-                        <input type="text" class="input-large" id="contact" name="partner.contact" value="<%=partner.contact%>">
+                        <input type="text" class="input-large" id="contact" name="partner.contact"
+                               value="<%=partner.contact%>">
                     </div>
                 </div>
 
@@ -104,14 +110,16 @@
                     <label class="control-label" for="phone">Telefon</label>
 
                     <div class="controls">
-                        <input type="text" class="input-large" id="phone" name="partner.phone" value="<%=partner.phone%>">
+                        <input type="text" class="input-large" id="phone" name="partner.phone"
+                               value="<%=partner.phone%>">
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label" for="email">Email</label>
 
                     <div class="controls">
-                        <input type="text" class="input-large" id="email" name="partner.email" value="<%=partner.email%>">
+                        <input type="text" class="input-large" id="email" name="partner.email"
+                               value="<%=partner.email%>">
                     </div>
                 </div>
 

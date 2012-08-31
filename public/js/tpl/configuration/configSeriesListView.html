@@ -16,7 +16,7 @@
                 <%
                 if (this.model.models.length == 0)
                 {%>
-                   Nu aveti nici o serie definita!
+                Nu aveti nici o serie definita!
                 <%}
                 else
                 {%>
@@ -32,13 +32,13 @@
                     </tr>
                     </thead>
                     <% _.each(this.model.models, function(i) { %>
-                        <tr class="rowClick" data-id="<%=i.get('id')%>">
-                            <!--<td><%= i.get('docType') %></td>-->
-                            <td><%= i.get('prefix') %></td>
-                            <td><%= i.get('suffix') %></td>
-                            <td><%= i.get('currentNumber') %></td>
-                            <td><%= i.getSample() %></td>
-                        </tr>
+                    <tr class="rowClick" data-id="<%=i.get('id')%>">
+                        <!--<td><%= i.get('docType') %></td>-->
+                        <td><%= i.get('prefix') %></td>
+                        <td><%= i.get('suffix') %></td>
+                        <td><%= i.get('currentNumber') %></td>
+                        <td><%= i.getSample() %></td>
+                    </tr>
                     <% }); %>
                 </table>
 

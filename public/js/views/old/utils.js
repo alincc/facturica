@@ -61,7 +61,7 @@ tpl = {
 
 
 nav = {
-    update: function(newMenu)
+    update:function (newMenu)
     {
         console.log("Switching menu to ", newMenu)
         $("li a").parent().removeClass('active');
@@ -89,7 +89,7 @@ dispath = _.extend({}, Backbone.Events);
 
 /* Update datepicker plugin so that MM/DD/YYYY format is used. */
 $.extend($.fn.datepicker.defaults, {
-    parse: function (string)
+    parse:function (string)
     {
         var matches;
         if ((matches = string.match(/^(\d{2,2})\/(\d{2,2})\/(\d{4,4})$/)))
@@ -101,11 +101,11 @@ $.extend($.fn.datepicker.defaults, {
             return null;
         }
     },
-    format: function (date)
+    format:function (date)
     {
         var
-                month = (date.getMonth() + 1).toString(),
-                dom = date.getDate().toString();
+            month = (date.getMonth() + 1).toString(),
+            dom = date.getDate().toString();
         if (month.length === 1)
         {
             month = "0" + month;
@@ -122,12 +122,12 @@ $.extend($.fn.datepicker.defaults, {
 /* ----------------------------------------------*/
 /* UTILS */
 window.Utils = {};
-window.Utils.roundToTwo = function(value)
+window.Utils.roundToTwo = function (value)
 {
     return Math.round(value * 100) / 100;
 };
 
-window.Utils.round = function(value, dec)
+window.Utils.round = function (value, dec)
 {
     if (dec == undefined || dec == null)
     {
@@ -138,23 +138,23 @@ window.Utils.round = function(value, dec)
     return Math.round(value * m) / m;
 };
 
-Number.prototype.round = function(value, dec)
+Number.prototype.round = function (value, dec)
 {
     return Utils.round(value, dec);
 }
 
-Number.prototype.money = function(c, d, t)
+Number.prototype.money = function (c, d, t)
 {
     var n = this, c = isNaN(c = Math.abs(c)) ? 2 : c, d = d == undefined ? "," : d, t = t == undefined ? "." : t, s = n < 0 ? "-" : "", i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", j = (j = i.length) > 3 ? j % 3 : 0;
     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
 
-_.mixin({round:function(v, d)
+_.mixin({round:function (v, d)
 {
-    return v.round(v,d);
+    return v.round(v, d);
 }});
 
-_.mixin({money:function(v)
+_.mixin({money:function (v)
 {
     return v.money(2, ".", ",");
 }});
@@ -163,17 +163,18 @@ _.mixin({money:function(v)
 
 /* ----------------------------------------------*/
 var _underscore_template = _.template;
-_.template = function(str, data)
+_.template = function (str, data)
 {
     // match "<% include template-id %>"
     return _underscore_template(
         str.replace(
             /<%\s*include\s*(.*?)\s*%>/g,
-            function(match, templateId) {
+            function (match, templateId)
+            {
                 /*var el = $('#' + templateId);
-                return el ? el.html() : '';*/
+                 return el ? el.html() : '';*/
 
-                console.log('Including '+templateId);
+                console.log('Including ' + templateId);
                 var el = tpl.get(templateId);
                 return el ? el : '';
             }

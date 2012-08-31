@@ -1,203 +1,203 @@
 <div class="row">
-    <div class="span8">
+<div class="span8">
 
-        <div id="content-left">
+    <div id="content-left">
 
-            <div class="page-header">
-                <h3>Factura noua
-                    <small>Emitere factura catre client</small>
-                </h3>
+        <div class="page-header">
+            <h3>Factura noua
+                <small>Emitere factura catre client</small>
+            </h3>
+        </div>
+
+        <div class="alert alert-success fade in" style="display:none">
+        </div>
+
+        <div style="height:30px">
+            <div class="form form-horizontal" id="actionButtons" style="">
+                <button id="saveBtn" type="submit" class="btn btn-primary"><i class="icon-white icon-ok"></i>
+                    Salveaza
+                    factura
+                </button>
+                <button id="cancel" class="btn"><i class="icon-remove"></i> Renunta</button>
+                <button id="validate" class="btn"><i class="icon-check"></i> Validare</button>
             </div>
+        </div>
 
-            <div class="alert alert-success fade in" style="display:none">
-            </div>
+        <br/>
 
-            <div style="height:30px">
-                <div class="form form-horizontal" id="actionButtons" style="">
-                    <button id="saveBtn" type="submit" class="btn btn-primary"><i class="icon-white icon-ok"></i>
-                        Salveaza
-                        factura
-                    </button>
-                    <button id="cancel" class="btn"><i class="icon-remove"></i> Renunta</button>
-                    <button id="validate" class="btn"><i class="icon-check"></i> Validare</button>
-                </div>
-            </div>
+        <ul id="myTab" class="nav nav-tabs">
+            <li class="active"><a href="#detalii" data-toggle="tab">Detalii</a></li>
+            <li><a href="#altele" data-toggle="tab">Alte Optiuni</a></li>
+        </ul>
 
-            <br/>
+        <div class="tab-content">
+            <form class="form form-horizontal tab-pane active" id="detalii">
+                <div class="row">
+                    <div class="span3">
+                        <div class="control-group">
+                            <label class="control-label" for="docNo">Nr. document</label>
 
-            <ul id="myTab" class="nav nav-tabs">
-                <li class="active"><a href="#detalii" data-toggle="tab">Detalii</a></li>
-                <li><a href="#altele" data-toggle="tab">Alte Optiuni</a></li>
-            </ul>
-
-            <div class="tab-content">
-                <form class="form form-horizontal tab-pane active" id="detalii">
-                    <div class="row">
-                        <div class="span3">
-                            <div class="control-group">
-                                <label class="control-label" for="docNo">Nr. document</label>
-
-                                <div class="controls">
-                                    <input type="text" class="input-medium" id="docNo" name="docNo" value="<%=docNo%>"/>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <div class="controls">
-                                    <select class="input-medium" id="selectSerie">
-                                        <option value="-1">Fara serie</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <br/>
-
-                            <div class="control-group">
-                                <label class="control-label" for="docDate">Data document</label>
-
-                                <div class="controls">
-                                    <input type="text" class="input-small" id="docDate" name="docDate"
-                                           value="<%=docDate%>"/>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label" for="docDueDate">Data scadenta</label>
-
-                                <div class="controls">
-                                    <input type="text" class="input-small" id="docDueDate" name="docDueDate"
-                                           value="<%=docDueDate%>"/>
-                                </div>
+                            <div class="controls">
+                                <input type="text" class="input-medium" id="docNo" name="docNo" value="<%=docNo%>"/>
                             </div>
                         </div>
 
-                        <div class="span4">
+                        <div class="control-group">
+                            <div class="controls">
+                                <select class="input-medium" id="selectSerie">
+                                    <option value="-1">Fara serie</option>
+                                </select>
+                            </div>
+                        </div>
 
-                            <div class="control-group">
-                                <label class="control-label" for="client-name">Client</label>
+                        <br/>
 
-                                <div class="controls">
-                                    <div class="input-append">
-                                        <input id="client-name" name="client.name" class="span2" size="20" type="text"
-                                               value="<%=client.name%>">
+                        <div class="control-group">
+                            <label class="control-label" for="docDate">Data document</label>
+
+                            <div class="controls">
+                                <input type="text" class="input-small" id="docDate" name="docDate"
+                                       value="<%=docDate%>"/>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="docDueDate">Data scadenta</label>
+
+                            <div class="controls">
+                                <input type="text" class="input-small" id="docDueDate" name="docDueDate"
+                                       value="<%=docDueDate%>"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="span4">
+
+                        <div class="control-group">
+                            <label class="control-label" for="client-name">Client</label>
+
+                            <div class="controls">
+                                <div class="input-append">
+                                    <input id="client-name" name="client.name" class="span2" size="20" type="text"
+                                           value="<%=client.name%>">
                                         <span class="add-on"><i class="icon-th-list"></i><i
                                                 class="icon-edit"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <br/>
-
-                            <div class="control-group">
-                                <label class="control-label" for="client-fiscalCode">Cod Fiscal/CNP</label>
-
-                                <div class="controls">
-                                    <input type="text" class="input-xlarge" id="client-fiscalCode"
-                                           name="client.fiscalCode"/>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label" for="client-regcom">Reg. Com.</label>
-
-                                <div class="controls">
-                                    <input type="text" class="input-xlarge" id="client-regcom"
-                                           name="client.regcom"/>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label" for="client-address">Adresa</label>
-
-                                <div class="controls">
-                                    <textarea cols="12" rows="2" type="text" class="input-xlarge"
-                                              id="client-address"
-                                              name="client.address"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label" for="client-city">Localitate</label>
-
-                                <div class="controls">
-                                    <input type="text" class="input-large" id="client-city" name="client.city">
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label" for="client-bankAccount">Cont bancar</label>
-
-                                <div class="controls">
-                                    <input type="text" class="input-large" id="client-bankAccount"
-                                           name="client.bankAccount">
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label" for="client-bankName">Banca</label>
-
-                                <div class="controls">
-                                    <input type="text" class="input-large" id="client-bankName"
-                                           name="client.bankName">
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label" for="client-phone">Telefon</label>
-
-                                <div class="controls">
-                                    <input type="text" class="input-large" id="client-phone"
-                                           name="client.phone">
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="client-email">Email</label>
-
-                                <div class="controls">
-                                    <input type="text" class="input-large" id="client-email"
-                                           name="client.email">
                                 </div>
                             </div>
                         </div>
+
+                        <br/>
+
+                        <div class="control-group">
+                            <label class="control-label" for="client-fiscalCode">Cod Fiscal/CNP</label>
+
+                            <div class="controls">
+                                <input type="text" class="input-xlarge" id="client-fiscalCode"
+                                       name="client.fiscalCode"/>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="client-regcom">Reg. Com.</label>
+
+                            <div class="controls">
+                                <input type="text" class="input-xlarge" id="client-regcom"
+                                       name="client.regcom"/>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="client-address">Adresa</label>
+
+                            <div class="controls">
+                                <textarea cols="12" rows="2" type="text" class="input-xlarge"
+                                          id="client-address"
+                                          name="client.address"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="client-city">Localitate</label>
+
+                            <div class="controls">
+                                <input type="text" class="input-large" id="client-city" name="client.city">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="client-bankAccount">Cont bancar</label>
+
+                            <div class="controls">
+                                <input type="text" class="input-large" id="client-bankAccount"
+                                       name="client.bankAccount">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="client-bankName">Banca</label>
+
+                            <div class="controls">
+                                <input type="text" class="input-large" id="client-bankName"
+                                       name="client.bankName">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="client-phone">Telefon</label>
+
+                            <div class="controls">
+                                <input type="text" class="input-large" id="client-phone"
+                                       name="client.phone">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="client-email">Email</label>
+
+                            <div class="controls">
+                                <input type="text" class="input-large" id="client-email"
+                                       name="client.email">
+                            </div>
+                        </div>
                     </div>
+                </div>
 
-                    <hr/>
+                <hr/>
 
-                    <div class="tableActions">
-                        <button class="btn btn-mini addDataGridline"><i class="icon-plus"></i> Adauga Linie</button>
-                    </div>
+                <div class="tableActions">
+                    <button class="btn btn-mini addDataGridline"><i class="icon-plus"></i> Adauga Linie</button>
+                </div>
 
 
-                    <table class="factura" style="border: none">
-                        <thead>
-                        <tr>
-                            <th class="actions"></th>
-                            <th class="item">Articol</th>
-                            <th class="um">UM</th>
-                            <th class="vat">% TVA</th>
-                            <th class="qty">Cantitate</th>
-                            <th class="pu">Pret unitar</th>
-                            <th class="pu">Valoare</th>
-                            <th class="pu">Val. TVA</th>
-                        </tr>
-                        </thead>
-                        <tbody class="sortableT">
-                        </tbody>
-                    </table>
-                </form>
+                <table class="factura" style="border: none">
+                    <thead>
+                    <tr>
+                        <th class="actions"></th>
+                        <th class="item">Articol</th>
+                        <th class="um">UM</th>
+                        <th class="vat">% TVA</th>
+                        <th class="qty">Cantitate</th>
+                        <th class="pu">Pret unitar</th>
+                        <th class="pu">Valoare</th>
+                        <th class="pu">Val. TVA</th>
+                    </tr>
+                    </thead>
+                    <tbody class="sortableT">
+                    </tbody>
+                </table>
+            </form>
 
-                <% include tpl/factura/AlteDetalii.html %>
+            <%= otherDetailsTemplateHtml %>
 
-            </div>
         </div>
     </div>
+</div>
 
-    <div class="span4">
-        <div id="content-right">
-            <h4 class="active">Total</h4>
-            <table id="stats" class="table table-condensed">
-            </table>
+<div class="span4">
+    <div id="content-right">
+        <h4 class="active">Total</h4>
+        <table id="stats" class="table table-condensed">
+        </table>
 
-        </div>
     </div>
+</div>
 </div>

@@ -3,22 +3,22 @@
 // sau alternativ la http://stackoverflow.com/questions/9663428/how-to-correctly-add-a-jquery-ui-autocomplete-widget-using-backbone-js
 //
 
-define(function()
+define(function ()
 {
     var Autocomplete = Backbone.View.extend({
-        render: function()
+        render:function ()
         {
             var choices = this.options.choices,
-                    selected = this.options.selected,
-                    iterator = this.options.iterator,
-                    label = this.options.label,
-                    allowDupes = this.options.allowDupes,
-                    remoteQuery = this.options.remoteQuery,
-                    remote = this.options.remote,
-                    $el = $(this.el);
+                selected = this.options.selected,
+                iterator = this.options.iterator,
+                label = this.options.label,
+                allowDupes = this.options.allowDupes,
+                remoteQuery = this.options.remoteQuery,
+                remote = this.options.remote,
+                $el = $(this.el);
 
             $el.autocomplete({
-                source: function(request, response)
+                source:function (request, response)
                 {
                     var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), 'i');
 
@@ -26,10 +26,10 @@ define(function()
                     if (remoteQuery)
                     {
                         choices.fetch({
-                            data: jQuery.param({query: request.term}),
-                            success: function(c, r)
+                            data:jQuery.param({query:request.term}),
+                            success:function (c, r)
                             {
-                                response(r.filter(function(model)
+                                response(r.filter(function (model)
                                 {
                                     return iterator(model, matcher);
                                 }));
@@ -39,19 +39,19 @@ define(function()
                     else
                     {
                         // Preloaded collection
-                        response(choices.filter(function(model)
+                        response(choices.filter(function (model)
                         {
                             return iterator(model, matcher);
                         }));
                     }
 
                 },
-                focus: function(event, ui)
+                focus:function (event, ui)
                 {
                     $el.val(label(ui.item));
                     return false;
                 },
-                select: function(event, ui)
+                select:function (event, ui)
                 {
                     selected.reset();
                     selected.add(ui.item);
@@ -62,12 +62,12 @@ define(function()
                     $el.val(label(ui.item));
                     return false;
                 }
-            }).data('autocomplete')._renderItem = function(ul, item)
+            }).data('autocomplete')._renderItem = function (ul, item)
             {
                 return $('<li/>')
-                        .data('item.autocomplete', item)
-                        .append($('<a/>').text(label(item)))
-                        .appendTo(ul);
+                    .data('item.autocomplete', item)
+                    .append($('<a/>').text(label(item)))
+                    .appendTo(ul);
             };
             return this;
         }

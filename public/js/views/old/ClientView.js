@@ -1,14 +1,14 @@
 window.ClientEditView = BaseFormEdit.extend({
 
-    tagName: "div",
+    tagName:"div",
 
-    events: {
-        "click #save": "handleSave",
-        "click #cancel": "handleCancel",
-        "change input,textarea": "handleChange"
+    events:{
+        "click #save":"handleSave",
+        "click #cancel":"handleCancel",
+        "change input,textarea":"handleChange"
     },
 
-    initialize: function()
+    initialize:function ()
     {
         console.log('ClientEditView:initialize');
 
@@ -21,7 +21,7 @@ window.ClientEditView = BaseFormEdit.extend({
         this.model.bind("destroy", this.close, this);
     },
 
-    render: function ()
+    render:function ()
     {
         console.log('ClientEditView:render');
         var el = $(this.el);
@@ -30,13 +30,13 @@ window.ClientEditView = BaseFormEdit.extend({
         return this;
     },
 
-    handleChange: function(e)
+    handleChange:function (e)
     {
         var ctrl = $(e.currentTarget);
         this.changes[ctrl.attr("name")] = ctrl.val();
     },
 
-    handleSave: function(e)
+    handleSave:function (e)
     {
         e.preventDefault();
 
@@ -49,40 +49,40 @@ window.ClientEditView = BaseFormEdit.extend({
             return false;
         }
 
-        var success = function(model, fail, xhr)
+        var success = function (model, fail, xhr)
         {
             console.log('ClientEditView:handleSuccessSave');
             app.navigate("clienti", true);
         };
 
-        var error = function(model, fail, xhr)
+        var error = function (model, fail, xhr)
         {
             console.log('ClientEditView:handleError', model, fail, xhr);
             messages = new MessageManager();
             messages.error("Eroare server - clientul nu a fost salvat.");
         };
 
-        this.model.save(null, {wait:true, success: success, error: error});
+        this.model.save(null, {wait:true, success:success, error:error});
 
         return false;
     },
 
-    handleCancel: function(e)
+    handleCancel:function (e)
     {
         window.history.back();
     }
 });
 
 window.ClientsListPage = Backbone.View.extend({
-    tagName: "ul",
+    tagName:"ul",
 
-    className: "unstyled",
+    className:"unstyled",
 
     events:{
-        "click #reload": "handleReload"
+        "click #reload":"handleReload"
     },
 
-    initialize: function()
+    initialize:function ()
     {
         console.log('ClientsListPage:initialize');
         this.template = _.template(tpl.get('client/List'));
@@ -96,8 +96,8 @@ window.ClientsListPage = Backbone.View.extend({
         if (this.model.length > 0)
         {
             this.listView = new ClientsListView({
-                el: $('#listView', this.el),
-                model: this.model});
+                el:$('#listView', this.el),
+                model:this.model});
             this.listView.render();
         }
         else
@@ -109,7 +109,7 @@ window.ClientsListPage = Backbone.View.extend({
         return this;
     },
 
-    handleReload: function()
+    handleReload:function ()
     {
         this.model.fetch();
     }
@@ -159,7 +159,7 @@ window.ClientsListItemView = Backbone.View.extend({
 window.ClientDetail = Backbone.View.extend({
 
     events:{
-        "click #delete": "handleDelete"
+        "click #delete":"handleDelete"
     },
 
     initialize:function ()
@@ -178,7 +178,7 @@ window.ClientDetail = Backbone.View.extend({
         return this;
     },
 
-    handleDelete : function()
+    handleDelete:function ()
     {
         if (confirm("Esti sigur ca vrei sa stergi clientul " + this.model.get("name") + "?"))
         {

@@ -1,8 +1,8 @@
 var activeRequests = [];
 
-define(['backbone',"libs/backbone.validation/backbone.validation.min"], function(Backbone)
+define(['backbone', "libs/backbone.validation/backbone.validation.min"], function (Backbone)
 {
-    Backbone.View.prototype.close = function()
+    Backbone.View.prototype.close = function ()
     {
         console.log("Backbone.View.close");
         this.remove();
@@ -13,7 +13,7 @@ define(['backbone',"libs/backbone.validation/backbone.validation.min"], function
         }
     }
 
-    Backbone.View.prototype.viewValidation = function()
+    Backbone.View.prototype.viewValidation = function ()
     {
 //        Backbone.Validation.bind(this,
 //        {
@@ -50,11 +50,11 @@ define(['backbone',"libs/backbone.validation/backbone.validation.min"], function
 
     Backbone._sync = Backbone.sync;
 
-    Backbone.sync = function(method, model, options)
+    Backbone.sync = function (method, model, options)
     {
         var asyncToken = Backbone._sync.apply(this, arguments);
 
-        asyncToken.then(function()
+        asyncToken.then(function ()
         {
             activeRequests = _.without(activeRequests, asyncToken);
             if (activeRequests.length === 0)

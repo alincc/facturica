@@ -1,6 +1,6 @@
 var BaseFormEdit = Backbone.View.extend({
 
-    initialize: function()
+    initialize:function ()
     {
         console.log('BaseFormEdit:initialize');
 
@@ -12,18 +12,18 @@ var BaseFormEdit = Backbone.View.extend({
         this.viewValidation();
     },
 
-    viewValidation: function()
+    viewValidation:function ()
     {
         Backbone.Validation.bind(this, {
-            index: 0,
-            forceUpdate: true,
-            valid: function(view, attr)
+            index:0,
+            forceUpdate:true,
+            valid:function (view, attr)
             {
                 var control = $("input[id='" + attr + "']");
                 control.parents("div.control-group").removeClass("error");
                 control.parent().find(".help-inline").remove();
             },
-            invalid: function(view, attr, error)
+            invalid:function (view, attr, error)
             {
                 var control = $("input[id='" + attr + "']");
                 var group = control.parents("div.control-group");

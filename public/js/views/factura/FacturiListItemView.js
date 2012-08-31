@@ -1,31 +1,31 @@
 define(
-        [
-            'text!tpl/factura/ListItem.html'
-        ]
-        ,
-        function(listItemTemplate)
-        {
-            var FacturiListItemView = Backbone.View.extend({
+    [
+        'text!tpl/factura/ListItem.html'
+    ]
+    ,
+    function (listItemTemplate)
+    {
+        var FacturiListItemView = Backbone.View.extend({
 
-                tagName:"tr",
+            tagName:"tr",
 
-                initialize:function ()
-                {
-                    console.log('FacturiListItemView:initialize');
+            initialize:function ()
+            {
+                console.log('FacturiListItemView:initialize');
 
-                    this.template = _.template(listItemTemplate);
-                    this.model.bind("change", this.render, this);
+                this.template = _.template(listItemTemplate);
+                this.model.bind("change", this.render, this);
 
-                    _.bindAll("render");
-                },
+                _.bindAll("render");
+            },
 
-                render:function (eventName)
-                {
-                    $(this.el).html(this.template(this.model.toJSON()));
-                    return this;
-                }
+            render:function (eventName)
+            {
+                $(this.el).html(this.template(this.model.toJSON()));
+                return this;
+            }
 
-            });
-
-            return FacturiListItemView;
         });
+
+        return FacturiListItemView;
+    });

@@ -1,11 +1,11 @@
 window.ClientModel = Backbone.NestedModel.extend({
 
-    urlRoot: function()
+    urlRoot:function ()
     {
         return "api/clients";
     },
 
-    url: function()
+    url:function ()
     {
         if (this.isNew())
         {
@@ -18,34 +18,32 @@ window.ClientModel = Backbone.NestedModel.extend({
     },
 
     defaults:{
-        partner:
-        {
-            name: '',
-            fiscalCode: '',
-            regcom: '',
-            address: '',
-            city: '',
-            bankAccount: '',
-            bankName: '',
-            contact: '',
-            email: '',
-            phone: ''
+        partner:{
+            name:'',
+            fiscalCode:'',
+            regcom:'',
+            address:'',
+            city:'',
+            bankAccount:'',
+            bankName:'',
+            contact:'',
+            email:'',
+            phone:''
         }
     },
 
-    validation:
-    {
-        partner: {
-            required: true,
-            validation: {
-                name: {
-                    required: true,
-                    msg: "Numele este obligatoriu"
+    validation:{
+        partner:{
+            required:true,
+            validation:{
+                name:{
+                    required:true,
+                    msg:"Numele este obligatoriu"
                 },
 
-                email: {
-                    required: false,
-                    pattern: 'email'
+                email:{
+                    required:false,
+                    pattern:'email'
                 }
             }
         }
@@ -54,11 +52,11 @@ window.ClientModel = Backbone.NestedModel.extend({
 });
 
 window.ClientsSearchCollection = Backbone.Collection.extend({
-    model: ClientModel,
+    model:ClientModel,
 
     url:"api/clients/search",
 
-    findByName: function(name)
+    findByName:function (name)
     {
         var url = 'api/clients/search/' + name;
 
@@ -76,7 +74,7 @@ window.ClientsSearchCollection = Backbone.Collection.extend({
 })
 
 window.ClientsCollection = Backbone.Collection.extend({
-    model: ClientModel,
+    model:ClientModel,
 
     url:"api/clients"
 })

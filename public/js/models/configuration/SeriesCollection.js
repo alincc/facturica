@@ -1,12 +1,12 @@
 define(
-        ['models/configuration/Serie'],
-        function(Serie)
-        {
-            var SeriesCollection = Backbone.Collection.extend({
-                model: Serie,
+    ['models/configuration/Serie'],
+    function (Serie)
+    {
+        var SeriesCollection = Backbone.Collection.extend({
+            model:Serie,
 
-                url:"api/configSeries"
-            });
+            url:"api/configSeries"
+        });
 
-            return SeriesCollection;
-        })
+        return SeriesCollection;
+    })

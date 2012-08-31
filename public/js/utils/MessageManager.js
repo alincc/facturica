@@ -1,14 +1,14 @@
 var MessageManager;
-var __bind = function(fn, me)
+var __bind = function (fn, me)
 {
-    return function()
+    return function ()
     {
         return fn.apply(me, arguments);
     };
-}, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent)
+}, __hasProp = Object.prototype.hasOwnProperty, __extends = function (child, parent)
 {
     for (var key in
-            parent)
+        parent)
     {
         if (__hasProp.call(parent, key))
         {
@@ -25,7 +25,7 @@ var __bind = function(fn, me)
     child.__super__ = parent.prototype;
     return child;
 };
-MessageManager = (function()
+MessageManager = (function ()
 {
     __extends(MessageManager, Backbone.View);
     function MessageManager()
@@ -37,28 +37,28 @@ MessageManager = (function()
     }
 
     MessageManager.prototype.el = '.alert';
-    MessageManager.prototype.render = function(type, message, opts)
+    MessageManager.prototype.render = function (type, message, opts)
     {
         var defaults, typeClass;
         defaults = {
-            fade: 50000
+            fade:50000
         };
         _.extend(defaults, opts);
         typeClass = "alert alert-" + type;
         this.$el.empty().prepend(message).removeClass().addClass(typeClass).fadeIn('fast');
-        return setTimeout((__bind(function()
+        return setTimeout((__bind(function ()
         {
             return this.$el.fadeOut();
         }, this)), defaults.fade);
     };
-    MessageManager.prototype.error = function(message, opts)
+    MessageManager.prototype.error = function (message, opts)
     {
         if (!!message)
         {
             return this.render('error', message + '<a class="close" data-dismiss="alert" href="#">×</a>', opts);
         }
     };
-    MessageManager.prototype.success = function(message, opts)
+    MessageManager.prototype.success = function (message, opts)
     {
         if (!!message)
         {

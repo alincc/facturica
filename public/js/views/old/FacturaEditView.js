@@ -1,21 +1,20 @@
 window.FacturaEditView = BaseFormEdit.extend({
 
-    tagName: "div",
+    tagName:"div",
 
-    events:
-    {
-        "change #docNo,#docDate,#docDueDate,#client-name,#client-fiscalCode, #client-regcom": "handleChange",
-        "change #client-address, #client-city, #client-bankAccount, #client-bankName": "handleChange",
-        "change #client-phone, #client-email": "handleChange",
-        "change #nraviz, #numeDelegat, #ciSeria, #ciNumar, #cnp, #detaliuTransport, #expDate, #note": "handleChange",
-        "click .addDataGridline" : "handleAddLine",
-        "click #saveBtn": "handleSave",
-        "click #cancel": "handleCancel",
+    events:{
+        "change #docNo,#docDate,#docDueDate,#client-name,#client-fiscalCode, #client-regcom":"handleChange",
+        "change #client-address, #client-city, #client-bankAccount, #client-bankName":"handleChange",
+        "change #client-phone, #client-email":"handleChange",
+        "change #nraviz, #numeDelegat, #ciSeria, #ciNumar, #cnp, #detaliuTransport, #expDate, #note":"handleChange",
+        "click .addDataGridline":"handleAddLine",
+        "click #saveBtn":"handleSave",
+        "click #cancel":"handleCancel",
 
-        "change #selectSerie": "handleChangeSerie"
+        "change #selectSerie":"handleChangeSerie"
     },
 
-    initialize: function()
+    initialize:function ()
     {
         console.log('FacturaEditView:initialize');
 
@@ -40,19 +39,19 @@ window.FacturaEditView = BaseFormEdit.extend({
         el.html(me.template(me.model.toJSON()));
 
         me.listView = new DataGrid(
-        {
-            el: $('table.factura tbody', el),
-            model: me.model.items,
-            rowUpdateHandler: me.rowUpdateHandler,
-            rowAddHandler: me.renderStats,
-            rowRemoveHandler: me.renderStats,
-            itemRenderer: 'factura/EditListItemView',
-            postCreationEvent: function(grid)
             {
-                // todo: add code that setup grid
-            },
-            scope: me
-        });
+                el:$('table.factura tbody', el),
+                model:me.model.items,
+                rowUpdateHandler:me.rowUpdateHandler,
+                rowAddHandler:me.renderStats,
+                rowRemoveHandler:me.renderStats,
+                itemRenderer:'factura/EditListItemView',
+                postCreationEvent:function (grid)
+                {
+                    // todo: add code that setup grid
+                },
+                scope:me
+            });
 
         me.listView.render();
 
@@ -80,7 +79,7 @@ window.FacturaEditView = BaseFormEdit.extend({
         return me;
     },
 
-    renderStats: function(scope)
+    renderStats:function (scope)
     {
         console.log("FacturaEditView:renderStats");
 
@@ -90,7 +89,7 @@ window.FacturaEditView = BaseFormEdit.extend({
 
         if (scope.model != null)
         {
-            _.each(scope.model.items, function(v)
+            _.each(scope.model.items, function (v)
             {
                 total += parseFloat(v.total);
                 subtotal += parseFloat(v.subtotal);
@@ -98,21 +97,21 @@ window.FacturaEditView = BaseFormEdit.extend({
             });
 
             scope.model.set({
-                total: Utils.round(total, 2),
-                subtotal: Utils.round(subtotal, 2),
-                vat: Utils.round(vat, 2)
+                total:Utils.round(total, 2),
+                subtotal:Utils.round(subtotal, 2),
+                vat:Utils.round(vat, 2)
             });
 
             me.stats = new FacturaTotal({
-                el: $('#stats', me.el),
-                model: me.model
+                el:$('#stats', me.el),
+                model:me.model
             });
 
             me.stats.render();
         }
     },
 
-    rowUpdateHandler: function(scope, e, m, attr, value)
+    rowUpdateHandler:function (scope, e, m, attr, value)
     {
         console.log("FacturaEditView:rowUpdateHandler");
 
@@ -124,24 +123,24 @@ window.FacturaEditView = BaseFormEdit.extend({
         me.renderStats(me);
     },
 
-    handleAddLine: function(e)
+    handleAddLine:function (e)
     {
         this.listView.addLine(e);
     },
 
-    handleSort:function(event, ui)
+    handleSort:function (event, ui)
     {
         console.log(ui);
     },
 
-    handleChange: function(e)
+    handleChange:function (e)
     {
         var ctrl = $(e.currentTarget);
         this.changes[ctrl.attr("name")] = ctrl.val();
         this.renderStats(this);
     },
 
-    handleSave: function(e)
+    handleSave:function (e)
     {
         console.log('FacturaEditView:handleSave');
 
@@ -156,13 +155,13 @@ window.FacturaEditView = BaseFormEdit.extend({
             return false;
         }
 
-        var success = function(e)
+        var success = function (e)
         {
             console.log('FacturaEditView:handleSuccessSave');
             app.navigate("facturi", true);
         };
 
-        var error = function(model, fail, xhr)
+        var error = function (model, fail, xhr)
         {
             console.log('FacturiEditView:handleError', model, fail, xhr);
             messages = new MessageManager();
@@ -170,20 +169,20 @@ window.FacturaEditView = BaseFormEdit.extend({
         }
 
         me.model.save(
-        {
-        },
-        {
-            success: success,
-            error: error
-        });
+            {
+            },
+            {
+                success:success,
+                error:error
+            });
     },
 
-    handleCancel: function(e)
+    handleCancel:function (e)
     {
         window.history.back();
     },
 
-    handleChangeSerie: function(e)
+    handleChangeSerie:function (e)
     {
         var value = $(e.currentTarget).val();
         this.model.set({'seriesId':value});
@@ -200,7 +199,7 @@ window.FacturaEditView = BaseFormEdit.extend({
         }
     },
 
-    setupPartnerSelection: function(el)
+    setupPartnerSelection:function (el)
     {
         me = this;
 
@@ -208,28 +207,28 @@ window.FacturaEditView = BaseFormEdit.extend({
 
         var selected = new ClientsSearchCollection();
 
-        selected.bind('add', function(model)
+        selected.bind('add', function (model)
         {
             var loadModel = new ClientModel();
             loadModel.set("id", model.get('id'))
             loadModel.fetch({
-                success: function(data)
+                success:function (data)
                 {
                     me.updatePartnerInfo(el, data.get("partner"));
                 }});
         });
 
         var input = new Autocomplete({
-            el: el.find('#client-name'),
-            choices: choices,
-            selected: selected,
-            allowDupes: true,
-            remoteQuery: true,
-            iterator: function(model, matcher, selected)
+            el:el.find('#client-name'),
+            choices:choices,
+            selected:selected,
+            allowDupes:true,
+            remoteQuery:true,
+            iterator:function (model, matcher, selected)
             {
                 return matcher.test(model.partner.name);
             },
-            label: function(model)
+            label:function (model)
             {
                 var data = model;
                 return  data.partner.name;
@@ -237,7 +236,7 @@ window.FacturaEditView = BaseFormEdit.extend({
         }).render();
     },
 
-    updatePartnerInfo: function(el, json)
+    updatePartnerInfo:function (el, json)
     {
         this.selectedPartner = json;
         this.model.set("client", json);
@@ -252,24 +251,24 @@ window.FacturaEditView = BaseFormEdit.extend({
         el.find("#client-email").val(json.email);
     },
 
-    selectableRowItem: function(lv)
+    selectableRowItem:function (lv)
     {
         $(lv).sortable({
             axis:'y',
             containment:'parent',
-            change: this.handleSort
+            change:this.handleSort
         }).disableSelection();
     },
 
-    loadDocumentSeries: function(el)
+    loadDocumentSeries:function (el)
     {
         var seriesCollection = new SeriesCollection();
         seriesCollection.fetch({
-            success: function()
+            success:function ()
             {
                 var ctrl = el.find('#selectSerie');
 
-                $.each(seriesCollection.models, function(index, obj)
+                $.each(seriesCollection.models, function (index, obj)
                 {
                     ctrl.append($("<option />").val(obj.get('id')).text(obj.getSample())).attr('data-last', obj.getNextPossible());
                 })
@@ -277,9 +276,9 @@ window.FacturaEditView = BaseFormEdit.extend({
         });
     },
 
-    fixedPosition: function(el)
+    fixedPosition:function (el)
     {
-        setTimeout(function()
+        setTimeout(function ()
         {
             var offset = $('#actionButtons', el).offset();
 
@@ -289,7 +288,7 @@ window.FacturaEditView = BaseFormEdit.extend({
 
                 if (offset.top < scrollTop)
                 {
-                    $('#actionButtons').css({'width': $("#content-left").parent().width()-40});
+                    $('#actionButtons').css({'width':$("#content-left").parent().width() - 40});
                     $('#actionButtons').addClass('fixed');
                     $('#content-right').addClass('fixed-content-right');
                 }

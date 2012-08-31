@@ -1,7 +1,7 @@
 window.SerieModel = Backbone.Model.extend({
     urlRoot:"api/configSeries",
 
-    url: function()
+    url:function ()
     {
         if (this.isNew())
         {
@@ -13,22 +13,21 @@ window.SerieModel = Backbone.Model.extend({
         }
     },
 
-    validation:
-    {
+    validation:{
         currentNumber:{
-            required: true,
-            min: 0
+            required:true,
+            min:0
         }
     },
 
     defaults:{
-        docType: 'FAC',
-        prefix: '',
-        suffix: '',
-        currentNumber: '0'
+        docType:'FAC',
+        prefix:'',
+        suffix:'',
+        currentNumber:'0'
     },
 
-    getNextPossible: function()
+    getNextPossible:function ()
     {
         var me = this;
 
@@ -37,7 +36,7 @@ window.SerieModel = Backbone.Model.extend({
         return me.get('prefix') + nextInt.toString() + me.get('suffix');
     },
 
-    getSample: function()
+    getSample:function ()
     {
         var me = this;
 
@@ -46,7 +45,7 @@ window.SerieModel = Backbone.Model.extend({
 });
 
 window.SeriesCollection = Backbone.Collection.extend({
-    model: SerieModel,
+    model:SerieModel,
 
     url:"api/configSeries"
 });

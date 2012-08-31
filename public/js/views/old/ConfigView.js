@@ -1,16 +1,16 @@
 window.ConfigView = Backbone.View.extend({
 
-    tagName: "div",
+    tagName:"div",
 
-    events: {
+    events:{
     },
 
-    initialize: function()
+    initialize:function ()
     {
         this.template = _.template(tpl.get('configView'));
     },
 
-    render: function ()
+    render:function ()
     {
         var el = $(this.el);
         el.html(this.template());
@@ -21,18 +21,18 @@ window.ConfigView = Backbone.View.extend({
 
 window.ConfigSeriesView = Backbone.View.extend({
 
-    tagName: "div",
+    tagName:"div",
 
-    events: {
-        'click .rowClick': 'editSerie'
+    events:{
+        'click .rowClick':'editSerie'
     },
 
-    initialize: function()
+    initialize:function ()
     {
         this.template = _.template(tpl.get('configSeriesListView'));
     },
 
-    render: function ()
+    render:function ()
     {
         var el = $(this.el);
         el.html(this.template({model:this.model}));
@@ -40,7 +40,7 @@ window.ConfigSeriesView = Backbone.View.extend({
         return this;
     },
 
-    editSerie: function(e)
+    editSerie:function (e)
     {
         var id = $(e.currentTarget).attr('data-id');
         app.navigate("serie/" + id, true);
@@ -50,15 +50,15 @@ window.ConfigSeriesView = Backbone.View.extend({
 
 window.ConfigSeriesEditView = Backbone.View.extend({
 
-    tagName: "div",
+    tagName:"div",
 
-    events: {
-        'change #docType, #prefix, #suffix, #currentNumber': 'updateExample',
-        'click #save': 'save',
-        'click #cancel': 'cancel'
+    events:{
+        'change #docType, #prefix, #suffix, #currentNumber':'updateExample',
+        'click #save':'save',
+        'click #cancel':'cancel'
     },
 
-    initialize: function()
+    initialize:function ()
     {
         _.bindAll(this, 'render', 'updateExample', 'save');
 
@@ -67,7 +67,7 @@ window.ConfigSeriesEditView = Backbone.View.extend({
         Backbone.Validation.bind(this);
     },
 
-    render: function ()
+    render:function ()
     {
         var el = $(this.el);
         el.html(this.template(this.model.toJSON()));
@@ -77,7 +77,7 @@ window.ConfigSeriesEditView = Backbone.View.extend({
         return this;
     },
 
-    updateExample: function(e)
+    updateExample:function (e)
     {
         // Update model
         if (e != null)
@@ -90,7 +90,7 @@ window.ConfigSeriesEditView = Backbone.View.extend({
         $('#example', this.el).html(this.model.getSample());
     },
 
-    save: function()
+    save:function ()
     {
         if (!this.model.isValid(true))
         {
@@ -99,25 +99,25 @@ window.ConfigSeriesEditView = Backbone.View.extend({
             return false;
         }
 
-        var success = function(model, fail, xhr)
+        var success = function (model, fail, xhr)
         {
             console.log('ConfigSeriesEditView:handleSuccessSave');
             app.navigate("serii", true);
         };
 
-        var error = function(model, fail, xhr)
+        var error = function (model, fail, xhr)
         {
             console.log('ConfigSeriesEditView:handleError', model, fail, xhr);
             messages = new MessageManager();
             messages.error("Eroare server - seria nu a fost salvata.");
         };
 
-        this.model.save(null, {wait:true, success: success, error: error});
+        this.model.save(null, {wait:true, success:success, error:error});
 
         return false;
     },
 
-    cancel: function(e)
+    cancel:function (e)
     {
         window.history.back();
     }
@@ -125,14 +125,14 @@ window.ConfigSeriesEditView = Backbone.View.extend({
 
 window.ConfigSeriesPopup = Backbone.View.extend({
 
-    tagName: "div",
+    tagName:"div",
 
-    initialize: function()
+    initialize:function ()
     {
         this.template = _.template(tpl.get('configSeriesPopupView'));
     },
 
-    render: function()
+    render:function ()
     {
         var el = $(this.el);
 

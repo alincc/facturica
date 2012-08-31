@@ -1,17 +1,17 @@
 window.FacturiListPage = Backbone.View.extend({
-    tagName: "ul",
+    tagName:"ul",
 
-    className: "unstyled",
+    className:"unstyled",
 
     events:{
-        "click #reload": "handleReload",
-        "click #delete": "handleDelete",
-        "click #duplicate": "handleDuplicate",
-        "click #filter": "handleFilter",
-        "click #print": "handlePrint"
+        "click #reload":"handleReload",
+        "click #delete":"handleDelete",
+        "click #duplicate":"handleDuplicate",
+        "click #filter":"handleFilter",
+        "click #print":"handlePrint"
     },
 
-    initialize: function()
+    initialize:function ()
     {
         console.log('FacturiListPage:initialize');
         this.template = _.template(tpl.get('factura/List'));
@@ -26,17 +26,17 @@ window.FacturiListPage = Backbone.View.extend({
         if (me.model.length > 0)
         {
             me.listView = new FacturiListView({
-                el: $('#listView', me.el),
-                model: me.model
+                el:$('#listView', me.el),
+                model:me.model
             });
             me.listView.render();
 
             var coll = new FacturiStatsCollection();
-            coll.fetch({success:function()
+            coll.fetch({success:function ()
             {
                 me.stats = new FacturiListStats({
-                    el: $("#stats", me.el),
-                    model: coll
+                    el:$("#stats", me.el),
+                    model:coll
                 });
                 me.stats.render();
             }});
@@ -51,12 +51,12 @@ window.FacturiListPage = Backbone.View.extend({
         return me;
     },
 
-    handleReload: function()
+    handleReload:function ()
     {
         this.model.fetch();
     },
 
-    handleSelectAll: function()
+    handleSelectAll:function ()
     {
         var elements = $(this).closest("table").find(":checkbox");
 
@@ -71,19 +71,19 @@ window.FacturiListPage = Backbone.View.extend({
             select = false;
         }
 
-        elements.each(function(index, ctrl)
+        elements.each(function (index, ctrl)
         {
             $(ctrl).attr("checked", select);
         })
     },
 
-    handleDelete:function()
+    handleDelete:function ()
     {
         var elements = $("#listView").find(":checked");
 
         if (elements.length > 0 && confirm("Confirmati stergerea documentelor selectate?"))
         {
-            elements.each(function(index, ctrl)
+            elements.each(function (index, ctrl)
             {
                 var ctrl = $(ctrl);
                 var docid = ctrl.siblings("input[type='hidden']").val();
@@ -100,7 +100,7 @@ window.FacturiListPage = Backbone.View.extend({
         }
     },
 
-    handleDuplicate: function()
+    handleDuplicate:function ()
     {
         var element = $("#listView").find(".doc:checked").first();
 
@@ -118,14 +118,14 @@ window.FacturiListPage = Backbone.View.extend({
         }
     },
 
-    handleFilter: function()
+    handleFilter:function ()
     {
         var filter = $("#filterList");
 
         filter.toggle();
     },
 
-    handlePrint: function()
+    handlePrint:function ()
     {
 
     }
@@ -179,7 +179,7 @@ window.FacturiListItemView = Backbone.View.extend({
 window.FacturaDetail = Backbone.View.extend({
 
     events:{
-        "click #delete": "handleDelete"
+        "click #delete":"handleDelete"
     },
 
     initialize:function ()
@@ -199,23 +199,23 @@ window.FacturaDetail = Backbone.View.extend({
         el.find("input,textarea").attr("readonly", true);
 
         me.listView = new DataGrid({
-            el: $('table.factura tbody', el),
-            model: me.model.items,
-            disabled: true,
-            itemRenderer: 'factura/EditListItemView'
+            el:$('table.factura tbody', el),
+            model:me.model.items,
+            disabled:true,
+            itemRenderer:'factura/EditListItemView'
         });
         me.listView.render();
 
         me.stats = new FacturaTotal({
-            el: $('#stats', me.el),
-            model: me.model
+            el:$('#stats', me.el),
+            model:me.model
         });
         me.stats.render();
 
         return me;
     },
 
-    handleDelete : function()
+    handleDelete:function ()
     {
         if (confirm("Esti sigur ca vrei sa stergi factura " + this.model.get("docNo") + "?"))
         {
@@ -228,7 +228,7 @@ window.FacturaDetail = Backbone.View.extend({
 })
 
 window.FacturiListStats = Backbone.View.extend({
-    render:function()
+    render:function ()
     {
         $(this.el).empty();
 
@@ -237,9 +237,9 @@ window.FacturiListStats = Backbone.View.extend({
         if (data.length > 0)
         {
             $(this.el).append(
-                    '<tr><td>Valoare fara TVA</td><td class="numeric">' + _(data[0].get('subtotal')).money() + ' lei</td></tr>' +
-                            '<tr><td>TVA</td><td class="numeric">' + _(data[0].get('vat')).money() + ' lei</td></tr>' +
-                            '<tr><td>Total</td><td class="numeric">' + _(data[0].get('total')).money() + ' lei</td></tr>');
+                '<tr><td>Valoare fara TVA</td><td class="numeric">' + _(data[0].get('subtotal')).money() + ' lei</td></tr>' +
+                    '<tr><td>TVA</td><td class="numeric">' + _(data[0].get('vat')).money() + ' lei</td></tr>' +
+                    '<tr><td>Total</td><td class="numeric">' + _(data[0].get('total')).money() + ' lei</td></tr>');
         }
     }
 })
@@ -254,16 +254,16 @@ window.FacturaTotal = Backbone.View.extend({
         }
     },
 
-    render:function()
+    render:function ()
     {
         var data = this.model;
         $(this.el).empty();
         if (data != null)
         {
             $(this.el).append(
-                    '<tr><td>Valoare fara TVA</td><td class="numeric">' + _(data.get('subtotal')).money() + ' lei</td></tr>' +
-                            '<tr><td>TVA</td><td class="numeric">' + _(data.get('vat')).money() + ' lei</td></tr>' +
-                            '<tr><td>Total</td><td class="numeric">' + _(data.get('total')).money() + ' lei</td></tr>');
+                '<tr><td>Valoare fara TVA</td><td class="numeric">' + _(data.get('subtotal')).money() + ' lei</td></tr>' +
+                    '<tr><td>TVA</td><td class="numeric">' + _(data.get('vat')).money() + ' lei</td></tr>' +
+                    '<tr><td>Total</td><td class="numeric">' + _(data.get('total')).money() + ' lei</td></tr>');
         }
     }
 })

@@ -1,126 +1,125 @@
 define(
-        [
-            'controls/DataGridItem',
-            'models/factura/FacturaItem'
-        ],
-        function(DataGridItem, FacturaItem) // !!! remove FacturaItem
-        {
-            var DataGrid = Backbone.View.extend({
-                events:
+    [
+        'controls/DataGridItem',
+        'models/factura/FacturaItem'
+    ],
+    function (DataGridItem, FacturaItem) // !!! remove FacturaItem
+    {
+        var DataGrid = Backbone.View.extend({
+            events:{
+                "click .add-line":"addLine",
+                "click .delete-line":"removeLine"
+            },
+
+            initialize:function ()
+            {
+                console.log('DataGrid:initialize');
+
+                _.bindAll(this);
+            },
+
+            render:function ()
+            {
+                console.log('DataGrid:render');
+
+                var me = this;
+                var el = $(this.el);
+                el.empty();
+
+                me.disabled = me.options.disabled;
+                me.rowAddHandler = me.options.rowAddHandler;
+                me.rowRemoveHandler = me.options.rowRemoveHandler;
+                me.rowUpdateHandler = me.options.rowUpdateHandler;
+                me.itemRenderer = me.options.itemRenderer;
+                me.scope = me.options.scope;
+
+                me.rows = new Array();
+
+                // Render items
+                _.each(this.model, function (item)
                 {
-                    "click .add-line" : "addLine",
-                    "click .delete-line" : "removeLine"
-                },
-
-                initialize: function ()
-                {
-                    console.log('DataGrid:initialize');
-
-                    _.bindAll(this);
-                },
-
-                render: function ()
-                {
-                    console.log('DataGrid:render');
-
-                    var me = this;
-                    var el = $(this.el);
-                    el.empty();
-
-                    me.disabled = me.options.disabled;
-                    me.rowAddHandler = me.options.rowAddHandler;
-                    me.rowRemoveHandler = me.options.rowRemoveHandler;
-                    me.rowUpdateHandler = me.options.rowUpdateHandler;
-                    me.itemRenderer = me.options.itemRenderer;
-                    me.scope = me.options.scope;
-
-                    me.rows = new Array();
-
-                    // Render items
-                    _.each(this.model, function (item)
-                    {
-                        var gridItem = new DataGridItem({
-                            model: item,
-                            disabled: me.disabled,
-                            rowUpdateHandler: me.rowUpdateHandler,
-                            itemRenderer: me.itemRenderer,
-                            scope: me.scope
-                        });
-
-                        me.rows.push(gridItem);
-
-                        el.append(gridItem.render().el);
+                    var gridItem = new DataGridItem({
+                        model:item,
+                        disabled:me.disabled,
+                        rowUpdateHandler:me.rowUpdateHandler,
+                        itemRenderer:me.itemRenderer,
+                        scope:me.scope
                     });
 
-                    return this;
-                },
+                    me.rows.push(gridItem);
 
-                addLine: function(e)
+                    el.append(gridItem.render().el);
+                });
+
+                return this;
+            },
+
+            addLine:function (e)
+            {
+                e.preventDefault();
+
+                console.log('DataGrid:addLine');
+
+                // Update model
+                var newItem = new FacturaItem();
+                this.model.push(newItem);
+
+                // Render row
+                var rowItem = new DataGridItem({
+                    model:newItem,
+                    rowUpdateHandler:this.rowUpdateHandler,
+                    itemRenderer:this.itemRenderer,
+                    scope:this.scope
+                });
+                this.rows.push(rowItem);
+                $(this.el).append(rowItem.render().el);
+
+                if (this.rowAddHandler)
                 {
-                    e.preventDefault();
+                    this.rowAddHandler(this.scope);
+                }
+            },
 
-                    console.log('DataGrid:addLine');
+            removeLine:function (e)
+            {
+                e.preventDefault();
 
-                    // Update model
-                    var newItem = new FacturaItem();
-                    this.model.push(newItem);
+                console.log('DataGrid:removeLine');
 
-                    // Render row
-                    var rowItem = new DataGridItem({
-                        model: newItem,
-                        rowUpdateHandler: this.rowUpdateHandler,
-                        itemRenderer: this.itemRenderer,
-                        scope: this.scope
-                    });
-                    this.rows.push(rowItem);
-                    $(this.el).append(rowItem.render().el);
-
-                    if (this.rowAddHandler)
-                    {
-                        this.rowAddHandler(this.scope);
-                    }
-                },
-
-                removeLine: function(e)
+                // Find model by cid
+                var guid = this.$(e.currentTarget).closest(".action-buttons").attr('data-cid');
+                if (!guid)
                 {
-                    e.preventDefault();
+                    throw "Could not retrive data-cid";
+                }
 
-                    console.log('DataGrid:removeLine');
-
-                    // Find model by cid
-                    var guid = this.$(e.currentTarget).closest(".action-buttons").attr('data-cid');
-                    if (!guid)
+                // Remove item from array
+                for (var i = 0;
+                     i < this.model.length;
+                     i++)
+                {
+                    if (this.model[i].guid === guid)
                     {
-                        throw "Could not retrive data-cid";
-                    }
+                        // Remove row
+                        this.model.splice(i, 1);
 
-                    // Remove item from array
-                    for (var i = 0;
-                         i < this.model.length;
-                         i++)
-                    {
-                        if (this.model[i].guid === guid)
-                        {
-                            // Remove row
-                            this.model.splice(i, 1);
+                        // Close view
+                        this.rows[i].close();
+                        this.rows.splice(i, 1);
 
-                            // Close view
-                            this.rows[i].close();
-                            this.rows.splice(i, 1);
-
-                            break;
-                        }
-                    }
-
-                    // Remove table row
-                    $(e.currentTarget).closest("tr").remove();
-
-                    if (this.rowRemoveHandler)
-                    {
-                        this.rowRemoveHandler(this.scope);
+                        break;
                     }
                 }
-            });
 
-            return DataGrid;
+                // Remove table row
+                $(e.currentTarget).closest("tr").remove();
+
+                if (this.rowRemoveHandler)
+                {
+                    this.rowRemoveHandler(this.scope);
+                }
+            }
         });
+
+        return DataGrid;
+    });
