@@ -1,0 +1,96 @@
+<div class="row-fluid">
+    <div class="span8">
+
+        <div id="content-left">
+
+            <div class="page-header">
+                <% if (!hasOwnProperty("id")) {%>
+                <h3>Serie noua
+                    <small>Creaza o noua serie</small>
+                </h3>
+                <% } else {%>
+                <h3>Modificare</h3>
+                <% } %>
+            </div>
+
+            <div class="alert alert-success fade in" style="display:none">
+            </div>
+
+            <form class="form-horizontal">
+
+                <input type="hidden" id="id" name="id" value="<%=this.id%>"/>
+
+                <div class="well" style="text-align:center;">
+                           Exemplu:
+                            <h2 id="example">
+                            </h2>
+
+                </div>
+
+                <!--<div class="control-group">-->
+                    <!--<label class="control-label" for="docType">Tip document</label>-->
+
+                    <!--<div class="controls">-->
+                        <!--<div class="input">-->
+                            <!--<input type="text" class="input-small" id="docType" name="docType" value="<%=docType%>"/>-->
+                        <!--</div>-->
+                        <!--<span class="help-inline">Documentul unde se poate folosi</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <div class="control-group">
+                    <label class="control-label" for="prefix">Prefix</label>
+
+                    <div class="controls">
+                        <div class="input">
+                            <input type="text" class="input-small" id="prefix" name="prefix"
+                                   value="<%=prefix%>" maxlength="10"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="suffix">Sufix</label>
+
+                    <div class="controls">
+                        <div class="input">
+                            <input type="text" class="input-small" id="suffix" name="suffix" value="<%=suffix%>" maxlength="10"/>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="control-group">
+                    <label class="control-label" for="currentNumber">Numar curent</label>
+
+                    <div class="controls">
+                        <div class="input">
+                            <input type="text" class="input-small" id="currentNumber" name="currentNumber"
+                                   value="<%=currentNumber%>"/>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+
+            <hr/>
+
+            <div class="form form-horizontal">
+                <button id="save" type="submit" class="btn btn-primary"><i class="icon-white icon-ok"></i> Salveaza
+                </button>
+                <button id="cancel" class="btn"><i class="icon-remove"></i> Renunta</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="span4">
+        <div id="content-right">
+            <h4>Shortcut-uri</h4>
+            <ul class="unstyled">
+                <li><a href="configSeriesEditView.html#serii">Lista serii</a></li>
+                <li><a href="configSeriesEditView.html#configurare">Configurare</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

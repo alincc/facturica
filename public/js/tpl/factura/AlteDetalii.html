@@ -1,0 +1,95 @@
+<div id="altele" class="tab-pane">
+    <ul class="unstyled">
+        <li>
+            <div class="controls">
+                <h3>Nr. aviz de insotire marfa</h3>
+            </div>
+
+            <div id="optAvizContainer">
+                <div class="form form-horizontal facturaOptional">
+                    <div class="control-group">
+                        <label class="control-label" for="nraviz">Numar aviz</label>
+
+                        <div class="controls">
+                            <input id="nraviz" name="nraviz" type="text" class="input-block-level"
+                                   value="<%=nraviz%>">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+        </li>
+
+        <li>
+            <div class="controls">
+                <h3>Expeditie</h3>
+            </div>
+            <div id="optExpeditieContainer">
+                <div class="form form-horizontal facturaOptional">
+                    <div class="control-group">
+                        <label class="control-label" for="numeDelegat">Numele delegatului</label>
+
+                        <div class="controls">
+                            <input id="numeDelegat" name="numeDelegat" type="text" value="<%=numeDelegat%>"
+                                   class="input-block-level">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="ciSeria">BI/CI (serie si numar)</label>
+
+                        <div class="controls">
+                            <input id="ciSeria" name="ciSeria" value="<%=ciSeria%>" type="text" class="input-mini">
+                            <input id="ciNumar" name="ciNumar" value="<%=ciNumar%>" type="text" class="input-small">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="cnp">CNP</label>
+
+                        <div class="controls">
+                            <input id="cnp" name="cnp" value="<%=cnp%>" type="text" class="input-block-level">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="detaliuTransport">Mijloc de transport: </label>
+
+                        <div class="controls">
+                            <input id="detaliuTransport" name="detaliuTransport" value="<%=detaliuTransport%>"
+                                   type="text" class="input-block-level">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="expDate">Data de expeditie</label>
+
+                        <div class="controls">
+                            <input id="expDate" name="expDate" value="<%=expDate%>" type="text"
+                                   class="input-block-level">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            <br/>
+        </li>
+        <li>
+            <div class="controls">
+                <h3>Note/Explicatii</h3>
+            </div>
+
+            <div id="optNoteContainer">
+                <div class="form form-vertical facturaOptional">
+                    <div class="control-group">
+                        <div class="controls">
+                            <textarea id="note" name="note" type="text"
+                                      class="input-block-level"><%=note%></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+
+    </ul>
+
+</div>

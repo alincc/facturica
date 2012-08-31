@@ -1,0 +1,40 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                                       Application.index
+
+# Facturi
+GET     /api/facturi                            FacturaController.list
+GET     /api/facturi/{<\d+>id}                  FacturaController.findById
+POST    /api/facturi                            FacturaController.create
+PUT     /api/facturi/{<\d+>id}                  FacturaController.update
+DELETE  /api/facturi/{<\d+>id}                  FacturaController.delete
+
+GET     /api/facturi/stats                      FacturaController.stats
+
+# Clients
+GET     /api/clients/search                     ClientsController.search
+GET     /api/clients/{<\d+>id}                  ClientsController.findById
+POST    /api/clients                            ClientsController.create
+PUT     /api/clients/{<\d+>id}                  ClientsController.update
+DELETE  /api/clients/{<\d+>id}                  ClientsController.delete
+GET     /api/clients                            ClientsController.list
+
+# Config
+# - Series
+GET     /api/configSeries                       SeriesController.list
+POST    /api/configSeries                       SeriesController.create
+PUT     /api/configSeries/{<\d+>id}             SeriesController.update
+GET     /api/configSeries/{<\d+>id}             SeriesController.findById
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public                                 staticDir:public
+GET     /                                       staticDir:public
+
+
+GET     /favicon.ico                            staticFile:/public/favicon.ico
+
+# Catch all
+#*       /{controller}/{action}                  {controller}.{action}

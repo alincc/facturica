@@ -1,0 +1,51 @@
+Client(part1):
+   partner.name:  'ROMPETROL DOWNSTREAM SRL'
+   partner.address: 'P-Ta PRESEI LIBERE BUCURESTI'
+   partner.city:  'Bucuresti'
+   partner.bankAccount: 'RO12 0000 0000 0000 0000'
+   partner.bankName:   'Banca Bancilor'
+   partner.fiscalCode: 'RO roro'
+   partner.regcom: 'J40///'
+   partner.phone: '0212067300'
+   partner.email: 'heelllo@rompeeetorl.ro'
+   partner.contact: 'Gigel Petrol'
+
+
+Client(part2):
+   partner.name:  'Petrom'
+
+Client(part3):
+   partner.name:  'Alin Capitanescu'
+   partner.fiscalCode: 'RO 12312312312'
+   partner.regcom: 'J40'
+
+FacturaItem(fi1):
+  itemId: '1'
+  item: 'Mere'
+  um: 'kg'
+  qty: 10.0
+  pu: 10
+  vatAmount: 0
+  subtotal: 0
+  vat: 0
+  total: 0
+
+FacturaItem(fi2):
+  itemId: '2'
+  item: 'Pere'
+  um: 'kg'
+  qty: 5.0
+  pu: 10
+  vatAmount: 0
+  subtotal: 0
+  vat: 0
+  total: 0
+
+Factura(f1):
+   docNo: '001'
+   docDate: '12-10-2011'
+   items: [fi1, fi2]
+   client.code: "001"
+   client.name: "Test Client"
+   client.address: "Strada Test"
+

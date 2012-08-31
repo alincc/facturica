@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>#{set title:'Home' /}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Facturi">
+    <meta name="author" content="X">
+
+    <link href="@{'/public/js/libs/jquery-ui/css/custom-theme/jquery-ui-1.8.16.custom.css'}" rel="stylesheet"
+          type="text/css"/>
+
+    <link href="@{'/public/js/libs/bootstrap/css/bootstrap.css'}" rel="stylesheet" type="text/css">
+    <link href="@{'/public/js/libs/bootstrap/css/bootstrap-responsive.css'}" rel="stylesheet" type="text/css">
+    <link href="@{'/public/stylesheets/main.less'}" rel="stylesheet" type="text/css">
+
+    <script data-main="js/main" src="@{'public/js/libs/requirejs/require.js'}"></script>
+
+</head>
+
+<body data-spy="scroll" data-target="subnav" data-offset="0">
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">Facturica</a>
+
+            <div class="nav-collapse">
+                <ul class="nav">
+                    <li class="active"><a href="#">Home</a></li>
+
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Operatii <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/">Intrari</a></li>
+                            <li><a href="/">Iesiri</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/">Transferuri</a></li>
+                            <li><a href="/">Bonuri</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/">Inchidere luna</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="#facturi">Facturi</a></li>
+                    <li><a href="#clienti">Clienti</a></li>
+
+                </ul>
+                <ul class="nav pull-left">
+                    <li class="divider-vertical"></li>
+                </ul>
+
+                <form accept-charset="UTF-8" action="/en/search" class="navbar-search pull-left"
+                      method="get">
+                    <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden"
+                                                                          value="✓"></div>
+                    <input autocomplete="off" class="search-query span2" id="header-search" name="search"
+                           placeholder="Cauta..." type="text" value="">
+                </form>
+
+                <p class="navbar-text pull-right">
+                    Logged in as <a href="#">alinc</a>
+                </p>
+
+                <ul class="nav pull-right">
+                    <li class="divider-vertical"></li>
+                    <li>
+                        <a href="#configurare"><i class="icon-cog icon-white"></i>
+                            Configurare
+                        </a></li>
+                    <li class="divider-vertical"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div id="content">
+
+        </div>
+    </div>
+</div>
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+<footer>
+</footer>
+
+
+<div id="right_loading_message">Se incarca...</div>
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+<div class="row-fluid">
+    <div class="span8">
+        <div id="content-left">
+
+            <div class="page-header">
+
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <a id="edit" class="btn" href="#client/<%=id%>/edit"><i class="icon-edit"/> Modifica</a>
+                        <a id="delete" class="btn"><i class="icon-minus"/> Sterge</a>
+                    </div>
+                </div>
+
+                <h3><%=partner.name%>
+                    <small></small>
+                </h3>
+
+            </div>
+
+            <form class="form-horizontal">
+
+                <input type="hidden" id="id" name="id" value="<%=this.id%>"/>
+
+                <div class="well">
+                    <div class="control-group">
+                        <label class="control-label" for="name">Nume</label>
+
+                        <div class="controls">
+                            <div class="input-append">
+                                <input type="text" class="input-xlarge" id="name" name="partner.name" value="<%=partner.name%>"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="fiscalCode">Cod Fiscal/CNP</label>
+
+                        <div class="controls">
+                            <div class="input-append">
+                                <input type="text" class="input-large" id="fiscalCode" name="partner.fiscalCode"
+                                       value="<%=partner.fiscalCode%>"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="regcom">Reg. Com.</label>
+
+                        <div class="controls">
+                            <div class="input-append">
+                                <input type="text" class="input-large" id="regcom" name="partner.regcom" value="<%=partner.regcom%>"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr/>
+
+                <div class="control-group">
+                    <label class="control-label" for="address">Adresa</label>
+
+                    <div class="controls">
+                        <textarea cols="12" rows="2" type="text" class="input-xlarge"
+                                  id="address"
+                                  name="partner.address"> <%=partner.address%></textarea>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="city">Localitate</label>
+
+                    <div class="controls">
+                        <input type="text" class="input-large" id="city" name="partner.city" value="<%=partner.city%>">
+                    </div>
+                </div>
+
+                <hr/>
+
+                <div class="control-group">
+                    <label class="control-label" for="bankAccount">Cont bancar</label>
+
+                    <div class="controls">
+                        <input type="text" class="input-large" id="bankAccount"
+                               name="partner.bankAccount" value="<%=partner.bankAccount%>">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="bankName">Banca</label>
+
+                    <div class="controls">
+                        <input type="text" class="input-large" id="bankName" name="partner.bankName" value="<%=partner.bankName%>">
+                    </div>
+                </div>
+
+                <hr/>
+
+                <div class="control-group">
+                    <label class="control-label" for="contact">Persoana Contact</label>
+
+                    <div class="controls">
+                        <input type="text" class="input-large" id="contact" name="partner.contact" value="<%=partner.contact%>">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="phone">Telefon</label>
+
+                    <div class="controls">
+                        <input type="text" class="input-large" id="phone" name="partner.phone" value="<%=partner.phone%>">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="email">Email</label>
+
+                    <div class="controls">
+                        <input type="text" class="input-large" id="email" name="partner.email" value="<%=partner.email%>">
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <div class="span4">
+        <div id="content-right">
+            <h4 class="active">Optiuni</h4>
+            <ul class="nav nav-list">
+                <li>
+                    <a id="reload" href="#clienti"><i class="icon-file"/> Emite Factura</a>
+                </li>
+            </ul>
+
+            <h4 class="active">Statistici</h4>
+            <ul class="nav nav-list">
+                <li>Nr. de facturi: 21</li>
+                <li>Vanzari totale: 590,000</li>
+                <li>Datorii/Plati: 219,111</li>
+            </ul>
+        </div>
+    </div>
+</div>

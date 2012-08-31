@@ -1,0 +1,6 @@
+# Application dependencies
+
+require:
+    - play -> less 0.9
+     - com.google.code.gson -> gson 2.1:
+          force: true

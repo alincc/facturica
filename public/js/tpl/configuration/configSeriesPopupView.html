@@ -1,0 +1,34 @@
+<%
+if (this.model.models.length == 0)
+{%>
+   Nu aveti nici o serie definita!
+<%}
+else
+{%>
+
+<table class="table">
+    <thead>
+    <tr>
+        <td>Document</td>
+        <td>Prefix</td>
+        <td>Start</td>
+        <td>Sufix</td>
+        <td>Ultimul numar</td>
+        <td>Exemplu</td>
+    </tr>
+    </thead>
+    <% _.each(this.model.models, function(i) { %>
+        <tr class="selectSeriesSelection" data-id="<%=i.get('id')%>">
+            <td><%= i.get('docType') %></td>
+            <td><%= i.get('prefix') %></td>
+            <td><%= i.get('startNumber') %></td>
+            <td><%= i.get('suffix') %></td>
+            <td class="currentNumber"><%= i.get('currentNumber') %></td>
+            <td><%= i.getSample() %></td>
+        </tr>
+    <% }); %>
+</table>
+
+</ul>
+
+<%}%>

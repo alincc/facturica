@@ -1,0 +1,191 @@
+<div class="row-fluid">
+    <div class="span8">
+        <div id="content-left">
+
+            <div class="page-header">
+
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <a id="edit" class="btn" href="#factura/<%=id%>/edit"><i class="icon-edit"/> Modifica</a>
+                        <a id="print" class="btn" href="#factura/<%=id%>/print"><i class="icon-print"/> Tipareste</a>
+                        <a id="delete" class="btn"><i class="icon-trash"/> Sterge</a>
+                    </div>
+                </div>
+
+                <h3>Factura <%=docNo%>
+                    <small></small>
+                </h3>
+            </div>
+
+
+            <ul id="myTab" class="nav nav-tabs">
+                <li class="active"><a href="#detalii" data-toggle="tab">Detalii</a></li>
+                <li><a href="#altele" data-toggle="tab">Alte Optiuni</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <form id="detalii" class="form-horizontal tab-pane active">
+                    <div class="row">
+                        <div class="span3">
+                            <div class="control-group">
+                                <label class="control-label" for="docNo">Nr. document</label>
+
+                                <div class="controls">
+                                    <input type="text" class="input-medium" id="docNo" value="<%=docNo%>">
+                                    <!--<p class="help-block">Ex: F-33-2012</p>-->
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="docDate">Data document</label>
+
+                                <div class="controls">
+                                    <input type="text" class="input-small" id="docDate" name="docDate"
+                                           value="<%=docDate%>"/>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="docDueDate">Data scadenta</label>
+
+                                <div class="controls">
+                                    <input type="text" class="input-small" id="docDueDate" name="docDueDate"
+                                           value="<%=docDueDate%>"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="span4">
+                            <div class="control-group">
+                                <label class="control-label" for="client">Client</label>
+
+                                <div class="controls">
+                                    <div class="input-append">
+                                        <input type="text" class="input-xlarge" id="client" name="client"
+                                               value="<%=client.name%>"/>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="body">
+                                <div class="control-group">
+                                    <label class="control-label" for="partner-fiscalCode">Cod Fiscal/CNP</label>
+
+                                    <div class="controls">
+                                        <input type="text" class="input-xlarge" id="partner-fiscalCode"
+                                               name="partner-fiscalCode" value="<%=client.fiscalCode%>"/>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="partner-regcom">Reg. Com.</label>
+
+                                    <div class="controls">
+                                        <input type="text" class="input-xlarge" id="partner-regcom"
+                                               name="partner-regcom" value="<%=client.regcom%>"/>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="partner-address">Adresa</label>
+
+                                    <div class="controls">
+                                        <textarea cols="12" rows="2" type="text" class="input-xlarge"
+                                                  id="partner-address"
+                                                  name="partner-address"><%=client.address%></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="partner-city">Localitate</label>
+
+                                    <div class="controls">
+                                        <input type="text" class="input-large" id="partner-city"
+                                               name="partner-city" value="<%=client.city%>">
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="partner-bankAccount">Cont bancar</label>
+
+                                    <div class="controls">
+                                        <input type="text" class="input-large" id="partner-bankAccount"
+                                               name="partner-bankAccount" value="<%=client.bankAccount%>">
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="partner-bankName">Banca</label>
+
+                                    <div class="controls">
+                                        <input type="text" class="input-large" id="partner-bankName"
+                                               name="partner-bankName" value="<%=client.bankName%>">
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="partner-phone">Telefon</label>
+
+                                    <div class="controls">
+                                        <input type="text" class="input-large" id="partner-phone"
+                                               name="partner-phone" value="<%=client.phone%>">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="partner-email">Email</label>
+
+                                    <div class="controls">
+                                        <input type="text" class="input-large" id="partner-email"
+                                               name="partner-email" value="<%=client.email%>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr/>
+
+                    <table class="factura" style="border: none">
+                        <thead>
+                        <tr>
+                            <th class="actions"></th>
+                            <th class="item">Articol</th>
+                            <th class="um">UM</th>
+                            <th class="vat">TVA</th>
+                            <th class="qty">Cantitate</th>
+                            <th class="pu">Pret unitar</th>
+                            <th class="pu">Valoare</th>
+                            <th class="pu">TVA</th>
+                        </tr>
+                        </thead>
+                        <tbody class="sortableT">
+
+                        </tbody>
+                    </table>
+                </form>
+
+                <% include factura/AlteDetalii %>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="span4">
+        <div id="content-right">
+
+            <h4 class="active">Total</h4>
+            <table id="stats" class="table table-condensed">
+
+            </table>
+
+
+            <h4 class="active">Statistici Client</h4>
+            <ul class="nav nav-list">
+                <li>Nr. de facturi: 21</li>
+                <li>Vanzari totale: 590,000</li>
+                <li>Datorii/Plati: 219,111</li>
+            </ul>
+        </div>
+    </div>
+</div>

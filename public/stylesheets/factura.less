@@ -1,0 +1,202 @@
+
+table.factura
+{
+    table-layout: fixed;
+    word-wrap:break-word;
+
+    border-spacing: 0;
+    border-collapse: collapse;
+    border: #DDD 1px solid;
+    width: 100%;
+
+    .help-block
+    {
+        font-size: 13px;
+        line-height: 18px;
+        color: #BFBFBF;
+    }
+
+    td
+    {
+        text-align: center;
+        padding: 2px 6px 2px 2px;
+        border-bottom: 1px solid #E5E5E5;
+        border-right: 1px solid #CCC;
+        overflow: hidden;
+
+        .action-buttons
+        {
+            width: 0px;
+            padding: 0px;
+            margin: 0px;
+        }
+    }
+
+    .cell-active
+    {
+        background-color: #FFF8D5 !important;
+    }
+
+    td:hover
+    {
+        background-color: #f9f9f9;
+    }
+
+    th
+    {
+        background-color: #f1f1f1;
+    }
+
+    th.actions
+    {
+        width:0px !important;
+        background-color:#ffffff;
+    }
+
+    th.item
+    {
+        width:200px !important;
+        border: 1px solid #E5E5E5;
+    }
+
+    th.um
+    {
+        width:50px;
+        border: 1px solid #E5E5E5;
+    }
+
+    th.vat
+    {
+        width:40px;
+        border: 1px solid #E5E5E5;
+    }
+
+    th.qty
+    {
+        width:60px;
+        border: 1px solid #E5E5E5;
+    }
+
+    th.pu
+    {
+        width:80px;
+        border: 1px solid #E5E5E5;
+    }
+
+    textarea, textarea:hover
+    {
+        border: 0;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        height: 22px;
+        resize: none;
+        line-height: 22px;
+        background-color: transparent;
+    }
+
+    input, input:hover
+    {
+        border: 0;
+        width: 100%;
+        margin: 0;
+        background-color: transparent;
+        line-height: 18px;
+    }
+
+    input, input:hover, input:focus, textarea, textarea:hover, textarea:focus
+    {
+        .box-shadow(none);
+    }
+
+    .smoke
+    {
+        background-color: whiteSmoke;
+    }
+
+    .action-buttons
+    {
+        padding: 0;
+        border: 0;
+        width: 0px !important;
+        vertical-align: top;
+        .border-radius(10px);
+
+        border-right: 1px solid #E5E5E5;
+
+        a
+        {
+            background-color: transparent;
+            display: block;
+        }
+
+        a:hover
+        {
+            color: white;
+            text-decoration: none;
+            text-shadow: none;
+        }
+
+        .drag-line, .drag-line:hover
+        {
+            cursor: move;
+            width: 18px;
+            background: url(/public/img/application.png) -21px 0 no-repeat;
+        }
+
+        .add-line, .add-line:hover
+        {
+            background: url(/public/img/application.png) 0px 0 no-repeat;
+        }
+
+        .delete-line, .delete-line:hover
+        {
+            background: url(/public/img/application.png) -38px 0 no-repeat;
+        }
+
+
+        .add-line, .delete-line, .drag-line {
+            padding: 22px 0 0 0;
+            height: 0;
+            overflow: hidden;
+            width: 20px;
+            position: absolute;
+        }
+
+        .handle, .insert,.delete
+        {
+            position:absolute;
+            width: 20px;
+            height: 20px;
+            z-index: 1;
+        }
+
+        .insert
+        {
+            margin-left: -20px;
+        }
+
+        .delete
+        {
+            margin-left: -40px;
+        }
+
+        .handle
+        {
+            display:none;
+        }
+
+    }
+}
+
+
+.numeric
+{
+    text-align: right !important;
+}
+
+
+.tableActions
+{
+    margin-bottom: 10px;
+}

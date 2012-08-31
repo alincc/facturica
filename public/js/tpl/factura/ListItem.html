@@ -1,0 +1,11 @@
+<td>
+    <input type="checkbox" class="doc"/>
+    <input type="hidden" value="<%=id%>"/>
+</td>
+<td>
+    <a href="#factura/<%=id%>"><%=docNo%></a>
+</td>
+<td><%=docDate%></td>
+<td><%=client.name%></td>
+<td class="numeric"><%=_(total).money()%></td>
+<td class="numeric"><%=_(payment).money()%></td>
