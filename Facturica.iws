@@ -16,72 +16,14 @@
   <component name="ChangeListManager">
     <list default="true" id="7dbde27b-066a-4ebb-8b31-d3a7fc3413e1" name="Default" comment="" />
     <list id="f53a3e3c-8646-495c-9b03-9c3fd0d8cbda" name="Failed commit: Default" comment="Changes to invoice and client">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/models/client/ClientModel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/models/client/ClientsCollection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/models/client/PartnerModel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/client/ClientDetailView.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/client/ClientEditView.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/client/ClientsListItemView.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/client/ClientsListPage.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/client/ClientsListView.js" />
-      <change type="DELETED" beforePath="C:\workspace\github\facturica\public\js\models\client\Client.js" afterPath="" />
       <change type="MOVED" beforePath="C:\workspace\github\facturica\public\js\app.js" afterPath="$PROJECT_DIR$/public/js/App.js" />
       <change type="MOVED" beforePath="C:\workspace\github\facturica\public\js\main.js" afterPath="$PROJECT_DIR$/public/js/Main.js" />
       <change type="MOVED" beforePath="C:\workspace\github\facturica\public\js\router.js" afterPath="$PROJECT_DIR$/public/js/Router.js" />
-      <change type="MOVED" beforePath="C:\workspace\github\facturica\public\js\tpl\factura\AlteDetalii.html" afterPath="$PROJECT_DIR$/public/js/tpl/factura/OtherDetails.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Facturica.ipr" afterPath="$PROJECT_DIR$/Facturica.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Facturica.iws" afterPath="$PROJECT_DIR$/Facturica.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/Application/index.html" afterPath="$PROJECT_DIR$/app/views/Application/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facturica.iml" afterPath="$PROJECT_DIR$/facturica.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/controls/Autocomplete.js" afterPath="$PROJECT_DIR$/public/js/controls/Autocomplete.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/controls/DataGrid.js" afterPath="$PROJECT_DIR$/public/js/controls/DataGrid.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/controls/DataGridItem.js" afterPath="$PROJECT_DIR$/public/js/controls/DataGridItem.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/main-old.js" afterPath="$PROJECT_DIR$/public/js/main-old.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/client.js" afterPath="$PROJECT_DIR$/public/js/models/client.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/client/ClientsSearchCollection.js" afterPath="$PROJECT_DIR$/public/js/models/client/ClientsSearchCollection.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/config.js" afterPath="$PROJECT_DIR$/public/js/models/config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/configuration/Serie.js" afterPath="$PROJECT_DIR$/public/js/models/configuration/Serie.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/configuration/SeriesCollection.js" afterPath="$PROJECT_DIR$/public/js/models/configuration/SeriesCollection.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/factura-old.js" afterPath="$PROJECT_DIR$/public/js/models/factura-old.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/factura/Factura.js" afterPath="$PROJECT_DIR$/public/js/models/factura/Factura.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/factura/FacturaItem.js" afterPath="$PROJECT_DIR$/public/js/models/factura/FacturaItem.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/factura/FacturiCollection.js" afterPath="$PROJECT_DIR$/public/js/models/factura/FacturiCollection.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/factura/FacturiStatsCollection.js" afterPath="$PROJECT_DIR$/public/js/models/factura/FacturiStatsCollection.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/item.js" afterPath="$PROJECT_DIR$/public/js/models/item.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/text.js" afterPath="$PROJECT_DIR$/public/js/text.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/tpl/HomeView.html" afterPath="$PROJECT_DIR$/public/js/tpl/HomeView.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/tpl/client/Detail.html" afterPath="$PROJECT_DIR$/public/js/tpl/client/Detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/tpl/client/Edit.html" afterPath="$PROJECT_DIR$/public/js/tpl/client/Edit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/tpl/configuration/configSeriesEditView.html" afterPath="$PROJECT_DIR$/public/js/tpl/configuration/configSeriesEditView.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/tpl/configuration/configSeriesListView.html" afterPath="$PROJECT_DIR$/public/js/tpl/configuration/configSeriesListView.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/tpl/configuration/configSeriesPopupView.html" afterPath="$PROJECT_DIR$/public/js/tpl/configuration/configSeriesPopupView.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/tpl/factura/Detail.html" afterPath="$PROJECT_DIR$/public/js/tpl/factura/Detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/tpl/factura/Edit.html" afterPath="$PROJECT_DIR$/public/js/tpl/factura/Edit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/tpl/factura/List.html" afterPath="$PROJECT_DIR$/public/js/tpl/factura/List.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/utils/BackboneMixin.js" afterPath="$PROJECT_DIR$/public/js/utils/BackboneMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/utils/MessageManager.js" afterPath="$PROJECT_DIR$/public/js/utils/MessageManager.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/utils/Navigation.js" afterPath="$PROJECT_DIR$/public/js/utils/Navigation.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/utils/NumberUtil.js" afterPath="$PROJECT_DIR$/public/js/utils/NumberUtil.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/utils/UnderscoreMixin.js" afterPath="$PROJECT_DIR$/public/js/utils/UnderscoreMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/HomeView.js" afterPath="$PROJECT_DIR$/public/js/views/HomeView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/factura/FacturaDetailView.js" afterPath="$PROJECT_DIR$/public/js/views/factura/FacturaDetailView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/factura/FacturaEditView.js" afterPath="$PROJECT_DIR$/public/js/views/factura/FacturaEditView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/factura/FacturaListView.js" afterPath="$PROJECT_DIR$/public/js/views/factura/FacturaListView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/factura/FacturaTotalView.js" afterPath="$PROJECT_DIR$/public/js/views/factura/FacturaTotalView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/factura/FacturiListItemView.js" afterPath="$PROJECT_DIR$/public/js/views/factura/FacturiListItemView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/factura/FacturiListPage.js" afterPath="$PROJECT_DIR$/public/js/views/factura/FacturiListPage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/factura/FacturiListStats.js" afterPath="$PROJECT_DIR$/public/js/views/factura/FacturiListStats.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/old/BaseFormEdit.js" afterPath="$PROJECT_DIR$/public/js/views/old/BaseFormEdit.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/old/BaseView.js" afterPath="$PROJECT_DIR$/public/js/views/old/BaseView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/old/ClientView.js" afterPath="$PROJECT_DIR$/public/js/views/old/ClientView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/old/ConfigView.js" afterPath="$PROJECT_DIR$/public/js/views/old/ConfigView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/old/FacturaEditView.js" afterPath="$PROJECT_DIR$/public/js/views/old/FacturaEditView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/old/Facturi.js" afterPath="$PROJECT_DIR$/public/js/views/old/Facturi.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/old/utils.js" afterPath="$PROJECT_DIR$/public/js/views/old/utils.js" />
     </list>
     <ignored path="Facturica.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="$PROJECT_DIR$/Facturica.iws" changelist="7dbde27b-066a-4ebb-8b31-d3a7fc3413e1" time="1346454744077" ignored="false" />
+    <file path="$PROJECT_DIR$/Facturica.iws" changelist="7dbde27b-066a-4ebb-8b31-d3a7fc3413e1" time="1346454852761" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -575,8 +517,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
-    <option name="CHECK_NEW_TODO" value="true" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <option name="myTodoPanelSettings">
       <value>
         <are-packages-shown value="false" />
