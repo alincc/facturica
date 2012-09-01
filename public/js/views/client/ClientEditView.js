@@ -21,6 +21,8 @@ define(
             {
                 console.log('ClientEditView:initialize');
 
+                Backbone.Validation.bind(this);
+                this.viewValidation();
                 this.template = _.template(EditTemplate);
 
                 this.model.bind("change", this.render, this);
@@ -30,7 +32,9 @@ define(
             render:function ()
             {
                 console.log('ClientEditView:render');
+
                 var el = $(this.el);
+
                 el.html(this.template(this.model.toJSON()));
 
                 return this;
@@ -38,23 +42,23 @@ define(
 
             handleSave:function (e)
             {
-                var partner;
+                var partner, me = this;
 
                 e.preventDefault();
 
                 partner = new PartnerModel();
-                partner.set('name', $.trim($("#name").val()));
-                partner.set('fiscalCode', $("#fiscalCode").val());
-                partner.set('regcom', $("#regcom").val());
-                partner.set('address', $("#address").val());
-                partner.set('city', $("#city").val());
-                partner.set('bankAccount', $("#bankAccount").val());
-                partner.set('bankName', $("#bankName").val());
-                partner.set('contact', $("#contact").val());
-                partner.set('phone', $("#phone").val());
-                partner.set('email', $("#email").val());
+                partner.set({'name':$.trim($("#name").val()),
+                    'fiscalCode':$("#fiscalCode").val(),
+                    'regcom':$("#regcom").val(),
+                    'address':$("#address").val(),
+                    'city':$("#city").val(),
+                    'bankAccount':$("#bankAccount").val(),
+                    'bankName':$("#bankName").val(),
+                    'contact':$("#contact").val(),
+                    'phone':$("#phone").val(),
+                    'email':$("#email").val()});
 
-                this.model.set('partner', partner);
+                this.model.set({'partner':partner}, {silent:true});
 
                 if (!this.model.isValid(true))
                 {
@@ -69,8 +73,9 @@ define(
                         wait:true,
                         success:function (model, fail, xhr)
                         {
-                            console.log('ClientEditView:handleSuccessSave');
-                            model.trigger('save-success', model.get('id'));
+                            console.log('ClientEditView:handleSuccessSave', me.model.get('id'));
+                            me.model.trigger('save-success');
+                            return true;
                         },
                         error:function (model, fail, xhr)
                         {

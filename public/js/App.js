@@ -15,7 +15,7 @@ define('App',
         'views/client/ClientDetailView',
         'views/client/ClientEditView'
     ],
-    function (nav, HomeView, Factura, FacturiCollection, FacturiListPage, FacturaEditView, FacturaDetailView, ClientModel, ClientsCollection, ClientsListPage, ClientDetailView, ClientEditView)
+    function (nav, HomeView, FacturaModel, FacturiCollection, FacturiListPage, FacturaEditView, FacturaDetailView, ClientModel, ClientsCollection, ClientsListPage, ClientDetailView, ClientEditView)
     {
         "use strict";
 
@@ -70,14 +70,15 @@ define('App',
 
             facturi:function ()
             {
-                var me = this;
+                var me = this, list;
+
                 nav.update("#facturi");
 
-                me.list = new FacturiCollection();
-                me.list.fetch({
+                list = new FacturiCollection();
+                list.fetch({
                     success:function ()
                     {
-                        me.view = new FacturiListPage({ model:me.list });
+                        me.view = new FacturiListPage({ model:list });
                         me.showView(me.view);
                     },
                     error:function ()
@@ -88,15 +89,20 @@ define('App',
 
             facturaNoua:function (id)
             {
-                var me = this, view;
+                var me = this, view, model;
 
                 nav.update("#facturi");
 
-                view = new FacturaEditView();
-                this.showView(this.facturaEditView);
+                model = new FacturaModel();
+                model.initNew();
+
+                view = new FacturaEditView({model:model});
+                this.showView(view);
+
                 view.model.on('save-success', function ()
                 {
-                    me.navigate('#/factura/' + id, { trigger:true });
+                    console.log(model, model.get('id'));
+                    me.navigate('#/factura/' + model.get('id'), { trigger:true });
                 });
             },
 
@@ -106,14 +112,17 @@ define('App',
 
                 nav.update("#facturi");
 
-                var factura = new Factura();
-                factura.set({"id":id});
-
-                factura.fetch({
+                var model = new FacturaModel({"id":id});
+                model.fetch({
                     success:function ()
                     {
-                        view = new FacturaDetailView({model:factura});
+                        view = new FacturaDetailView({model:model});
                         me.showView(view);
+
+                        model.on('delete-success', function ()
+                        {
+                            me.navigate("#/facturi");
+                        })
                     },
                     error:function ()
                     {
@@ -127,7 +136,7 @@ define('App',
 
                 nav.update("#facturi");
 
-                var factura = new Factura();
+                var factura = new FacturaModel();
                 factura.set("id", id);
                 factura.fetch({
                     success:function ()
@@ -137,7 +146,7 @@ define('App',
 
                         view.model.on('save-success', function ()
                         {
-                            me.navigate('#/client/' + id, { trigger:true });
+                            me.navigate('#/factura/' + view.model.get('id'), { trigger:true });
                         });
                     },
                     error:function ()
@@ -168,29 +177,38 @@ define('App',
 
             clientNou:function ()
             {
-                nav.update("#clienti");
+                var client, view, me = this;
 
-                var client, view;
+                nav.update("#clienti");
 
                 client = new ClientModel();
 
                 view = new ClientEditView({model:client});
                 this.showView(view);
+
+                view.model.on('save-success', function ()
+                {
+                    me.navigate('#/client/' + view.model.get('id'), { trigger:true });
+                });
             },
 
             clientDetail:function (id)
             {
-                var me = this, model;
+                var me = this, model, view;
 
                 nav.update("#clienti");
 
-                var model = new ClientModel({id:id, _silent:true });
+                var model = new ClientModel({id:id});
                 model.fetch({
                     success:function (model)
                     {
-                        model.unset('_silent');
-                        me.clientDetail = new ClientDetailView({model:model});
-                        me.showView(me.clientDetail);
+                        view = new ClientDetailView({model:model});
+                        me.showView(view);
+
+                        view.on('delete-success', function ()
+                        {
+                            me.navigate('#/clienti', { trigger:true });
+                        });
                     },
                     error:function (model, res)
                     {
@@ -204,7 +222,7 @@ define('App',
                             // TODO: handle 500 Internal Server Error
                         }
                     }
-                });
+                }, {silent:true});
             },
 
             clientEdit:function (id)
@@ -213,7 +231,7 @@ define('App',
 
                 nav.update("#clienti");
 
-                model = new ClientModel({id:id, _silent:true});
+                model = new ClientModel({id:id}, {silent:true});
                 model.fetch({
                     success:function (model)
                     {
@@ -222,7 +240,7 @@ define('App',
 
                         view.model.on('save-success', function ()
                         {
-                            me.navigate('#/client/' + id, { trigger:true });
+                            me.navigate('#/client/' + view.model.get('id'), { trigger:true });
                         });
 
                     },

@@ -87,8 +87,6 @@ define([
 
             validate: function(attrs)
             {
-                "use strict";
-
             }
         });
 

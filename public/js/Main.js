@@ -22,7 +22,7 @@
                 exports:'Backbone'
             },
             backboneValidation:{
-                paths: "libs/backbone.validation/backbone.validation.min",
+                paths: "libs/backbone.validation/backbone-validation-amd-min",
                 deps:['backbone'],
                 exports:'Backbone.Validation'
             },

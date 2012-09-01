@@ -90,9 +90,11 @@ define(
                 })
             },
 
-            handleDelete:function ()
+            handleDelete:function (e)
             {
-                var elements = $("#listView").find(":checked");
+                e.preventDefault();
+
+                var elements = $("#listView").find(":checked"), me = this;
 
                 if (elements.length > 0 && confirm("Confirmati stergerea documentelor selectate?"))
                 {
@@ -102,9 +104,10 @@ define(
                         var docId = ctrl.siblings("input[type='hidden']").val();
                         if (docId != "")
                         {
-                            var model = new FacturaModel({id:docId});
-                            model.destroy();
-                            model = null;
+                            var invoice = me.model.get(docId);
+                            invoice.destroy();
+                            me.model.remove(invoice);
+
                             ctrl.closest('tr').hide('highlight');
                         }
                     });
@@ -122,11 +125,11 @@ define(
                     console.log(element);
 
                     var ctrl = $(element);
-                    var docid = ctrl.siblings("input[type='hidden']").val();
+                    var docId = ctrl.siblings("input[type='hidden']").val();
 
-                    if (docid != "")
+                    if (docId != "")
                     {
-                        app.navigate("/facturaNouaDup/" + docid, true);
+                        App.navigate("/factura/" + docId + "/edit", true);
                     }
                 }
             },

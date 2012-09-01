@@ -38,6 +38,7 @@ define(
             {
                 console.log('FacturaEditView:initialize');
 
+                Backbone.Validation.bind(this);
                 this.viewValidation();
 
                 this.template = _.template(EditTemplate);
@@ -47,10 +48,9 @@ define(
 
             render:function ()
             {
-                console.log('FacturaEditView:render');
+                var me = this, el = $(me.el);
 
-                var me = this;
-                var el = $(me.el);
+                console.log('FacturaEditView:render');
 
                 if (!me.model)
                 {
@@ -59,7 +59,7 @@ define(
                 }
 
                 // Clear series
-                me.model.set({"seriesId":"-1"});
+                me.model.set({"seriesId":"-1"},{silent:true});
 
                 // Other details view section rendering
                 otherDetailsTemplate = _.template(OtherDetailsTemplate);
@@ -190,10 +190,12 @@ define(
                     {
                     },
                     {
+                        wait: true,
+
                         success:function (e)
                         {
                             console.log('FacturaEditView:handleSuccessSave');
-                            model.trigger('save-success', model.get('id'));
+                            me.model.trigger('save-success');
                         },
                         error:function (model, fail, xhr)
                         {

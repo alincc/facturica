@@ -64,6 +64,9 @@ public class FacturaController extends BaseController
             {
                 // Update statistics
                 addToStats(factura);
+
+                response.status = Http.StatusCode.OK;
+                renderJSON(factura);
             }
         }
         catch (Exception ex)

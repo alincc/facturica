@@ -28,16 +28,21 @@ define(
                 return this;
             },
 
-            handleDelete:function ()
+            handleDelete:function (e)
             {
-                if (confirm("Esti sigur ca vrei sa stergi clientul " + this.model.get("name") + "?"))
+                e.preventDefault();
+
+                if (confirm('Esti sigur ca vrei sa stergi clientul ' + this.model.get("name") + '?'))
                 {
-                    this.model.destroy();
-                    app.navigate("#/clienti", true);
+                    this.model.destroy({wait:true});
+
+                    this.trigger('delete-success');
+
+                    return true;
                 }
+
                 return false;
             }
-
         })
 
         return ClientDetailView;

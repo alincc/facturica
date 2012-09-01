@@ -8,7 +8,7 @@ define(
     ],
     function (DataGrid, FacturaTotalView, DetailTemplate, OtherDetailsTemplate, EditListItemViewTemplate)
     {
-        var FacturaDetail = Backbone.View.extend({
+        var FacturaDetailView = Backbone.View.extend({
 
             events:{
                 "click #delete":"handleDelete"
@@ -16,7 +16,7 @@ define(
 
             initialize:function ()
             {
-                console.log('FacturaDetail:initialize');
+                console.log('FacturaDetailView:initialize');
                 this.template = _.template(DetailTemplate);
                 this.model.bind("change", this.render, this);
                 this.model.bind("destroy", this.close, this);
@@ -56,12 +56,12 @@ define(
                 if (confirm("Esti sigur ca vrei sa stergi factura " + this.model.get("docNo") + "?"))
                 {
                     this.model.destroy();
-                    app.navigate("/facturi", true);
+                    this.model.trigger('delete-success');
                 }
                 return false;
             }
 
         });
 
-        return FacturaDetail;
+        return FacturaDetailView;
     })
