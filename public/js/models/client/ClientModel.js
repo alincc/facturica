@@ -6,7 +6,7 @@ define(
     {
         var ClientModel;
 
-        ClientModel = Backbone.Model.extend({
+        ClientModel = Backbone.NestedModel.extend({
 
             urlRoot:"api/clients",
 
@@ -19,18 +19,7 @@ define(
                 this.set('partner', new PartnerModel());
             },
 
-            validate:function (attrs)
-            {
-//                if (!this.silent)
-//                {
-//                    if (_.isEmpty(attrs.partner.name))
-//                    {
-//                        return "Name cannot be null";
-//                    }
-//                }
-            }
-              /*
-            validate:{
+            validation:{
                 partner:{
                     required:true,
                     validation:
@@ -48,7 +37,7 @@ define(
                         }
                     }
                 }
-            }   */
+            }
 
         });
 

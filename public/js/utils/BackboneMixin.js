@@ -1,6 +1,6 @@
 var activeRequests = [];
 
-define(['backbone', "libs/backbone.validation/backbone-validation-amd-min"], function (Backbone)
+define(['backbone','backboneValidation'], function (Backbone)
 {
     Backbone.View.prototype.close = function ()
     {
