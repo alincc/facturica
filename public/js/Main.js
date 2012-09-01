@@ -6,11 +6,12 @@
         paths:{
             jquery:'libs/jquery/jquery-1.7.1.min',
             jqueryUI:'libs/jquery-ui/js/jquery-ui-1.8.18.custom.min',
-            underscore:'libs/backbone/lodash',
-            backbone:'libs/backbone/backbone',
+//            underscore:'libs/backbone/lodash',
+            underscore:'libs/backbone/underscore-min',
+            backbone:'libs/backbone/backbone-min',
             backboneValidation:'libs/backbone.validation/backbone-validation-min',
             backboneNested:'libs/backbone-nested/backbone-nested-v1.1.2.min',
-            bootstrap:'libs/bootstrap/js/bootstrap'
+            bootstrap:'libs/bootstrap/js/bootstrap.min'
         },
         shim:{
             jquery:{
@@ -51,6 +52,7 @@
             $(function ()
             {
                 App.initialize();
+
             });
         });
 })();

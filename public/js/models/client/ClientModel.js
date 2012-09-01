@@ -6,7 +6,7 @@ define(
     {
         var ClientModel;
 
-        ClientModel = Backbone.NestedModel.extend({
+        ClientModel = Backbone.Model.extend({
 
             urlRoot:"api/clients",
 

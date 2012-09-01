@@ -6,17 +6,17 @@ define(
     {
         var DataGridItem = Backbone.View.extend({
 
-            tagName:"tr",
+            tagName:'tr',
 
             events:{
-                "change input,textarea":"attributesChanged"
+                'change input,textarea':'attributesChanged'
             },
 
             disabled:false,
 
             initialize:function ()
             {
-                console.log("DataGridItem:initialize");
+                console.log('DataGridItem:initialize');
 
                 var me = this;
                 _.bindAll(me, 'render');
@@ -32,7 +32,7 @@ define(
 
             render:function ()
             {
-                console.log("DataGridItem:render");
+                console.log('DataGridItem:render');
 
                 var me = this;
                 var el = $(me.el);
@@ -40,7 +40,7 @@ define(
                 el.html(me.template(me.model));
 
                 // Hide actions
-                $("td.action-buttons a", el).hide();
+                $('td.action-buttons a', el).hide();
                 // Auto expand text area
                 $('textarea.expand', el).expandingTextArea();
 
@@ -50,16 +50,16 @@ define(
                     el.mouseover(me.handleRowFocus).mouseout(me.handleRowLostFocus);
 
                     // Change background color if focus
-                    $("td input[type!=hidden],textarea", el)
+                    $('td input[type!=hidden],textarea', el)
                         .focus(me.handleFocus)
                         .blur(me.handleLostFocus);
 
                     // Validate numeric input
-                    $("input.numeric", el).keyup(me.validateNumber);
+                    $('input.numeric', el).keyup(me.validateNumber);
                 }
                 else
                 {
-                    el.find("input,textarea").attr("readonly", true);
+                    el.find('input,textarea').attr('readonly', true);
                 }
 
                 return me;
@@ -67,35 +67,35 @@ define(
 
             attributesChanged:function (e)
             {
-                console.log("DataGridItem:attributesChanged");
+                console.log('DataGridItem:attributesChanged');
 
                 var target = $(e.currentTarget);
                 var attr = target.attr('name');
 
                 if (this.rowUpdateHandler)
                 {
-                    this.rowUpdateHandler(this.scope, "rowUpdate", this.model, attr, target.val());
+                    this.rowUpdateHandler(this.scope, 'rowUpdate', this.model, attr, target.val());
                 }
             },
 
             handleFocus:function ()
             {
-                $(this).closest("td").addClass("cell-active");
+                $(this).closest('td').addClass('cell-active');
             },
 
             handleLostFocus:function ()
             {
-                $(this).closest("td").removeClass("cell-active")
+                $(this).closest('td').removeClass('cell-active')
             },
 
             handleRowFocus:function ()
             {
-                $("td.action-buttons a", this).show();
+                $('td.action-buttons a', this).show();
             },
 
             handleRowLostFocus:function ()
             {
-                $("td.action-buttons a", this).hide();
+                $('td.action-buttons a', this).hide();
             },
 
             validateNumber:function (e)
@@ -104,9 +104,9 @@ define(
                 if (isNaN(this.value))
                 {
                     this.value = this.value.replace(/[^\-0-9\.]/g, '');
-                    if (this.value === "")
+                    if (this.value === '')
                     {
-                        this.value = "0";
+                        this.value = '0';
                         //$(this).select();
                     }
                     e.preventDefault();

@@ -1,0 +1,64 @@
+<div class="row-fluid">
+    <div class="span8">
+
+        <div id="content-left">
+
+            <div class="page-header">
+                <span class="pull-right">
+                    <a class="btn" href="#config/serieNoua"><i class="icon-plus"/> Serie Noua</a>
+                </span>
+
+                <h3>Serii documente</h3>
+            </div>
+
+            <div id="listView">
+
+                <%
+                if (this.model.models.length == 0)
+                {%>
+                Nu aveti nici o serie definita!
+                <%}
+                else
+                {%>
+
+                <table class="table">
+                    <thead>
+                    <tr class="ui-state-default ui-corner-all">
+                        <td>Id</td>
+                        <td>Prefix</td>
+                        <td>Sufix</td>
+                        <td>Contor</td>
+                        <td>Exemplu</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% _.each(this.model.models, function(i) { %>
+                    <tr class="rowClick" data-id="<%=i.get('id')%>">
+                        <td><%= i.get('id') %></td>
+                        <td><%= i.get('prefix') %></td>
+                        <td><%= i.get('suffix') %></td>
+                        <td><%= i.get('currentNumber') %></td>
+                        <td><%= i.getSample() %></td>
+                    </tr>
+                    <% }); %>
+                    </tbody>
+                </table>
+
+                </ul>
+
+                <%}%>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="span4">
+        <div id="content-right">
+            <h4>Shortcut-uri</h4>
+            <ul class="unstyled">
+                <li><a href="#/config">Configurare</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -146,6 +146,7 @@ define(
 
                 m[attr] = value;
                 m.calculate();
+
                 $('[name=subtotal]', this.el).text(m.subtotal);
                 $('[name=vatAmount]', this.el).text(m.vatAmount);
 
