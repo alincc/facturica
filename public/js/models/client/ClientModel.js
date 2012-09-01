@@ -29,7 +29,7 @@ define(
                     }
                 }
             }
-
+//
 //            validate:function(attrs){
 //                partner:{
 //                    required:true,

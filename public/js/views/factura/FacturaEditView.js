@@ -5,14 +5,16 @@ define(
         'text!tpl/factura/Edit.html',
         'text!tpl/factura/EditListItemView.html',
         'text!tpl/factura/OtherDetails.html',
-        'models/factura/Factura',
+        'models/factura/FacturaModel',
+        'models/client/ClientModel',
         'controls/DataGrid',
         'views/factura/FacturaTotalView',
         'models/client/ClientsSearchCollection',
         'models/configuration/SeriesCollection',
-        'controls/Autocomplete'
+        'controls/Autocomplete',
+        'controls/MessageManager'
     ],
-    function (Backbone, NumberMixin, EditTemplate, EditListItemViewTemplate, OtherDetailsTemplate, FacturaModel, DataGrid, FacturaTotalView, ClientsSearchCollection, SeriesCollection, Autocomplete)
+    function (Backbone, NumberMixin, EditTemplate, EditListItemViewTemplate, OtherDetailsTemplate, FacturaModel, ClientModel, DataGrid, FacturaTotalView, ClientsSearchCollection, SeriesCollection, Autocomplete, MessageManager)
     {
         var FacturaEditView = Backbone.View.extend({
 
@@ -29,6 +31,8 @@ define(
 
                 "change #selectSerie":"handleChangeSerie"
             },
+
+            changes: {},
 
             initialize:function ()
             {
@@ -167,6 +171,8 @@ define(
 
             handleSave:function (e)
             {
+                e.preventDefault();
+
                 console.log('FacturaEditView:handleSave');
 
                 var me = this;
@@ -180,30 +186,27 @@ define(
                     return false;
                 }
 
-                var success = function (e)
-                {
-                    console.log('FacturaEditView:handleSuccessSave');
-                    app.navigate("facturi", true);
-                };
-
-                var error = function (model, fail, xhr)
-                {
-                    console.log('FacturiEditView:handleError', model, fail, xhr);
-                    messages = new MessageManager();
-                    messages.error("Eroare server - factura nu a fost salvata.");
-                }
-
                 me.model.save(
                     {
                     },
                     {
-                        success:success,
-                        error:error
+                        success:function (e)
+                        {
+                            console.log('FacturaEditView:handleSuccessSave');
+                            model.trigger('save-success', model.get('id'));
+                        },
+                        error:function (model, fail, xhr)
+                        {
+                            console.log('FacturiEditView:handleError', model, fail, xhr);
+                            messages = new MessageManager();
+                            messages.error("Eroare server - factura nu a fost salvata.");
+                        }
                     });
             },
 
             handleCancel:function (e)
             {
+                e.preventDefault();
                 window.history.back();
             },
 

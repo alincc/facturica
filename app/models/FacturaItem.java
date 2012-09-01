@@ -14,21 +14,21 @@ public class FacturaItem extends Model
 {
     public String itemId;
 
-    public String item;
+    public String item = "";
 
-    public String um;
+    public String um = "";
 
-    public Double qty;
+    public Double qty= 0d;
 
-    public Double pu;
+    public Double pu= 0d;
 
-    public Double subtotal;
+    public Double subtotal = 0d;
 
-    public Double vat;
+    public Double vat= 0d;
 
-    public Double vatAmount;
+    public Double vatAmount= 0d;
 
-    public Double total;
+    public Double total= 0d;
 
 //    @PrePersist
 //    @PreUpdate

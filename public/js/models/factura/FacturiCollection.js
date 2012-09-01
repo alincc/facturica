@@ -1,4 +1,4 @@
-define(['models/factura/Factura'],
+define(['models/factura/FacturaModel'],
     function (FacturaModel)
     {
         var FacturiCollection = Backbone.Collection.extend({

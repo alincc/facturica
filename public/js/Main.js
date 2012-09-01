@@ -1,4 +1,5 @@
-(function () {
+(function ()
+{
     "use strict";
 
     require.config({
@@ -7,7 +8,6 @@
             jqueryUI:"libs/jquery-ui/js/jquery-ui-1.8.18.custom.min",
             underscore:"libs/backbone/lodash",
             backbone:"libs/backbone/backbone",
-            backboneValidation:"libs/backbone.validation/backbone.validation.min",
             bootstrap:"libs/bootstrap/js/bootstrap"
         },
         shim:{
@@ -22,8 +22,9 @@
                 exports:'Backbone'
             },
             backboneValidation:{
+                paths: "libs/backbone.validation/backbone.validation.min",
                 deps:['backbone'],
-                exports:'Validation'
+                exports:'Backbone.Validation'
             },
             bootstrap:['jquery']
         }
@@ -39,8 +40,10 @@
         'utils/UnderscoreMixin'
 
     ],
-        function ($, _, Backbone, app) {
-            $(function () {
+        function ($, _, Backbone, app)
+        {
+            $(function ()
+            {
                 var router = new app();
 
                 Backbone.history.start();
@@ -51,7 +54,8 @@
                 //window.messages = new MessageManager();
 
                 jQuery.fn.extend({
-                    scrollToMe:function () {
+                    scrollToMe:function ()
+                    {
                         var x = jQuery(this).position().top - 100;
                         jQuery('body').animate({scrollTop:x}, 200);
                         //$(window).scrollTop(this.position().top)
@@ -60,5 +64,6 @@
         });
 })();
 
-define("main", function () {
+define("main", function ()
+{
 });

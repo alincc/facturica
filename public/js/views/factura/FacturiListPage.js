@@ -1,11 +1,14 @@
 define(
     [
         'text!tpl/factura/List.html',
-        'views/factura/FacturaListView',
+
         'models/factura/FacturiStatsCollection',
-        'views/factura/FacturiListStats'
+        'models/factura/FacturaModel',
+
+        'views/factura/FacturaListView',
+        'views/factura/FacturiListStatsView'
     ],
-    function (listTemplate, FacturiListView, FacturiStatsCollection, FacturiListStats)
+    function (listTemplate, FacturaModel, FacturiStatsCollection, FacturiListView, FacturiListStatsView)
     {
 
         var FacturiListPage = Backbone.View.extend({
@@ -44,7 +47,7 @@ define(
                     var coll = new FacturiStatsCollection();
                     coll.fetch({success:function ()
                     {
-                        me.stats = new FacturiListStats({
+                        me.stats = new FacturiListStatsView({
                             el:$("#stats", me.el),
                             model:coll
                         });
@@ -96,10 +99,10 @@ define(
                     elements.each(function (index, ctrl)
                     {
                         var ctrl = $(ctrl);
-                        var docid = ctrl.siblings("input[type='hidden']").val();
-                        if (docid != "")
+                        var docId = ctrl.siblings("input[type='hidden']").val();
+                        if (docId != "")
                         {
-                            var model = new FacturaModel({id:docid});
+                            var model = new FacturaModel({id:docId});
                             model.destroy();
                             model = null;
                             ctrl.closest('tr').hide('highlight');

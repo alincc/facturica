@@ -1,9 +1,10 @@
 define(
     [
         'text!tpl/client/Edit.html',
-        'models/client/PartnerModel'
+        'models/client/PartnerModel',
+        'controls/MessageManager'
     ],
-    function (EditTemplate, PartnerModel)
+    function (EditTemplate, PartnerModel, MessageManager)
     {
         var ClientEditView;
 

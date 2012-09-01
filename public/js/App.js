@@ -3,7 +3,7 @@ define('App',
         'utils/Navigation',
         'views/HomeView',
 
-        'models/factura/Factura',
+        'models/factura/FacturaModel',
         'models/factura/FacturiCollection',
         'views/factura/FacturiListPage',
         'views/factura/FacturaEditView',
@@ -51,7 +51,10 @@ define('App',
 
                 this.currentView = view;
 
-                $("#content").html(this.currentView.render().el);
+                if (this.currentView != null)
+                {
+                    $("#content").html(this.currentView.render().el);
+                }
             },
 
             home:function ()
@@ -85,17 +88,21 @@ define('App',
 
             facturaNoua:function (id)
             {
+                var me = this, view;
+
                 nav.update("#facturi");
 
-                var me = this;
-
-                this.facturaEditView = new FacturaEditView();
+                view = new FacturaEditView();
                 this.showView(this.facturaEditView);
+                view.model.on('save-success', function ()
+                {
+                    me.navigate('#/factura/' + id, { trigger:true });
+                });
             },
 
             facturaDetail:function (id)
             {
-                var me = this;
+                var me = this, view;
 
                 nav.update("#facturi");
 
@@ -105,8 +112,8 @@ define('App',
                 factura.fetch({
                     success:function ()
                     {
-                        me.view = new FacturaDetailView({model:factura});
-                        me.showView(me.view);
+                        view = new FacturaDetailView({model:factura});
+                        me.showView(view);
                     },
                     error:function ()
                     {
@@ -116,7 +123,7 @@ define('App',
 
             facturaEdit:function (id)
             {
-                var me = this;
+                var me = this, view;
 
                 nav.update("#facturi");
 
@@ -125,8 +132,13 @@ define('App',
                 factura.fetch({
                     success:function ()
                     {
-                        me.view = new FacturaEditView({model:factura});
-                        me.showView(me.view);
+                        view = new FacturaEditView({model:factura});
+                        me.showView(view);
+
+                        view.model.on('save-success', function ()
+                        {
+                            me.navigate('#/client/' + id, { trigger:true });
+                        });
                     },
                     error:function ()
                     {
@@ -172,7 +184,7 @@ define('App',
 
                 nav.update("#clienti");
 
-                var model = new ClientModel({id:id, _silent: true });
+                var model = new ClientModel({id:id, _silent:true });
                 model.fetch({
                     success:function (model)
                     {
@@ -201,7 +213,7 @@ define('App',
 
                 nav.update("#clienti");
 
-                model = new ClientModel({id:id, _silent: true});
+                model = new ClientModel({id:id, _silent:true});
                 model.fetch({
                     success:function (model)
                     {

@@ -29,6 +29,8 @@
     <orderEntry type="library" name="Modernizr-2.5.3" level="application" />
     <orderEntry type="library" name="jQuery UI-1.8.17" level="application" />
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="library" name="play-1.2.4" level="project" />
+    <orderEntry type="library" name="gson-2.1" level="project" />
   </component>
 </module>
 

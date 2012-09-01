@@ -4,7 +4,7 @@ define([
 ],
     function (FacturaItem)
     {
-        var Factura = Backbone.Model.extend({
+        var FacturaModel = Backbone.Model.extend({
 
             urlRoot:"api/facturi",
 
@@ -22,6 +22,9 @@ define([
                 expDate:"",
                 note:""
             },
+
+            items:[],
+            client: {},
 
             initialize:function ()
             {
@@ -80,8 +83,14 @@ define([
                 }
 
                 return response;
+            },
+
+            validate: function(attrs)
+            {
+                "use strict";
+
             }
         });
 
-        return Factura;
+        return FacturaModel;
     })
