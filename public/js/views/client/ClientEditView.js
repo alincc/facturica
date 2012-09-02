@@ -46,7 +46,7 @@ define(
                 var el = $(this.el);
                 el.html(this.template(this.model.toJSON()));
 
-                this.viewValidation();
+                //this.viewValidation();
 
                 return this.bindModel();
             },

@@ -223,7 +223,7 @@ define('Router',
             {
                 var me = this, model, view;
 
-                var model = new ClientModel({id:id});
+                var model = new ClientModel({id:id},{silent:true});
                 model.fetch({
                     success:function (model)
                     {

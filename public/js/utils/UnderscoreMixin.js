@@ -8,7 +8,14 @@ define(
             {
                 round:function (v, d)
                 {
-                    return v.round(v, d);
+                    if (v)
+                    {
+                        return v.round(v, d);
+                    }
+                    else
+                    {
+                        return v;
+                    }
                 }
             });
 
@@ -16,7 +23,14 @@ define(
             {
                 money:function (v)
                 {
-                    return v.money(2, ".", ",");
+                    if (v)
+                    {
+                        return v.money(2, ".", ",");
+                    }
+                    else
+                    {
+                        return "0.00";
+                    }
                 }
             });
     });

@@ -15,10 +15,14 @@ define(
             },
 
             validation:{
-                'partner':function(value){
-                    if($.trim(value.name) == '')
+                'partner':function (value)
+                {
+                    if (!this.silent)
                     {
-                        return 'Trebuie un nume pentru client'
+                        if ($.trim(value.name) == '')
+                        {
+                            return 'Trebuie un nume pentru client'
+                        }
                     }
                 }
             }

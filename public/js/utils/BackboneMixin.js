@@ -13,44 +13,44 @@ define(['backbone','backboneValidation'], function (Backbone)
         }
     }
 
-    _.extend(Backbone.Model.prototype, Backbone.Validation.mixin);
-
-    Backbone.View.prototype.viewValidation = function ()
-    {
-        Backbone.Validation.bind(this,
-        {
-            index: 0,
-            forceUpdate: true,
-            valid: function(view, attr)
-            {
-                console.log('Backbone.View.viewValidation:valid', view,attr);
-
-                var control = $("input[id='" + attr + "']");
-                control.parents("div.control-group").removeClass("error");
-                control.parent().find(".help-inline").remove();
-            },
-            invalid: function(view, attr, error)
-            {
-                console.log('Backbone.View.viewValidation:invalid', view,attr,error);
-
-                var control = $("input[id='" + attr + "']");
-                var group = control.parents("div.control-group");
-                if (!group.hasClass("error"))
-                {
-                    group.addClass("error");
-                    control.parent().append("<div class='help-inline'>" + error + "</div>");
-                }
-
-                // Scroll to first invalid item and focus on it
-//                if (this.index == 0)
+//    _.extend(Backbone.Model.prototype, Backbone.Validation.mixin);
+//
+//    Backbone.View.prototype.viewValidation = function ()
+//    {
+//        Backbone.Validation.bind(this,
+//        {
+//            index: 0,
+//            forceUpdate: true,
+//            valid: function(view, attr)
+//            {
+//                console.log('Backbone.View.viewValidation:valid', view,attr);
+//
+//                var control = $("input[id='" + attr + "']");
+//                control.parents("div.control-group").removeClass("error");
+//                control.parent().find(".help-inline").remove();
+//            },
+//            invalid: function(view, attr, error)
+//            {
+//                console.log('Backbone.View.viewValidation:invalid', view,attr,error);
+//
+//                var control = $("input[id='" + attr + "']");
+//                var group = control.parents("div.control-group");
+//                if (!group.hasClass("error"))
 //                {
-//                    group.scrollToMe();
-//                    control.focus();
-//                    this.index++;
+//                    group.addClass("error");
+//                    control.parent().append("<div class='help-inline'>" + error + "</div>");
 //                }
-            }
-        });
-    }
+//
+//                // Scroll to first invalid item and focus on it
+////                if (this.index == 0)
+////                {
+////                    group.scrollToMe();
+////                    control.focus();
+////                    this.index++;
+////                }
+//            }
+//        });
+//    }
 
     Backbone._sync = Backbone.sync;
     Backbone.sync = function (method, model, options)

@@ -4,7 +4,7 @@ define([
 ],
     function (FacturaItem)
     {
-        var FacturaModel = Backbone.Model.extend({
+        var FacturaModel = Backbone.NestedModel.extend({
 
             urlRoot:"api/facturi",
 
@@ -20,11 +20,11 @@ define([
                 cnp:"",
                 detaliuTransport:"",
                 expDate:"",
-                note:""
-            },
+                note:"",
 
-            items:[],
-            client: {},
+                client: {},
+                items:[]
+            },
 
             initialize:function ()
             {
@@ -35,6 +35,9 @@ define([
                     this.set("docNo", "");
                     this.set("docDate", $.datepicker.formatDate("dd/mm/yy", new Date()));
                     this.set("docDueDate", "");
+
+                    this.set('items', []);
+                    this.set('client', {});
                 }
             },
 
@@ -45,12 +48,12 @@ define([
                 // init empty client details
                 var emptyClient = {};
                 emptyClient.name = "";
-                this.set("client", emptyClient);
+                this.set({"client": emptyClient});
                 this.client = emptyClient;
 
                 // add two empty rows
                 var emptyItems = [new FacturaItem(), new FacturaItem()];
-                this.set("items", emptyItems);
+                this.set({"items": emptyItems});
                 this.items = emptyItems;
             },
 
@@ -59,6 +62,7 @@ define([
                 if (response != null)
                 {
                     var items = new Array();
+
                     _.each(response.items, function (item)
                     {
                         var fi = new FacturaItem();
@@ -85,9 +89,12 @@ define([
                 return response;
             },
 
-            validate: function(attrs)
-            {
+            validation: {
+                docNo:{
+                    required: true
+                }
             }
+
         });
 
         return FacturaModel;

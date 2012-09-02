@@ -9,7 +9,7 @@
 //            underscore:'libs/backbone/lodash',
             underscore:'libs/backbone/underscore-min',
             backbone:'libs/backbone/backbone-min',
-            backboneValidation:'libs/backbone.validation/backbone-validation-min',
+            backboneValidation:'libs/backbone.validation/backbone-validation-amd-min',
             backboneNested:'libs/backbone-nested/backbone-nested-v1.1.2.min',
             bootstrap:'libs/bootstrap/js/bootstrap.min',
             backboneBindings:'libs/backbone-bindings/backbone-bindings'

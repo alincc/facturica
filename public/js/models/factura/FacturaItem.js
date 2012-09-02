@@ -32,7 +32,7 @@ define(function ()
             var vatPercent = parseFloat(this.vat) / 100;
 
             this.subtotal = (parseFloat(this.qty) * parseFloat(this.pu)).round(2);
-            this.vatAmount = (this.subtotal * vatPercent, 2).round(2);
+            this.vatAmount = (this.subtotal * vatPercent).round(2);
             this.total = this.subtotal + this.vatAmount;
         }
         catch (e)

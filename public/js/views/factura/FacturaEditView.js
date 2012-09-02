@@ -18,18 +18,18 @@ define(
     {
         var FacturaEditView = Backbone.View.extend({
 
-            tagName:"div",
+            tagName:'div',
 
             events:{
-                "change #docNo,#docDate,#docDueDate,#client-name,#client-fiscalCode, #client-regcom":"handleChange",
-                "change #client-address, #client-city, #client-bankAccount, #client-bankName":"handleChange",
-                "change #client-phone, #client-email":"handleChange",
-                "change #nraviz, #numeDelegat, #ciSeria, #ciNumar, #cnp, #detaliuTransport, #expDate, #note":"handleChange",
-                "click .addDataGridline":"handleAddLine",
-                "click #saveBtn":"handleSave",
-                "click #cancel":"handleCancel",
+                'change #docNo,#docDate,#docDueDate,#client-name,#client-fiscalCode, #client-regcom':'handleChange',
+                'change #client-address, #client-city, #client-bankAccount, #client-bankName':'handleChange',
+                'change #client-phone, #client-email':'handleChange',
+                'change #nraviz, #numeDelegat, #ciSeria, #ciNumar, #cnp, #detaliuTransport, #expDate, #note':'handleChange',
+                'click .addDataGridline':'handleAddLine',
+                'click #saveBtn':'handleSave',
+                'click #cancel':'handleCancel',
 
-                "change #selectSerie":"handleChangeSerie"
+                'change #selectSerie':'handleChangeSerie'
             },
 
             changes: {},
@@ -39,7 +39,7 @@ define(
                 console.log('FacturaEditView:initialize');
 
                 Backbone.Validation.bind(this);
-                this.viewValidation();
+                //this.viewValidation();
 
                 this.template = _.template(EditTemplate);
 
@@ -59,11 +59,11 @@ define(
                 }
 
                 // Clear series
-                me.model.set({"seriesId":"-1"},{silent:true});
+                me.model.set({'seriesId':'-1'},{silent:true});
 
                 // Other details view section rendering
                 otherDetailsTemplate = _.template(OtherDetailsTemplate);
-                me.model.set('otherDetailsTemplateHtml', otherDetailsTemplate(me.model.toJSON()));
+                me.model.set({'otherDetailsTemplateHtml': otherDetailsTemplate(me.model.toJSON())},{silent:true});
 
                 el.html(me.template(me.model.toJSON()));
 
@@ -86,7 +86,7 @@ define(
 
                 me.renderStats(me);
 
-                el.find("#docDate,#docDueDate,#expDate").datepicker();
+                el.find('#docDate,#docDueDate,#expDate').datepicker();
 
                 me.selectableRowItem(me.listView.el);
 
@@ -98,9 +98,7 @@ define(
                 if (!me.model.isNew())
                 {
                     // Render current client info
-                    me.updatePartnerInfo(el, me.model.get("client"));
-                    me.selectedPartner = {};
-                    me.selectedPartner.partner = me.model.get("client");
+                    me.updatePartnerInfo(el, me.model.get('client'));
                 }
 
                 me.fixedPosition(el);
@@ -108,24 +106,23 @@ define(
                 return me;
             },
 
-            renderStats:function (scope)
+            renderStats:function ()
             {
-                console.log("FacturaEditView:renderStats");
+                console.log('FacturaEditView:renderStats');
 
                 var total = 0, subtotal = 0, vat = 0;
+                var me = this;
 
-                var me = scope;
-
-                if (scope.model != null)
+                if (me.model != null)
                 {
-                    _.each(scope.model.items, function (v)
+                    _.each(me.model.items, function (v)
                     {
                         total += parseFloat(v.total);
                         subtotal += parseFloat(v.subtotal);
                         vat += parseFloat(v.vatAmount);
                     });
 
-                    scope.model.set({
+                    me.model.set({
                         total:total.round(2),
                         subtotal:subtotal.round(2),
                         vat:vat.round(2)
@@ -142,15 +139,16 @@ define(
 
             rowUpdateHandler:function (scope, e, m, attr, value)
             {
-                console.log("FacturaEditView:rowUpdateHandler");
+                var me = this;
+                console.log('FacturaEditView:rowUpdateHandler');
 
                 m[attr] = value;
                 m.calculate();
 
-                $('[name=subtotal]', this.el).text(m.subtotal);
-                $('[name=vatAmount]', this.el).text(m.vatAmount);
+                $('[name=subtotal]', scope.el).text(m.subtotal);
+                $('[name=vatAmount]', scope.el).text(m.vatAmount);
 
-                me.renderStats(me);
+                scope.renderStats();
             },
 
             handleAddLine:function (e)
@@ -166,7 +164,7 @@ define(
             handleChange:function (e)
             {
                 var ctrl = $(e.currentTarget);
-                this.changes[ctrl.attr("name")] = ctrl.val();
+                this.changes[ctrl.attr('name')] = ctrl.val();
                 this.renderStats(this);
             },
 
@@ -176,20 +174,20 @@ define(
 
                 console.log('FacturaEditView:handleSave');
 
-                var me = this;
+                var me = this, messages;
 
                 me.model.set(me.changes);
                 me.model.set({'items':me.model.items});
 
                 if (!me.model.isValid(true))
                 {
-                    messages.error("Eroare - completati toate campurile campurile cu rosu");
+                    messages = new MessageManager();
+                    messages.error('Eroare - completati toate campurile campurile cu rosu');
                     return false;
                 }
 
                 me.model.save(
-                    {
-                    },
+                    me.model.toJSON(),
                     {
                         wait: true,
 
@@ -202,7 +200,7 @@ define(
                         {
                             console.log('FacturiEditView:handleError', model, fail, xhr);
                             messages = new MessageManager();
-                            messages.error("Eroare server - factura nu a fost salvata.");
+                            messages.error('Eroare server - factura nu a fost salvata.');
                         }
                     });
             },
@@ -218,34 +216,31 @@ define(
                 var value = $(e.currentTarget).val();
                 this.model.set({'seriesId':value});
 
-                if (value === "-1")
+                if (value === '-1')
                 {
-                    $("#docNo").removeAttr('readonly');
+                    $('#docNo').removeAttr('readonly');
                 }
                 else
                 {
-                    this.model.set({'docNo':""});
-                    $("#docNo").val("");
-                    $("#docNo").attr('readonly', true);
+                    this.model.set({'docNo':''});
+                    $('#docNo').val('');
+                    $('#docNo').attr('readonly', true);
                 }
             },
 
             setupPartnerSelection:function (el)
             {
-                me = this;
-
+                var me = this;
                 var choices = new ClientsSearchCollection();
-
                 var selected = new ClientsSearchCollection();
 
                 selected.bind('add', function (model)
                 {
-                    var loadModel = new ClientModel();
-                    loadModel.set("id", model.get('id'))
+                    var loadModel = new ClientModel({id:model.get('id')});
                     loadModel.fetch({
                         success:function (data)
                         {
-                            me.updatePartnerInfo(el, data.get("partner"));
+                            me.updatePartnerInfo(el, data.get('partner'));
                         }});
                 });
 
@@ -262,24 +257,23 @@ define(
                     label:function (model)
                     {
                         var data = model;
-                        return  data.partner.name;
+                        return data.partner.name;
                     }
                 }).render();
             },
 
             updatePartnerInfo:function (el, json)
             {
-                this.selectedPartner = json;
-                this.model.set("client", json);
-                el.find("#client-name").val(json.name);
-                el.find("#client-fiscalCode").val(json.fiscalCode);
-                el.find("#client-regcom").val(json.regcom);
-                el.find("#client-address").val(json.address);
-                el.find("#client-city").val(json.city);
-                el.find("#client-bankAccount").val(json.bankAccount);
-                el.find("#client-bankName").val(json.bankName);
-                el.find("#client-phone").val(json.phone);
-                el.find("#client-email").val(json.email);
+                this.model.set({'client': json});
+                el.find('#client-name').val(json.name);
+                el.find('#client-fiscalCode').val(json.fiscalCode);
+                el.find('#client-regcom').val(json.regcom);
+                el.find('#client-address').val(json.address);
+                el.find('#client-city').val(json.city);
+                el.find('#client-bankAccount').val(json.bankAccount);
+                el.find('#client-bankName').val(json.bankName);
+                el.find('#client-phone').val(json.phone);
+                el.find('#client-email').val(json.email);
             },
 
             selectableRowItem:function (lv)
@@ -301,7 +295,7 @@ define(
 
                         $.each(seriesCollection.models, function (index, obj)
                         {
-                            ctrl.append($("<option />").val(obj.get('id')).text(obj.getSample())).attr('data-last', obj.getNextPossible());
+                            ctrl.append($('<option />').val(obj.get('id')).text(obj.getSample() + ' (' + obj.get('id') + ')')).attr('data-last', obj.getNextPossible());
                         })
                     }
                 });
@@ -319,7 +313,7 @@ define(
 
                         if (offset.top < scrollTop)
                         {
-                            $('#actionButtons').css({'width':$("#content-left").parent().width() - 40});
+                            $('#actionButtons').css({'width':$('#content-left').parent().width() - 40});
                             $('#actionButtons').addClass('fixed');
                             $('#content-right').addClass('fixed-content-right');
                         }

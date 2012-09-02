@@ -16,7 +16,8 @@ define(
             {
                 console.log('ClientDetailView:initialize');
                 this.template = _.template(DetailTemplate);
-                this.model.bind("change", this.render, this);
+
+                //this.model.bind("change", this.render, this);
                 this.model.bind("destroy", this.close, this);
             },
 
