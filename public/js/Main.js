@@ -11,7 +11,8 @@
             backbone:'libs/backbone/backbone-min',
             backboneValidation:'libs/backbone.validation/backbone-validation-min',
             backboneNested:'libs/backbone-nested/backbone-nested-v1.1.2.min',
-            bootstrap:'libs/bootstrap/js/bootstrap.min'
+            bootstrap:'libs/bootstrap/js/bootstrap.min',
+            backboneBindings:'libs/backbone-bindings/backbone-bindings'
         },
         shim:{
             jquery:{
@@ -30,7 +31,12 @@
             backboneNested:{
                 deps:['backbone']
             },
-            bootstrap:['jquery']
+            bootstrap:{
+                deps:['jquery']
+            },
+            backboneBindings:{
+                deps:['backbone']
+            }
         }
     });
 
@@ -45,7 +51,8 @@
 
         'backboneNested',
         'backboneValidation',
-        'bootstrap'
+        'bootstrap',
+        'backboneBindings'
     ],
         function ($, _, Backbone, App)
         {

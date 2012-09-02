@@ -23,12 +23,16 @@ define(['backbone','backboneValidation'], function (Backbone)
             forceUpdate: true,
             valid: function(view, attr)
             {
+                console.log('Backbone.View.viewValidation:valid', view,attr);
+
                 var control = $("input[id='" + attr + "']");
                 control.parents("div.control-group").removeClass("error");
                 control.parent().find(".help-inline").remove();
             },
             invalid: function(view, attr, error)
             {
+                console.log('Backbone.View.viewValidation:invalid', view,attr,error);
+
                 var control = $("input[id='" + attr + "']");
                 var group = control.parents("div.control-group");
                 if (!group.hasClass("error"))
@@ -48,10 +52,7 @@ define(['backbone','backboneValidation'], function (Backbone)
         });
     }
 
-    //Backbone.Validation = Backbone.Validation || {};
-
     Backbone._sync = Backbone.sync;
-
     Backbone.sync = function (method, model, options)
     {
         var asyncToken = Backbone._sync.apply(this, arguments);

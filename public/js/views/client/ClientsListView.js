@@ -1,6 +1,6 @@
 define(
     [
-    'views/client/ClientsListItemView'
+        'views/client/ClientsListItemView'
     ],
     function (ClientsListItemView)
     {
@@ -16,10 +16,10 @@ define(
 
             render:function (eventName)
             {
-                _.each(this.model.models, function (m)
+                _.each(this.model.models, function (itemModel)
                 {
                     $(this.el).append(new ClientsListItemView({
-                        model:m
+                        model:itemModel
                     }).render().el);
                 }, this);
 

@@ -2,8 +2,11 @@ define('Router',
     [
         'backbone',
 
-        'utils/Navigation',
         'views/HomeView',
+
+        'views/layout/HeaderView',
+
+        'views/common/ErrorView',
 
         'models/factura/FacturaModel',
         'models/factura/FacturiCollection',
@@ -24,7 +27,7 @@ define('Router',
         'views/config/ConfigSeriesView',
         'views/config/ConfigSeriesEditView'
     ],
-    function (Backbone, nav, HomeView, FacturaModel, FacturiCollection, FacturiListPage, FacturaEditView, FacturaDetailView, ClientModel, ClientsCollection, ClientsListPage, ClientDetailView, ClientEditView, SerieModel, SeriesCollection, ConfigView, ConfigSeriesView, ConfigSeriesEditView)
+    function (Backbone, HomeView, HeaderView, ErrorView, FacturaModel, FacturiCollection, FacturiListPage, FacturaEditView, FacturaDetailView, ClientModel, ClientsCollection, ClientsListPage, ClientDetailView, ClientEditView, SerieModel, SeriesCollection, ConfigView, ConfigSeriesView, ConfigSeriesEditView)
     {
         'use strict';
 
@@ -51,57 +54,80 @@ define('Router',
                 '*actions':'defaultAction'
             },
 
-            showView:function (view)
+            /* ----------------------------------------------------------------------------- */
+            initialize:function ()
             {
+                console.log('Router:initialize');
+
+                this.headerView = new HeaderView();
+                $('header').html(this.headerView.render().el);
+            },
+
+            /* ----------------------------------------------------------------------------- */
+            showView:function (menuToSelect, view)
+            {
+                // Close any active view
                 if (this.currentView)
                 {
                     this.currentView.close();
                 }
 
-                this.currentView = view;
+                // Select menu
+                this.headerView.selectMenu(menuToSelect);
 
-                if (this.currentView != null)
+                // Show view
+                this.currentView = view;
+                $('#content').html(this.currentView.render().el);
+            },
+
+            handleFetchError:function (model, res)
+            {
+                var view, model;
+
+                console.log('Router:handleFetchError', model, res);
+
+                $('#right_loading_message').hide();
+
+
+                view = new ErrorView();
+
+
+                if (res.status === 404)
                 {
-                    $('#content').html(this.currentView.render().el);
+                    $('#content').html(view.render('404 Error', 'Page not found').el);
+                } else if (res.status === 500)
+                {
+                    $('#content').html(view.render('500 Error', 'Server internal error').el);
+                }
+                else
+                {
+                    $('#content').html(view.render(res.status + ' Error', 'Server internal error').el);
                 }
             },
 
+            /* ----------------------------------------------------------------------------- */
             home:function ()
             {
-                nav.update('#');
-
                 if (!this.homeView)
                 {
                     this.homeView = new HomeView();
                 }
-                this.showView(this.homeView);
+                this.showView('#', this.homeView);
             },
 
+            /* ----------------------------------------------------------------------------- */
             facturi:function ()
             {
                 var me = this, list;
-
-                nav.update('#facturi');
 
                 list = new FacturiCollection();
                 list.fetch({
                     success:function ()
                     {
                         me.view = new FacturiListPage({ model:list });
-                        me.showView(me.view);
+                        me.showView('#facturi', me.view);
                     },
-                    error:function (model, res)
-                    {
-                        console.log(res);
-
-                        if (res.status === 404)
-                        {
-                            // TODO: handle 404 Not Found
-                        } else if (res.status === 500)
-                        {
-                            // TODO: handle 500 Internal Server Error
-                        }
-                    }
+                    error:this.handleFetchError
                 });
             },
 
@@ -109,13 +135,11 @@ define('Router',
             {
                 var me = this, view, model;
 
-                nav.update('#facturi');
-
                 model = new FacturaModel();
                 model.initNew();
 
                 view = new FacturaEditView({model:model});
-                this.showView(view);
+                this.showView('#facturi', view);
 
                 view.model.on('save-success', function ()
                 {
@@ -128,32 +152,19 @@ define('Router',
             {
                 var me = this, view;
 
-                nav.update('#facturi');
-
                 var model = new FacturaModel({'id':id});
                 model.fetch({
                     success:function ()
                     {
                         view = new FacturaDetailView({model:model});
-                        me.showView(view);
+                        me.showView('#facturi', view);
 
                         model.on('delete-success', function ()
                         {
                             me.navigate('#/facturi');
                         })
                     },
-                    error:function (model, res)
-                    {
-                        console.log(res);
-
-                        if (res.status === 404)
-                        {
-                            // TODO: handle 404 Not Found
-                        } else if (res.status === 500)
-                        {
-                            // TODO: handle 500 Internal Server Error
-                        }
-                    }
+                    error:this.handleFetchError
                 });
             },
 
@@ -161,62 +172,35 @@ define('Router',
             {
                 var me = this, view;
 
-                nav.update('#facturi');
-
-                var factura = new FacturaModel();
-                factura.set('id', id);
+                var factura = new FacturaModel({id:id});
                 factura.fetch({
                     success:function ()
                     {
                         view = new FacturaEditView({model:factura});
-                        me.showView(view);
+                        me.showView('#facturi', view);
 
                         view.model.on('save-success', function ()
                         {
                             me.navigate('#/factura/' + view.model.get('id'), { trigger:true });
                         });
                     },
-                    error:function (model, res)
-                    {
-                        console.log(res);
-
-                        if (res.status === 404)
-                        {
-                            // TODO: handle 404 Not Found
-                        } else if (res.status === 500)
-                        {
-                            // TODO: handle 500 Internal Server Error
-                        }
-                    }
+                    error:this.handleFetchError
                 });
             },
 
-
+            /* ----------------------------------------------------------------------------- */
             clienti:function ()
             {
                 var me = this;
-
-                nav.update('#clienti');
 
                 me.clientsColl = new ClientsCollection();
                 me.clientsColl.fetch({
                     success:function ()
                     {
                         me.clientsListPage = new ClientsListPage({model:me.clientsColl});
-                        me.showView(me.clientsListPage);
+                        me.showView('#clienti', me.clientsListPage);
                     },
-                    error:function (model, res)
-                    {
-                        console.log(res);
-
-                        if (res.status === 404)
-                        {
-                            // TODO: handle 404 Not Found
-                        } else if (res.status === 500)
-                        {
-                            // TODO: handle 500 Internal Server Error
-                        }
-                    }
+                    error:this.handleFetchError
                 });
             },
 
@@ -224,12 +208,10 @@ define('Router',
             {
                 var client, view, me = this;
 
-                nav.update('#clienti');
-
                 client = new ClientModel();
 
                 view = new ClientEditView({model:client});
-                this.showView(view);
+                this.showView('#clienti', view);
 
                 view.model.on('save-success', function ()
                 {
@@ -241,48 +223,32 @@ define('Router',
             {
                 var me = this, model, view;
 
-                nav.update('#clienti');
-
                 var model = new ClientModel({id:id});
                 model.fetch({
                     success:function (model)
                     {
                         view = new ClientDetailView({model:model});
-                        me.showView(view);
+                        me.showView('#clienti', view);
 
                         view.on('delete-success', function ()
                         {
                             me.navigate('#/clienti', { trigger:true });
                         });
                     },
-                    error:function (model, res)
-                    {
-                        console.log(res);
-                        $('#right_loading_message').hide();
-
-                        if (res.status === 404)
-                        {
-                            // TODO: handle 404 Not Found
-                        } else if (res.status === 500)
-                        {
-                            // TODO: handle 500 Internal Server Error
-                        }
-                    }
-                }, {silent:true});
+                    error:this.handleFetchError
+                });
             },
 
             clientEdit:function (id)
             {
                 var me = this, model, view;
 
-                nav.update('#clienti');
-
                 model = new ClientModel({id:id}, {silent:true});
                 model.fetch({
                     success:function (model)
                     {
                         view = new ClientEditView({model:model});
-                        me.showView(view);
+                        me.showView('#clienti', view);
 
                         view.model.on('save-success', function ()
                         {
@@ -290,54 +256,36 @@ define('Router',
                         });
 
                     },
-                    error:function (model, res)
-                    {
-                        console.log(res);
-                        $('#right_loading_message').hide();
-
-                        if (res.status === 404)
-                        {
-                            // TODO: handle 404 Not Found
-                        } else if (res.status === 500)
-                        {
-                            // TODO: handle 500 Internal Server Error
-                        }
-                    }
+                    error:this.handleFetchError
                 });
             },
 
+            /* ----------------------------------------------------------------------------- */
             config:function ()
             {
                 var me = this;
 
-                nav.update('#config');
-
                 me.clientForm = new ConfigView();
-                me.showView(me.clientForm);
+                me.showView('#config', me.clientForm);
             },
 
             configSeries:function ()
             {
                 var me = this, view;
 
-                nav.update('#config');
-
                 var series = new SeriesCollection();
                 series.fetch({
                     success:function ()
                     {
                         view = new ConfigSeriesView({model:series});
-                        me.showView(view);
+                        me.showView('#config', view);
 
                         view.on('show', function (param)
                         {
                             me.navigate('#/config/serie/' + param.id, { trigger:true });
                         })
                     },
-                    error:function ()
-                    {
-                        $('#right_loading_message').hide();
-                    }
+                    error:this.handleFetchError
                 });
             },
 
@@ -345,12 +293,10 @@ define('Router',
             {
                 var me = this, model, view;
 
-                nav.update('#config');
-
                 model = new SerieModel();
                 new ConfigSeriesEditView();
                 view = new ConfigSeriesEditView({model:model});
-                me.showView(view);
+                me.showView('#config', view);
 
                 // Events
                 view.model.on('save-success', function ()
@@ -363,15 +309,13 @@ define('Router',
             {
                 var me = this, model, view;
 
-                nav.update('#config');
-
                 // Load model
                 model = new SerieModel({id:id});
                 model.fetch({
                     success:function ()
                     {
                         view = new ConfigSeriesEditView({model:model});
-                        me.showView(view);
+                        me.showView('#config', view);
 
                         // Events
                         view.model.on('save-success', function ()
@@ -379,13 +323,11 @@ define('Router',
                             me.navigate('#config/serii', { trigger:true });
                         });
                     },
-                    error:function ()
-                    {
-                        $('#right_loading_message').hide();
-                    }
+                    error:this.handleFetchError
                 });
             },
 
+            /* ----------------------------------------------------------------------------- */
             defaultAction:function (actions)
             {
                 // No matching route

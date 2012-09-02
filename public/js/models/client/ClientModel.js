@@ -6,35 +6,19 @@ define(
     {
         var ClientModel;
 
-        ClientModel = Backbone.Model.extend({
+        ClientModel = Backbone.NestedModel.extend({
 
             urlRoot:"api/clients",
 
             defaults:{
-                partner:new PartnerModel()
-            },
-
-            init:function ()
-            {
-                this.set('partner', new PartnerModel());
+                partner:{}
             },
 
             validation:{
-                partner:{
-                    required:true,
-                    validation:
+                'partner':function(value){
+                    if($.trim(value.name) == '')
                     {
-                        name:
-                        {
-                            required:true,
-                            msg:'Numele este obligatoriu'
-                        },
-
-                        email:
-                        {
-                            required:false,
-                            pattern:'email'
-                        }
+                        return 'Trebuie un nume pentru client'
                     }
                 }
             }

@@ -1,7 +1,7 @@
 define(
     function ()
     {
-        var PartnerModel = Backbone.Model.extend({
+        var PartnerModel = Backbone.NestedModel.extend({
             defaults:{
                 name:'',
                 fiscalCode:'',
@@ -15,10 +15,18 @@ define(
                 phone:''
             },
 
-            validate: function(attrs)
-            {
-                if(name == '')
-                    return false;
+            validate:function(attr){},
+
+            validation:{
+                name:{
+                    required:true,
+                    msg:'Numele este obligatoriu'
+                },
+
+                email:{
+                    required:false,
+                    pattern:'email'
+                }
             }
         })
 

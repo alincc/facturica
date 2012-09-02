@@ -17,15 +17,25 @@ define(
                 "click #cancel":"handleCancel"
             },
 
+            bindings:{
+                'value input[name="partner.name"]':'partner.name',
+                'value input[name="partner.fiscalCode"]':'partner.fiscalCode',
+                'value input[name="partner.regcom"]':'partner.regcom',
+                'value textarea[name="partner.address"]':'partner.address',
+                'value input[name="partner.city"]':'partner.city',
+                'value input[name="partner.bankAccount"]':'partner.bankAccount',
+                'value input[name="partner.bankName"]':'partner.bankName',
+                'value input[name="partner.contact"]':'partner.contact',
+                'value input[name="partner.phone"]':'partner.phone',
+                'value input[name="partner.email"]':'partner.email'
+            },
+
             initialize:function ()
             {
                 console.log('ClientEditView:initialize');
 
-                Backbone.Validation.bind(this);
-                this.viewValidation();
                 this.template = _.template(EditTemplate);
 
-                this.model.bind("change", this.render, this);
                 this.model.bind("destroy", this.close, this);
             },
 
@@ -34,10 +44,11 @@ define(
                 console.log('ClientEditView:render');
 
                 var el = $(this.el);
-
                 el.html(this.template(this.model.toJSON()));
 
-                return this;
+                this.viewValidation();
+
+                return this.bindModel();
             },
 
             handleSave:function (e)
@@ -46,21 +57,7 @@ define(
 
                 e.preventDefault();
 
-                partner = new PartnerModel();
-                partner.set({'name':$.trim($("#name").val()),
-                    'fiscalCode':$("#fiscalCode").val(),
-                    'regcom':$("#regcom").val(),
-                    'address':$("#address").val(),
-                    'city':$("#city").val(),
-                    'bankAccount':$("#bankAccount").val(),
-                    'bankName':$("#bankName").val(),
-                    'contact':$("#contact").val(),
-                    'phone':$("#phone").val(),
-                    'email':$("#email").val()});
-
-                this.model.set({'partner':partner}, {silent:true});
-
-                if (!this.model.isValid(true))
+                if (!me.model.isValid(true))
                 {
                     messages = new MessageManager();
                     messages.error("Eroare - completati toate campurile campurile cu rosu");
@@ -68,14 +65,13 @@ define(
                 }
 
                 this.model.save(
-                    null,
+                    me.model.toJSON(),
                     {
                         wait:true,
                         success:function (model, fail, xhr)
                         {
                             console.log('ClientEditView:handleSuccessSave', me.model.get('id'));
                             me.model.trigger('save-success');
-                            return true;
                         },
                         error:function (model, fail, xhr)
                         {
@@ -84,8 +80,6 @@ define(
                             messages.error("Eroare server - clientul nu a fost salvat.");
                         }
                     });
-
-                return false;
             },
 
             handleCancel:function (e)
