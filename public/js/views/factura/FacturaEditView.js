@@ -148,7 +148,7 @@ define(
                 $('[name=subtotal]', scope.el).text(m.subtotal);
                 $('[name=vatAmount]', scope.el).text(m.vatAmount);
 
-                scope.renderStats();
+                me.scope.renderStats();
             },
 
             handleAddLine:function (e)

@@ -74,7 +74,7 @@ define(
 
                 if (this.rowUpdateHandler)
                 {
-                    this.rowUpdateHandler(this.scope, 'rowUpdate', this.model, attr, target.val());
+                    this.rowUpdateHandler(this, 'rowUpdate', this.model, attr, target.val());
                 }
             },
 

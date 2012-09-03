@@ -93,10 +93,10 @@ define(
                     throw "Could not retrive data-cid";
                 }
 
+                console.log(this.model);
+
                 // Remove item from array
-                for (var i = 0;
-                     i < this.model.length;
-                     i++)
+                for (var i = 0;i < this.model.length;i++)
                 {
                     if (this.model[i].guid === guid)
                     {
