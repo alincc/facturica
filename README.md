@@ -5,7 +5,7 @@ About
 -----
 Single page application that uses Backbone, Underscore, RequireJS
 
-Demo: http://capitanescu.ro:9000/
+Demo: http://demo.capitanescu.ro/
 
 Instalation
 -----------
