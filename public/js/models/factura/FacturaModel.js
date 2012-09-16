@@ -23,7 +23,11 @@ define([
                 note:"",
 
                 client: {},
-                items:[]
+                items:[],
+
+                subtotal: 0,
+                vat: 0,
+                total: 0
             },
 
             initialize:function ()

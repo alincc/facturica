@@ -14,7 +14,7 @@ define(
                 _.bindAll("render");
             },
 
-            render:function (eventName)
+            render:function ()
             {
                 _.each(this.model.models, function (m)
                 {
@@ -27,4 +27,4 @@ define(
         });
 
         return FacturiListView;
-    })
+    });

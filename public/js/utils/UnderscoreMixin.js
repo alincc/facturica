@@ -2,8 +2,10 @@ define(
     [
         'utils/NumberUtil'
     ],
+
     function ()
     {
+
         _.mixin(
             {
                 round:function (v, d)
@@ -16,11 +18,8 @@ define(
                     {
                         return v;
                     }
-                }
-            });
+                },
 
-        _.mixin(
-            {
                 money:function (v)
                 {
                     if (v)
@@ -32,5 +31,7 @@ define(
                         return "0.00";
                     }
                 }
-            });
-    });
+            }
+        );
+    })
+;

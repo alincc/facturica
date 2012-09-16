@@ -1,0 +1,14 @@
+<table id="stats" class="table table-condensed">
+    <tr>
+        <td>Valoare fara TVA</td>
+        <td class="numeric"><%= _(subtotal).money() %> lei</td>
+    </tr>
+    <tr>
+        <td>TVA</td>
+        <td class="numeric"><%= _(vat).money() %> lei</td>
+    </tr>
+    <tr>
+        <td>Total</td>
+        <td class="numeric"><%= _(total).money() %> lei</td>
+    </tr>
+</table>

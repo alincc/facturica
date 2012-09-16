@@ -19,7 +19,6 @@ define(
                 console.log('DataGridItem:initialize');
 
                 var me = this;
-                _.bindAll(me, 'render');
 
                 // Options
                 me.disabled = me.options.disabled;

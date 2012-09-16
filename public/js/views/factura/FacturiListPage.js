@@ -1,14 +1,13 @@
-define(
-    [
-        'text!tpl/factura/List.html',
+define([
+    'text!tpl/factura/List.html',
 
-        'models/factura/FacturiStatsCollection',
-        'models/factura/FacturaModel',
+    'models/factura/FacturiStatsCollection',
+    'models/factura/FacturaModel',
 
-        'views/factura/FacturaListView',
-        'views/factura/FacturiListStatsView'
-    ],
-    function (listTemplate, FacturaModel, FacturiStatsCollection, FacturiListView, FacturiListStatsView)
+    'views/factura/FacturaListView',
+    'views/factura/FacturiListStatsView'
+],
+    function (listTemplate, FacturiStatsCollection, FacturaModel, FacturiListView, FacturiListStatsView)
     {
 
         var FacturiListPage = Backbone.View.extend({
@@ -44,15 +43,20 @@ define(
                     });
                     me.listView.render();
 
-                    var coll = new FacturiStatsCollection();
-                    coll.fetch({success:function ()
-                    {
-                        me.stats = new FacturiListStatsView({
-                            el:$("#stats", me.el),
-                            model:coll
-                        });
-                        me.stats.render();
-                    }});
+                    var facturiStatsCollection = new FacturiStatsCollection();
+                    facturiStatsCollection.fetch({
+                        success:function (a)
+                        {
+                            new FacturiListStatsView({
+                                el:$("#stats", me.el),
+                                model:a
+                            }).render();
+                        },
+                        error:function()
+                        {
+                            console.log('Error loading FacturiStatsCollection');
+                        }
+                    });
 
                     $(me.el).find("#selectAll").click(me.handleSelectAll);
                 }
@@ -73,16 +77,7 @@ define(
             {
                 var elements = $(this).closest("table").find(":checkbox");
 
-                if ($(this).is(":checked"))
-                {
-                    // Select all
-                    select = true;
-                }
-                else
-                {
-                    // Unselect all
-                    select = false;
-                }
+                var select = $(this).is(":checked");
 
                 elements.each(function (index, ctrl)
                 {
@@ -100,15 +95,14 @@ define(
                 {
                     elements.each(function (index, ctrl)
                     {
-                        var ctrl = $(ctrl);
-                        var docId = ctrl.siblings("input[type='hidden']").val();
-                        if (docId != "")
+                        var docIdSib = $(ctrl).siblings("input[type='hidden']").val();
+                        if (docIdSib != "")
                         {
-                            var invoice = me.model.get(docId);
+                            var invoice = me.model.get(docIdSib);
                             invoice.destroy();
                             me.model.remove(invoice);
 
-                            ctrl.closest('tr').hide('highlight');
+                            $(ctrl).closest('tr').hide('highlight');
                         }
                     });
 
@@ -149,4 +143,4 @@ define(
 
         return FacturiListPage;
 
-    })
+    });

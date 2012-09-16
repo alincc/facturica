@@ -1,18 +1,26 @@
-define(function ()
+define(
+    [
+        'text!tpl/factura/ListStatsView.html'
+    ],
+    function (FacturiListStatsViewTemplate)
 {
     var FacturiListStatsView = Backbone.View.extend({
+        initialize: function()
+        {
+            this.template = _.template(FacturiListStatsViewTemplate)
+        },
+
         render:function ()
         {
+            console.log('FacturiListStatsView:render');
+
             $(this.el).empty();
 
             var data = this.model.models;
 
             if (data && data.length > 0)
             {
-                $(this.el).append(
-                    '<tr><td>Valoare fara TVA</td><td class="numeric">' + _(data[0].get('subtotal')).money() + ' lei</td></tr>' +
-                        '<tr><td>TVA</td><td class="numeric">' + _(data[0].get('vat')).money() + ' lei</td></tr>' +
-                        '<tr><td>Total</td><td class="numeric">' + _(data[0].get('total')).money() + ' lei</td></tr>');
+                $(this.el).html(this.template(data[0].toJSON()));
             }
         }
     });

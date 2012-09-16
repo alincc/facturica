@@ -12,7 +12,8 @@ define(
         'models/client/ClientsSearchCollection',
         'models/configuration/SeriesCollection',
         'controls/Autocomplete',
-        'controls/MessageManager'
+        'controls/MessageManager',
+        'utils/ScrollFixed'
     ],
     function (Backbone, NumberMixin, EditTemplate, EditListItemViewTemplate, OtherDetailsTemplate, FacturaModel, ClientModel, DataGrid, FacturaTotalView, ClientsSearchCollection, SeriesCollection, Autocomplete, MessageManager)
     {
@@ -32,7 +33,7 @@ define(
                 'change #selectSerie':'handleChangeSerie'
             },
 
-            changes: {},
+            changes:{},
 
             initialize:function ()
             {
@@ -43,52 +44,48 @@ define(
 
                 this.template = _.template(EditTemplate);
 
-                _.bindAll(this, 'renderStats', 'handleChangeSerie');
+                _.bindAll(this, 'handleChangeSerie', 'renderStats', 'rowUpdateHandler');
             },
 
             render:function ()
             {
-                var me = this, el = $(me.el);
+                var me = this,
+                    el = $(me.el),
+                    otherDetailsTemplate;
 
                 console.log('FacturaEditView:render');
 
-                if (!me.model)
-                {
-                    me.model = new FacturaModel();
-                    me.model.initNew();
-                }
-
                 // Clear series
-                me.model.set({'seriesId':'-1'},{silent:true});
-
-                // Other details view section rendering
-                otherDetailsTemplate = _.template(OtherDetailsTemplate);
-                me.model.set({'otherDetailsTemplateHtml': otherDetailsTemplate(me.model.toJSON())},{silent:true});
+                me.model.set({'seriesId':'-1'}, {silent:true});
 
                 el.html(me.template(me.model.toJSON()));
 
+                // Other details view section rendering
+                otherDetailsTemplate = _.template(OtherDetailsTemplate, me.model.toJSON());
+                $('#altele', el).html(otherDetailsTemplate);
+
+                // Statistics
+                me.stats = new FacturaTotalView({
+                    el:$('#stats', me.el),
+                    model:me.model
+                });
+
                 me.listView = new DataGrid(
                     {
-                        el:$('table.factura tbody', el),
+                        el:$('#facturaItemsBody', el),
                         model:me.model.items,
                         rowUpdateHandler:me.rowUpdateHandler,
                         rowAddHandler:me.renderStats,
                         rowRemoveHandler:me.renderStats,
                         itemRenderer:EditListItemViewTemplate,
-                        postCreationEvent:function (grid)
-                        {
-                            // todo: add code that setup grid
-                        },
                         scope:me
                     });
 
                 me.listView.render();
 
-                me.renderStats(me);
+                me.renderStats();
 
                 el.find('#docDate,#docDueDate,#expDate').datepicker();
-
-                me.selectableRowItem(me.listView.el);
 
                 me.setupPartnerSelection(el);
 
@@ -110,31 +107,7 @@ define(
             {
                 console.log('FacturaEditView:renderStats');
 
-                var total = 0, subtotal = 0, vat = 0;
-                var me = this;
-
-                if (me.model != null)
-                {
-                    _.each(me.model.items, function (v)
-                    {
-                        total += parseFloat(v.total);
-                        subtotal += parseFloat(v.subtotal);
-                        vat += parseFloat(v.vatAmount);
-                    });
-
-                    me.model.set({
-                        total:total.round(2),
-                        subtotal:subtotal.round(2),
-                        vat:vat.round(2)
-                    });
-
-                    me.stats = new FacturaTotalView({
-                        el:$('#stats', me.el),
-                        model:me.model
-                    });
-
-                    me.stats.render();
-                }
+                this.stats.render();
             },
 
             rowUpdateHandler:function (scope, e, m, attr, value)
@@ -148,7 +121,7 @@ define(
                 $('[name=subtotal]', scope.el).text(m.subtotal);
                 $('[name=vatAmount]', scope.el).text(m.vatAmount);
 
-                me.scope.renderStats();
+                me.renderStats();
             },
 
             handleAddLine:function (e)
@@ -156,16 +129,11 @@ define(
                 this.listView.addLine(e);
             },
 
-            handleSort:function (event, ui)
-            {
-                console.log(ui);
-            },
-
             handleChange:function (e)
             {
                 var ctrl = $(e.currentTarget);
                 this.changes[ctrl.attr('name')] = ctrl.val();
-                this.renderStats(this);
+                this.renderStats();
             },
 
             handleSave:function (e)
@@ -189,9 +157,9 @@ define(
                 me.model.save(
                     me.model.toJSON(),
                     {
-                        wait: true,
+                        wait:true,
 
-                        success:function (e)
+                        success:function ()
                         {
                             console.log('FacturaEditView:handleSuccessSave');
                             me.model.trigger('save-success');
@@ -244,27 +212,26 @@ define(
                         }});
                 });
 
-                var input = new Autocomplete({
+                new Autocomplete({
                     el:el.find('#client-name'),
                     choices:choices,
                     selected:selected,
                     allowDupes:true,
                     remoteQuery:true,
-                    iterator:function (model, matcher, selected)
+                    iterator:function (model, matcher)
                     {
                         return matcher.test(model.partner.name);
                     },
                     label:function (model)
                     {
-                        var data = model;
-                        return data.partner.name;
+                        return model.partner.name;
                     }
                 }).render();
             },
 
             updatePartnerInfo:function (el, json)
             {
-                this.model.set({'client': json});
+                this.model.set({'client':json});
                 el.find('#client-name').val(json.name);
                 el.find('#client-fiscalCode').val(json.fiscalCode);
                 el.find('#client-regcom').val(json.regcom);
@@ -276,15 +243,8 @@ define(
                 el.find('#client-email').val(json.email);
             },
 
-            selectableRowItem:function (lv)
-            {
-                $(lv).sortable({
-                    axis:'y',
-                    containment:'parent',
-                    change:this.handleSort
-                }).disableSelection();
-            },
 
+            // Load and populate series drop down
             loadDocumentSeries:function (el)
             {
                 var seriesCollection = new SeriesCollection();
@@ -295,7 +255,8 @@ define(
 
                         $.each(seriesCollection.models, function (index, obj)
                         {
-                            ctrl.append($('<option />').val(obj.get('id')).text(obj.getSample() + ' (' + obj.get('id') + ')')).attr('data-last', obj.getNextPossible());
+                            ctrl.append($('<option />').val(obj.get('id')).text(obj.getSample()
+                                + ' (' + obj.get('id') + ')')).attr('data-last', obj.getNextPossible());
                         })
                     }
                 });
@@ -303,13 +264,16 @@ define(
 
             fixedPosition:function (el)
             {
+                // Wait to render and after that update position of elements
                 setTimeout(function ()
                 {
                     var offset = $('#actionButtons', el).offset();
 
-                    $(window).scroll(function ()
+                    $(window).scroll(updateScroll);
+
+                    function updateScroll()
                     {
-                        var scrollTop = $(window).scrollTop() + 55;
+                        var scrollTop = $(window).scrollTop() + 70;
 
                         if (offset.top < scrollTop)
                         {
@@ -322,10 +286,13 @@ define(
                             $('#actionButtons').removeClass('fixed');
                             $('#content-right').removeClass('fixed-content-right');
                         }
-                    });
-                }, 1500);
+                    }
+
+                    updateScroll();
+
+                }, 1000);
             }
         });
 
         return FacturaEditView;
-    })
+    });

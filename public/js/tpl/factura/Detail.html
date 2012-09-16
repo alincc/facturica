@@ -146,7 +146,7 @@
 
                     <hr/>
 
-                    <table class="factura" style="border: none">
+                    <table id="facturaItems" class="factura" style="border: none">
                         <thead>
                         <tr>
                             <th class="actions"></th>
@@ -159,13 +159,14 @@
                             <th class="pu">TVA</th>
                         </tr>
                         </thead>
-                        <tbody class="sortableT">
+                        <tbody id="facturaItemsBody" class="sortableT">
 
                         </tbody>
                     </table>
                 </form>
 
-                <%= otherDetailsTemplateHtml %>
+                <div id="altele" class="tab-pane">
+                </div>
 
             </div>
         </div>

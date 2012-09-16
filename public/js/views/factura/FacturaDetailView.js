@@ -18,32 +18,33 @@ define(
             {
                 console.log('FacturaDetailView:initialize');
                 this.template = _.template(DetailTemplate);
-                this.model.bind("change", this.render, this);
-                this.model.bind("destroy", this.close, this);
             },
 
-            render:function (eventName)
+            render:function ()
             {
-                var me = this;
+                var me = this,
+                    otherDetailsTemplate,
+                    el = $(me.el);
+
+                el.html(me.template(me.model.toJSON()));
 
                 // Other details view section rendering
-                otherDetailsTemplate = _.template(OtherDetailsTemplate);
-                me.model.set('otherDetailsTemplateHtml', otherDetailsTemplate(me.model.toJSON()));
+                otherDetailsTemplate = _.template(OtherDetailsTemplate, me.model.toJSON());
+                $('#altele', el).html(otherDetailsTemplate);
 
-                var el = $(me.el);
-                el.html(me.template(me.model.toJSON()));
                 el.find("input,textarea").attr("readonly", true);
 
                 me.listView = new DataGrid({
-                    el:$('table.factura tbody', el),
+                    el:$('#facturaItemsBody', el),
                     model:me.model.items,
                     disabled:true,
                     itemRenderer:EditListItemViewTemplate
                 });
                 me.listView.render();
 
+                // Statistics
                 me.stats = new FacturaTotalView({
-                    el:$('#stats', me.el),
+                    el:$('#stats', el),
                     model:me.model
                 });
                 me.stats.render();
@@ -64,4 +65,4 @@ define(
         });
 
         return FacturaDetailView;
-    })
+    });

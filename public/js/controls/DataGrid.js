@@ -14,8 +14,6 @@ define(
             initialize:function ()
             {
                 console.log('DataGrid:initialize');
-
-                _.bindAll(this);
             },
 
             render:function ()
