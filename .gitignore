@@ -170,3 +170,5 @@ test-result
 tmp
 
 *.lock.db
+*.ipr
+*.iws
