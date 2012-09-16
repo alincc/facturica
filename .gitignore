@@ -172,3 +172,5 @@ tmp
 *.lock.db
 *.ipr
 *.iws
+*.iml
+db
