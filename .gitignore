@@ -168,3 +168,5 @@ docs
 logs
 test-result
 tmp
+
+*.lock.db
