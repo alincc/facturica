@@ -1,0 +1,13 @@
+Rezultate (<%=models.length%>):
+<ul class="unstyled">
+    <% _.each(models, function(model) { %>
+
+    <li>
+        <a href="#">
+            <input class="modelId" type="hidden" value="<%= model.id %>"/>
+            <%= model.partner.name %> (<%= model.partner.fiscalCode %>)
+        </a>
+    </li>
+
+    <% }); %>
+</ul>

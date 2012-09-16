@@ -20,6 +20,12 @@ public class ClientsController extends BaseController
         renderJSON(partners);
     }
 
+    public static void searchExtended(String query)
+    {
+        List<Client> partners = Client.find("byNameIlike", "%" + query + "%").fetch(20);
+        renderJSON(partners);
+    }
+
     public static void findById(Long id)
     {
         try

@@ -4,9 +4,9 @@ define(
     ],
     function (DetailTemplate)
     {
-        "use strict";
+        var ClientDetailView;
 
-        var ClientDetailView = Backbone.View.extend({
+        ClientDetailView = Backbone.View.extend({
 
             events:{
                 "click #delete":"handleDelete"
@@ -21,7 +21,7 @@ define(
                 this.model.bind("destroy", this.close, this);
             },
 
-            render:function (eventName)
+            render:function ()
             {
                 var data = this.model.toJSON();
                 $(this.el).html(this.template(data));
@@ -44,7 +44,7 @@ define(
 
                 return false;
             }
-        })
+        });
 
         return ClientDetailView;
     });

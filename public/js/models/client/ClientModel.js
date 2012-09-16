@@ -14,6 +14,11 @@ define(
                 partner:{}
             },
 
+            validate: function()
+            {
+
+            },
+
             validation:{
                 'partner':function (value)
                 {

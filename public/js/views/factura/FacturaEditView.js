@@ -8,14 +8,17 @@ define(
         'models/factura/FacturaModel',
         'models/client/ClientModel',
         'controls/DataGrid',
+
         'views/factura/FacturaTotalView',
+        'views/client/ClientSelectPopupView',
+
         'models/client/ClientsSearchCollection',
         'models/configuration/SeriesCollection',
         'controls/Autocomplete',
         'controls/MessageManager',
         'utils/ScrollFixed'
     ],
-    function (Backbone, NumberMixin, EditTemplate, EditListItemViewTemplate, OtherDetailsTemplate, FacturaModel, ClientModel, DataGrid, FacturaTotalView, ClientsSearchCollection, SeriesCollection, Autocomplete, MessageManager)
+    function (Backbone, NumberMixin, EditTemplate, EditListItemViewTemplate, OtherDetailsTemplate, FacturaModel, ClientModel, DataGrid, FacturaTotalView, ClientSelectPopupView, ClientsSearchCollection, SeriesCollection, Autocomplete, MessageManager)
     {
         var FacturaEditView = Backbone.View.extend({
 
@@ -30,7 +33,9 @@ define(
                 'click #saveBtn':'handleSave',
                 'click #cancel':'handleCancel',
 
-                'change #selectSerie':'handleChangeSerie'
+                'change #selectSerie':'handleChangeSerie',
+
+                'click #selectClient':'handleSelectClient'
             },
 
             changes:{},
@@ -44,14 +49,15 @@ define(
 
                 this.template = _.template(EditTemplate);
 
-                _.bindAll(this, 'handleChangeSerie', 'renderStats', 'rowUpdateHandler');
+                _.bindAll(this, 'handleChangeSerie', 'renderStats', 'rowUpdateHandler', 'handleClientSelectPopup', 'updatePartnerInfo');
             },
 
             render:function ()
             {
                 var me = this,
                     el = $(me.el),
-                    otherDetailsTemplate;
+                    otherDetailsTemplate,
+                    selectClientPopupTemplate;
 
                 console.log('FacturaEditView:render');
 
@@ -63,6 +69,12 @@ define(
                 // Other details view section rendering
                 otherDetailsTemplate = _.template(OtherDetailsTemplate, me.model.toJSON());
                 $('#altele', el).html(otherDetailsTemplate);
+
+                me.clientSelectPopup = new ClientSelectPopupView({
+                    el:$("#clientSelectPopup", el)
+                });
+                me.clientSelectPopup.render();
+                me.clientSelectPopup.on('clientSelect', this.handleClientSelectPopup);
 
                 // Statistics
                 me.stats = new FacturaTotalView({
@@ -291,6 +303,26 @@ define(
                     updateScroll();
 
                 }, 1000);
+            },
+
+            handleSelectClient:function (e)
+            {
+                e.preventDefault();
+
+                this.clientSelectPopup.show();
+            },
+
+            handleClientSelectPopup:function (e)
+            {
+                var me = this;
+
+                var clientModel = new ClientModel({id:e});
+                clientModel.fetch({
+                    success:function (data)
+                    {
+                        me.updatePartnerInfo(me.$el, data.get('partner'));
+                    }
+                });
             }
         });
 

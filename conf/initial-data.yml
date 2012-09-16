@@ -1,18 +1,18 @@
 Client(part1):
-   partner.name:  'ROMPETROL DOWNSTREAM SRL'
+   partner.name:  'Sample Company SRL'
    partner.address: 'P-Ta PRESEI LIBERE BUCURESTI'
    partner.city:  'Bucuresti'
    partner.bankAccount: 'RO12 0000 0000 0000 0000'
    partner.bankName:   'Banca Bancilor'
    partner.fiscalCode: 'RO roro'
-   partner.regcom: 'J40///'
+   partner.regcom: 'J40/1234511'
    partner.phone: '0212067300'
-   partner.email: 'heelllo@rompeeetorl.ro'
-   partner.contact: 'Gigel Petrol'
+   partner.email: 'heelllo@there.ro'
+   partner.contact: 'Ion Ion'
 
 
 Client(part2):
-   partner.name:  'Petrom'
+   partner.name:  'Yet Another Sample Company'
 
 Client(part3):
    partner.name:  'Alin Capitanescu'
@@ -25,10 +25,10 @@ FacturaItem(fi1):
   um: 'kg'
   qty: 10.0
   pu: 10
-  vatAmount: 0
-  subtotal: 0
-  vat: 0
-  total: 0
+  vatAmount: 24
+  subtotal: 100
+  vat: 24
+  total: 124
 
 FacturaItem(fi2):
   itemId: '2'
@@ -36,16 +36,25 @@ FacturaItem(fi2):
   um: 'kg'
   qty: 5.0
   pu: 10
-  vatAmount: 0
-  subtotal: 0
-  vat: 0
-  total: 0
+  vatAmount: 12
+  subtotal: 50
+  vat: 24
+  total: 62
 
 Factura(f1):
    docNo: '001'
-   docDate: '12-10-2011'
+   docDate: '12-08-2012'
    items: [fi1, fi2]
    client.code: "001"
    client.name: "Test Client"
    client.address: "Strada Test"
+
+FacturiMonthlyStats:
+  month: 8
+  year: 2012
+  payments: 0
+  receipts: 0
+  vat: 36
+  subtotal: 150
+  total: 186
 

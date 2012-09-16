@@ -21,6 +21,7 @@ POST    /api/clients                            ClientsController.create
 PUT     /api/clients/{<\d+>id}                  ClientsController.update
 DELETE  /api/clients/{<\d+>id}                  ClientsController.delete
 GET     /api/clients                            ClientsController.list
+GET     /api/clients/searchExtended/{query}     ClientsController.searchExtended
 
 # Config
 # - Series

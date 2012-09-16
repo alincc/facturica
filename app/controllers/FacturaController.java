@@ -1,7 +1,9 @@
 package controllers;
 
 import com.google.gson.*;
+import play.db.jpa.GenericModel;
 import play.db.jpa.JPA;
+import play.db.jpa.JPABase;
 import play.mvc.*;
 import play.Logger;
 
