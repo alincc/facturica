@@ -14,7 +14,6 @@ define(function ()
                 label = this.options.label,
                 allowDupes = this.options.allowDupes,
                 remoteQuery = this.options.remoteQuery,
-                remote = this.options.remote,
                 $el = $(this.el);
 
             $el.autocomplete({

@@ -4,15 +4,14 @@ import models.Factura;
 import models.FacturaItem;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class FacturaListener
-{
+public class FacturaListener {
 
     @PrePersist
-    protected void onCreate(Factura factura)
-    {
+    protected void onCreate(Factura factura) {
         factura.history.dateCreated = new Date();
         factura.history.lastUpdated = new Date();
 
@@ -20,24 +19,23 @@ public class FacturaListener
     }
 
     @PreUpdate
-    protected void onUpdate(Factura factura)
-    {
+    protected void onUpdate(Factura factura) {
         factura.history.lastUpdated = new Date();
 
         updateTotals(factura);
     }
 
-    protected void updateTotals(Factura factura)
-    {
+    protected void updateTotals(Factura factura) {
         factura.subtotal = 0;
         factura.vat = 0;
         factura.total = 0;
 
-        for (FacturaItem item : factura.items)
-        {
-            factura.subtotal += item.subtotal;
-            factura.vat += item.vatAmount;
-            factura.total += item.total;
+        for (FacturaItem item : new ArrayList<FacturaItem>(factura.items)) {
+            if (item != null) {
+                factura.subtotal += item.subtotal;
+                factura.vat += item.vatAmount;
+                factura.total += item.total;
+            }
         }
     }
 }

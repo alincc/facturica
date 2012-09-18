@@ -6,9 +6,7 @@ import play.data.validation.Required;
 import play.db.jpa.Model;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @EntityListeners(FacturaListener.class)
@@ -25,8 +23,8 @@ public class Factura extends Model
     @As(value = "dd-MM-yyyy")
     public Date docDueDate;
 
-    @OneToMany(cascade = {CascadeType.ALL})
-    public List<FacturaItem> items;
+    @OneToMany(mappedBy="parent", cascade=CascadeType.ALL, orphanRemoval=true)
+    public Set<FacturaItem> items = new HashSet<FacturaItem>();
 
     public double subtotal = 0;
 
@@ -59,7 +57,7 @@ public class Factura extends Model
 
     public Factura()
     {
-        items = new ArrayList<FacturaItem>();
+        items = new HashSet<FacturaItem>();
         client = new Partner();
         history = new History();
     }

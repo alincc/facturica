@@ -1,5 +1,5 @@
 <div class="row">
-<div class="span8">
+<div class="span9">
 
     <div id="content-left">
 
@@ -20,6 +20,7 @@
             <button id="validate" class="btn"><i class="icon-check"></i> Validare</button>
         </div>
 
+        <br/>
         <br/>
 
         <ul id="myTab" class="nav nav-tabs">
@@ -92,7 +93,7 @@
 
                             <div class="controls">
                                 <input type="text" class="input-xlarge" id="client-fiscalCode"
-                                       name="client.fiscalCode"/>
+                                       name="client.fiscalCode" value="<%=client.fiscalCode%>"/>
                             </div>
                         </div>
 
@@ -101,7 +102,7 @@
 
                             <div class="controls">
                                 <input type="text" class="input-xlarge" id="client-regcom"
-                                       name="client.regcom"/>
+                                       name="client.regcom" value="<%=client.regcom%>"/>
                             </div>
                         </div>
 
@@ -111,7 +112,7 @@
                             <div class="controls">
                                 <textarea cols="12" rows="2" type="text" class="input-xlarge"
                                           id="client-address"
-                                          name="client.address"></textarea>
+                                          name="client.address" value="<%=client.address%>"></textarea>
                             </div>
                         </div>
 
@@ -119,7 +120,8 @@
                             <label class="control-label" for="client-city">Localitate</label>
 
                             <div class="controls">
-                                <input type="text" class="input-large" id="client-city" name="client.city">
+                                <input type="text" class="input-large" id="client-city" name="client.city"
+                                       value="<%=client.city%>">
                             </div>
                         </div>
 
@@ -128,7 +130,7 @@
 
                             <div class="controls">
                                 <input type="text" class="input-large" id="client-bankAccount"
-                                       name="client.bankAccount">
+                                       name="client.bankAccount" value="<%=client.bankAccount%>">
                             </div>
                         </div>
 
@@ -137,7 +139,7 @@
 
                             <div class="controls">
                                 <input type="text" class="input-large" id="client-bankName"
-                                       name="client.bankName">
+                                       name="client.bankName" value="<%=client.bankName%>">
                             </div>
                         </div>
 
@@ -146,7 +148,7 @@
 
                             <div class="controls">
                                 <input type="text" class="input-large" id="client-phone"
-                                       name="client.phone">
+                                       name="client.phone" value="<%=client.phone%>">
                             </div>
                         </div>
                         <div class="control-group">
@@ -154,7 +156,7 @@
 
                             <div class="controls">
                                 <input type="text" class="input-large" id="client-email"
-                                       name="client.email">
+                                       name="client.email" value="<%=client.email%>">
                             </div>
                         </div>
                     </div>
@@ -191,8 +193,8 @@
     </div>
 </div>
 
-<div class="span4">
-    <div id="content-right">
+<div class="span3">
+    <div id="content-right" class="fixed-content-right">
 
         <h4 class="active">Total</h4>
 

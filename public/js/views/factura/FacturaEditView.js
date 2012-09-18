@@ -12,23 +12,18 @@ define(
         'views/factura/FacturaTotalView',
         'views/client/ClientSelectPopupView',
 
-        'models/client/ClientsSearchCollection',
+        'models/client/ClientSearchCollection',
         'models/configuration/SeriesCollection',
-        'controls/Autocomplete',
         'controls/MessageManager',
-        'utils/ScrollFixed'
+        'utils/ClientUtil'
     ],
-    function (Backbone, NumberMixin, EditTemplate, EditListItemViewTemplate, OtherDetailsTemplate, FacturaModel, ClientModel, DataGrid, FacturaTotalView, ClientSelectPopupView, ClientsSearchCollection, SeriesCollection, Autocomplete, MessageManager)
+    function (Backbone, NumberMixin, EditTemplate, EditListItemViewTemplate, OtherDetailsTemplate, FacturaModel, ClientModel, DataGrid, FacturaTotalView, ClientSelectPopupView, ClientSearchCollection, SeriesCollection, MessageManager, ClientUtil)
     {
         var FacturaEditView = Backbone.View.extend({
 
             tagName:'div',
 
             events:{
-                'change #docNo,#docDate,#docDueDate,#client-name,#client-fiscalCode, #client-regcom':'handleChange',
-                'change #client-address, #client-city, #client-bankAccount, #client-bankName':'handleChange',
-                'change #client-phone, #client-email':'handleChange',
-                'change #nraviz, #numeDelegat, #ciSeria, #ciNumar, #cnp, #detaliuTransport, #expDate, #note':'handleChange',
                 'click .addDataGridline':'handleAddLine',
                 'click #saveBtn':'handleSave',
                 'click #cancel':'handleCancel',
@@ -38,7 +33,28 @@ define(
                 'click #selectClient':'handleSelectClient'
             },
 
-            changes:{},
+            bindings:{
+                'value #docNo':'docNo',
+                'value #docDate':'docDate',
+                'value #docDueDate':'docDueDate',
+                'value #client-name':'client.name',
+                'value #client-fiscalCode':'client.fiscalCode',
+                'value #client-regcom':'client.regcom',
+                'value #client-address':'client.address',
+                'value #client-city':'client.city',
+                'value #client-bankAccount':'client.bankAccount',
+                'value #client-bankName':'client.bankName',
+                'value #client-phone':'client.phone',
+                'value #client-email':'client.email',
+                'value #nraviz':'nraviz',
+                'value #numeDelegat':'numeDelegat',
+                'value #ciSeria':'ciSeria',
+                'value #ciNumar':'ciNumar',
+                'value #cnp':'cnp',
+                'value #detaliuTransport':'detaliuTransport',
+                'value #expDate':'expDate',
+                'value #note':'note'
+            },
 
             initialize:function ()
             {
@@ -49,15 +65,14 @@ define(
 
                 this.template = _.template(EditTemplate);
 
-                _.bindAll(this, 'handleChangeSerie', 'renderStats', 'rowUpdateHandler', 'handleClientSelectPopup', 'updatePartnerInfo');
+                _.bindAll(this, 'handleChangeSerie', 'renderStats', 'rowUpdateHandler', 'handleClientSelectPopup');
             },
 
             render:function ()
             {
                 var me = this,
                     el = $(me.el),
-                    otherDetailsTemplate,
-                    selectClientPopupTemplate;
+                    otherDetailsTemplate;
 
                 console.log('FacturaEditView:render');
 
@@ -99,20 +114,16 @@ define(
 
                 el.find('#docDate,#docDueDate,#expDate').datepicker();
 
-                me.setupPartnerSelection(el);
+                ClientUtil.setupTypeAhead(el.find('#client-name'), function (selection)
+                {
+                    me.updatePartnerInfo(selection.get('partner'));
+                });
 
                 me.loadDocumentSeries(el);
 
-                // If not a new invoice
-                if (!me.model.isNew())
-                {
-                    // Render current client info
-                    me.updatePartnerInfo(el, me.model.get('client'));
-                }
-
                 me.fixedPosition(el);
 
-                return me;
+                return me.bindModel();
             },
 
             renderStats:function ()
@@ -141,13 +152,6 @@ define(
                 this.listView.addLine(e);
             },
 
-            handleChange:function (e)
-            {
-                var ctrl = $(e.currentTarget);
-                this.changes[ctrl.attr('name')] = ctrl.val();
-                this.renderStats();
-            },
-
             handleSave:function (e)
             {
                 e.preventDefault();
@@ -156,7 +160,8 @@ define(
 
                 var me = this, messages;
 
-                me.model.set(me.changes);
+                console.log(me.model.get('items'), me.model.items);
+
                 me.model.set({'items':me.model.items});
 
                 if (!me.model.isValid(true))
@@ -208,54 +213,6 @@ define(
                 }
             },
 
-            setupPartnerSelection:function (el)
-            {
-                var me = this;
-                var choices = new ClientsSearchCollection();
-                var selected = new ClientsSearchCollection();
-
-                selected.bind('add', function (model)
-                {
-                    var loadModel = new ClientModel({id:model.get('id')});
-                    loadModel.fetch({
-                        success:function (data)
-                        {
-                            me.updatePartnerInfo(el, data.get('partner'));
-                        }});
-                });
-
-                new Autocomplete({
-                    el:el.find('#client-name'),
-                    choices:choices,
-                    selected:selected,
-                    allowDupes:true,
-                    remoteQuery:true,
-                    iterator:function (model, matcher)
-                    {
-                        return matcher.test(model.partner.name);
-                    },
-                    label:function (model)
-                    {
-                        return model.partner.name;
-                    }
-                }).render();
-            },
-
-            updatePartnerInfo:function (el, json)
-            {
-                this.model.set({'client':json});
-                el.find('#client-name').val(json.name);
-                el.find('#client-fiscalCode').val(json.fiscalCode);
-                el.find('#client-regcom').val(json.regcom);
-                el.find('#client-address').val(json.address);
-                el.find('#client-city').val(json.city);
-                el.find('#client-bankAccount').val(json.bankAccount);
-                el.find('#client-bankName').val(json.bankName);
-                el.find('#client-phone').val(json.phone);
-                el.find('#client-email').val(json.email);
-            },
-
-
             // Load and populate series drop down
             loadDocumentSeries:function (el)
             {
@@ -285,18 +242,16 @@ define(
 
                     function updateScroll()
                     {
-                        var scrollTop = $(window).scrollTop() + 70;
+                        var scrollTop = $(window).scrollTop() + 50;
 
                         if (offset.top < scrollTop)
                         {
                             $('#actionButtons').css({'width':$('#content-left').parent().width() - 40});
-                            $('#actionButtons').addClass('fixed');
-                            $('#content-right').addClass('fixed-content-right');
+                            $('#actionButtons').addClass('fixed-actionsButtons');
                         }
                         else
                         {
-                            $('#actionButtons').removeClass('fixed');
-                            $('#content-right').removeClass('fixed-content-right');
+                            $('#actionButtons').removeClass('fixed-actionsButtons');
                         }
                     }
 
@@ -308,7 +263,6 @@ define(
             handleSelectClient:function (e)
             {
                 e.preventDefault();
-
                 this.clientSelectPopup.show();
             },
 
@@ -320,9 +274,14 @@ define(
                 clientModel.fetch({
                     success:function (data)
                     {
-                        me.updatePartnerInfo(me.$el, data.get('partner'));
+                        me.updatePartnerInfo(data.get('partner'));
                     }
                 });
+            },
+
+            updatePartnerInfo: function(partner)
+            {
+                this.model.set({'client':partner});
             }
         });
 

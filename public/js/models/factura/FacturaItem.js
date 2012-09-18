@@ -13,17 +13,20 @@ define(function ()
         this.total = '0';
 
         this.vatAmount = '0';
-    };
 
-    FacturaItem.prototype.guid = function ()
-    {
-        return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-    }
+        this.guid = this.guidFunc();
+    };
 
     FacturaItem.prototype.S4 = function ()
     {
         return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-    }
+    };
+
+
+    FacturaItem.prototype.guidFunc = function ()
+    {
+        return (this.S4() + this.S4() + "-" + this.S4() + "-" + this.S4() + "-" + this.S4() + "-" + this.S4() + this.S4() + this.S4());
+    };
 
     FacturaItem.prototype.calculate = function ()
     {
@@ -39,7 +42,7 @@ define(function ()
         {
             console.log(e);
         }
-    }
+    };
 
     return FacturaItem;
-})
+});

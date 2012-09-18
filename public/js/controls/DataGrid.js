@@ -80,18 +80,17 @@ define(
 
             removeLine:function (e)
             {
+                var isRemoved = false, guid;
                 e.preventDefault();
 
                 console.log('DataGrid:removeLine');
 
                 // Find model by cid
-                var guid = this.$(e.currentTarget).closest(".action-buttons").attr('data-cid');
+                guid = this.$(e.currentTarget).closest(".action-buttons").attr('data-cid');
                 if (!guid)
                 {
                     throw "Could not retrive data-cid";
                 }
-
-                console.log(this.model);
 
                 // Remove item from array
                 for (var i = 0;i < this.model.length;i++)
@@ -104,17 +103,20 @@ define(
                         // Close view
                         this.rows[i].close();
                         this.rows.splice(i, 1);
-
+                        isRemoved = true;
                         break;
                     }
                 }
 
-                // Remove table row
-                $(e.currentTarget).closest("tr").remove();
-
-                if (this.rowRemoveHandler)
+                if (isRemoved)
                 {
-                    this.rowRemoveHandler(this.scope);
+                    // Remove table row
+                    $(e.currentTarget).closest("tr").remove();
+
+                    if (this.rowRemoveHandler)
+                    {
+                        this.rowRemoveHandler(this.scope);
+                    }
                 }
             }
         });
