@@ -4,13 +4,14 @@
 
     require.config({
         paths:{
-            jquery:'libs/jquery/jquery-1.7.1.min',
-            jqueryUI:'libs/jquery-ui/js/jquery-ui-1.8.18.custom.min',
+            jquery:'libs/jquery/jquery-1.8.1.min',
+            jqueryUI:'libs/jquery-ui/js/jquery-ui-1.8.23.custom.min',
 //            underscore:'libs/backbone/lodash',
             underscore:'libs/backbone/underscore-min',
             backbone:'libs/backbone/backbone-min',
             backboneValidation:'libs/backbone.validation/backbone-validation-amd-min',
-            backboneNested:'libs/backbone-nested/backbone-nested-v1.1.2.min',
+            //backboneNested:'libs/backbone-nested/backbone-nested-v1.1.2.min',
+            backboneNested:'libs/backbone-nested/backbone-nested',
             bootstrap:'libs/bootstrap/js/bootstrap.min',
             backboneBindings:'libs/backbone-bindings/backbone-bindings'
         },

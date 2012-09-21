@@ -30,7 +30,7 @@ public class FacturaListener {
         factura.vat = 0;
         factura.total = 0;
 
-        for (FacturaItem item : new ArrayList<FacturaItem>(factura.items)) {
+        for (FacturaItem item : factura.items) {
             if (item != null) {
                 factura.subtotal += item.subtotal;
                 factura.vat += item.vatAmount;

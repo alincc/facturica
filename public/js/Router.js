@@ -126,17 +126,33 @@ define('Router',
                     {
                         me.view = new FacturiListPage({ model:list });
                         me.showView('#facturi', me.view);
+
+                        me.view.on('duplicate', function (newModel)
+                        {
+                            console.log('duplicate event');
+                            me.duplicatedInvoice = newModel;
+                            me.navigate('/facturaNoua', {trigger:true});
+                        }, me)
                     },
                     error:this.handleFetchError
                 });
             },
 
-            facturaNoua:function (id)
+            facturaNoua:function ()
             {
                 var me = this, view, model;
 
-                model = new FacturaModel();
-                model.initNew();
+                if (me.duplicatedInvoice != null)
+                {
+                    console.log('newModel is not null');
+                    model = me.duplicatedInvoice;
+                    delete me.duplicatedInvoice;
+                }
+                else
+                {
+                    model = new FacturaModel();
+                    model.initNew();
+                }
 
                 view = new FacturaEditView({model:model});
                 this.showView('#facturi', view);
@@ -223,7 +239,7 @@ define('Router',
             {
                 var me = this, model, view;
 
-                var model = new ClientModel({id:id},{silent:true});
+                var model = new ClientModel({id:id}, {silent:true});
                 model.fetch({
                     success:function (model)
                     {

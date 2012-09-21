@@ -52,7 +52,7 @@ define([
                                 model:a
                             }).render();
                         },
-                        error:function()
+                        error:function ()
                         {
                             console.log('Error loading FacturiStatsCollection');
                         }
@@ -113,17 +113,24 @@ define([
             handleDuplicate:function ()
             {
                 var element = $("#listView").find(".doc:checked").first();
+                var me = this;
 
                 if (element != null)
                 {
-                    console.log(element);
-
                     var ctrl = $(element);
                     var docId = ctrl.siblings("input[type='hidden']").val();
 
                     if (docId != "")
                     {
-                        App.navigate("/factura/" + docId + "/edit", true);
+                        var loadModel = new FacturaModel({id:docId});
+                        loadModel.fetch({
+                            success:function ()
+                            {
+                                var newModel = new FacturaModel();
+                                newModel.attributes = _.clone(loadModel.attributes);
+                                me.trigger('duplicate', loadModel);
+                            }
+                        });
                     }
                 }
             },

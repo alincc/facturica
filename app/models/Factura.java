@@ -23,8 +23,8 @@ public class Factura extends Model
     @As(value = "dd-MM-yyyy")
     public Date docDueDate;
 
-    @OneToMany(mappedBy="parent", cascade=CascadeType.ALL, orphanRemoval=true)
-    public Set<FacturaItem> items = new HashSet<FacturaItem>();
+    @OneToMany(cascade=CascadeType.ALL)
+    public List<FacturaItem> items = new ArrayList<FacturaItem>();
 
     public double subtotal = 0;
 
@@ -57,7 +57,7 @@ public class Factura extends Model
 
     public Factura()
     {
-        items = new HashSet<FacturaItem>();
+        items = new ArrayList<FacturaItem>();
         client = new Partner();
         history = new History();
     }

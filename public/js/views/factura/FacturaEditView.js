@@ -65,7 +65,7 @@ define(
 
                 this.template = _.template(EditTemplate);
 
-                _.bindAll(this, 'handleChangeSerie', 'renderStats', 'rowUpdateHandler', 'handleClientSelectPopup');
+                _.bindAll(this, 'handleChangeSerie', 'renderStats', 'rowUpdateHandler', 'handleClientSelectPopup', 'handleSave');
             },
 
             render:function ()
@@ -160,8 +160,6 @@ define(
 
                 var me = this, messages;
 
-                console.log(me.model.get('items'), me.model.items);
-
                 me.model.set({'items':me.model.items});
 
                 if (!me.model.isValid(true))
@@ -171,8 +169,11 @@ define(
                     return false;
                 }
 
+                console.log(me.model.items);
+
                 me.model.save(
-                    me.model.toJSON(),
+                    null
+                    ,
                     {
                         wait:true,
 
@@ -279,7 +280,7 @@ define(
                 });
             },
 
-            updatePartnerInfo: function(partner)
+            updatePartnerInfo:function (partner)
             {
                 this.model.set({'client':partner});
             }

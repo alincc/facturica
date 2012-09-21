@@ -30,13 +30,6 @@ public class FacturaItem extends Model
 
     public Double total= 0d;
 
-    @ManyToOne
-        @JoinTable(name = "CHILDREN_WITH_PARENT",
-                joinColumns = {@JoinColumn(name = "CHILD_ID")},
-                inverseJoinColumns = {@JoinColumn(name = "PARENT_ID")}
-        )
-    private Factura parent;
-
 //    @PrePersist
 //    @PreUpdate
 //    protected void updateTotalsIfEmpty()
