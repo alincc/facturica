@@ -126,9 +126,8 @@ define([
                         loadModel.fetch({
                             success:function ()
                             {
-                                var newModel = new FacturaModel();
-                                newModel.attributes = _.clone(loadModel.attributes);
-                                me.trigger('duplicate', loadModel);
+                                var newModel = FacturaModel.duplicate(loadModel);
+                                me.trigger('duplicate', newModel);
                             }
                         });
                     }

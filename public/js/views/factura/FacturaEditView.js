@@ -157,7 +157,6 @@ define(
                 e.preventDefault();
 
                 console.log('FacturaEditView:handleSave');
-
                 var me = this, messages;
 
                 me.model.set({'items':me.model.items});
@@ -169,11 +168,8 @@ define(
                     return false;
                 }
 
-                console.log(me.model.items);
-
                 me.model.save(
-                    null
-                    ,
+                    null,
                     {
                         wait:true,
 

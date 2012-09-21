@@ -22,12 +22,12 @@ define([
                 expDate:"",
                 note:"",
 
-                client: {},
+                client:{},
                 items:[],
 
-                subtotal: 0,
-                vat: 0,
-                total: 0
+                subtotal:0,
+                vat:0,
+                total:0
             },
 
             initialize:function ()
@@ -52,12 +52,12 @@ define([
                 // init empty client details
                 var emptyClient = {};
                 emptyClient.name = "";
-                this.set({"client": emptyClient});
+                this.set({"client":emptyClient});
                 this.client = emptyClient;
 
                 // add two empty rows
                 var emptyItems = [new FacturaItem(), new FacturaItem()];
-                this.set({"items": emptyItems});
+                this.set({"items":emptyItems});
                 this.items = emptyItems;
             },
 
@@ -93,13 +93,49 @@ define([
                 return response;
             },
 
-            validation: {
+            validation:{
                 docNo:{
-                    required: true
+                    required:true
                 }
             }
 
         });
+
+        FacturaModel.duplicate = function (existingModel)
+        {
+            "use strict";
+
+            var newModel = new FacturaModel();
+
+            newModel.attributes = _.clone(existingModel.attributes);
+            newModel.items = new Array();
+            newModel.set({
+                'docNo':'',
+                'items':''
+            });
+            newModel.unset('id');
+
+            for(var i in existingModel.items)
+            {
+                if (existingModel.items[i] instanceof FacturaItem)
+                {
+                    var newItem = new FacturaItem();
+                    newItem.item = existingModel.items[i].item;
+                    newItem.qty = existingModel.items[i].qty;
+                    newItem.pu = existingModel.items[i].pu;
+                    newItem.vat = existingModel.items[i].vat;
+                    newItem.total = existingModel.items[i].total;
+                    newItem.subtotal = existingModel.items[i].subtotal;
+                    newItem.vatAmount = existingModel.items[i].vatAmount;
+
+                    newModel.items.push(newItem);
+                }
+            }
+
+            console.log(newModel);
+
+            return newModel;
+        }
 
         return FacturaModel;
     })

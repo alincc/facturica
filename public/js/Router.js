@@ -144,7 +144,7 @@ define('Router',
 
                 if (me.duplicatedInvoice != null)
                 {
-                    console.log('newModel is not null');
+                    console.log('Event "duplicate" has been triggered');
                     model = me.duplicatedInvoice;
                     delete me.duplicatedInvoice;
                 }
@@ -159,7 +159,6 @@ define('Router',
 
                 view.model.on('save-success', function ()
                 {
-                    console.log(model, model.get('id'));
                     me.navigate('#/factura/' + model.get('id'), { trigger:true });
                 });
             },
@@ -192,6 +191,8 @@ define('Router',
                 factura.fetch({
                     success:function ()
                     {
+                        console.log('Edit existing', factura);
+
                         view = new FacturaEditView({model:factura});
                         me.showView('#facturi', view);
 
