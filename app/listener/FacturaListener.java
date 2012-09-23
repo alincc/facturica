@@ -4,23 +4,21 @@ import models.Factura;
 import models.FacturaItem;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.sql.Time;
 import java.util.Date;
 
 public class FacturaListener {
-
     @PrePersist
     protected void onCreate(Factura factura) {
-        factura.history.dateCreated = new Date();
-        factura.history.lastUpdated = new Date();
+        factura.history.dateCreated = getCurrentDate();
+        factura.history.lastUpdated = factura.history.dateCreated;
 
         updateTotals(factura);
     }
 
     @PreUpdate
     protected void onUpdate(Factura factura) {
-        factura.history.lastUpdated = new Date();
+        factura.history.lastUpdated = getCurrentDate();
 
         updateTotals(factura);
     }
@@ -37,5 +35,11 @@ public class FacturaListener {
                 factura.total += item.total;
             }
         }
+    }
+
+    private Date getCurrentDate()
+    {
+        //return new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        return new Date(System.currentTimeMillis());
     }
 }

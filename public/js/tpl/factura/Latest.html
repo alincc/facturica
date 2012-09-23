@@ -1,0 +1,8 @@
+<h4>Ultimele facturi editate</h4>
+<ul class="nav nav-list">
+    <% _.each(this.model.models, function(i) { %>
+    <li>
+        <a href="#/factura/<%=i.get('id')%>"><%=i.get('docNo')%> - <%=i.get('client.name')%></a>
+    </li>
+    <% }); %>
+</ul>

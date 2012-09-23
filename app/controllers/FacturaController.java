@@ -10,89 +10,70 @@ import play.Logger;
 import models.*;
 import sun.util.calendar.Gregorian;
 
+import java.sql.Timestamp;
 import java.util.*;
 
-public class FacturaController extends BaseController
-{
-    public static void list()
-    {
+public class FacturaController extends BaseController {
+    public static void list() {
         List<Factura> facturaList = Factura.find("order by docDate desc, client asc").fetch();
         renderJSON(facturaList);
     }
 
-    public static void findById(Long id)
-    {
-        try
-        {
+    public static void findById(Long id) {
+        try {
             Factura factura = Factura.findById(id);
-            if (factura == null)
-            {
+            if (factura == null) {
                 response.status = Http.StatusCode.NOT_FOUND;
                 return;
             }
 
             renderText(gson.toJson(factura));
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             response.status = Http.StatusCode.INTERNAL_ERROR;
         }
     }
 
-    public static void create(JsonObject body)
-    {
+    public static void create(JsonObject body) {
         Factura factura = null;
 
-        try
-        {
+        try {
             factura = gson.fromJson(body, Factura.class);
             incrementSeries(factura, body.get("seriesId").getAsString());
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Logger.error(ex, "Failed to parse JSON");
         }
 
-        if (factura == null)
-        {
+        if (factura == null) {
             response.status = Http.StatusCode.NOT_FOUND;
             return;
         }
 
-        try
-        {
+        try {
             // Validate and save
-            if (factura.create())
-            {
+            if (factura.create()) {
                 // Update statistics
                 addToStats(factura);
 
                 response.status = Http.StatusCode.OK;
                 renderJSON(factura);
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Logger.error(ex, "Cannot save model");
             response.status = Http.StatusCode.INTERNAL_ERROR;
         }
     }
 
-
-    public static void update(Long id, JsonObject body)
-    {
+    public static void update(Long id, JsonObject body) {
         Factura factura = null;
 
-        try
-        {
+        try {
             // Deserialize
             factura = gson.fromJson(body, Factura.class);
 
             // Search prev factura
             Factura prev = Factura.findById(factura.id);
 
-            if (prev != null)
-            {
+            if (prev != null) {
                 // Remove factura from stats
                 removeFromStats(prev);
 
@@ -102,29 +83,21 @@ public class FacturaController extends BaseController
                 factura = factura.merge();
 
                 // Try to validate and save
-                if (factura.validateAndSave())
-                {
+                if (factura.validateAndSave()) {
                     addToStats(factura);
-                }
-                else
-                {
+                } else {
                     throw new Exception("Factura not saved");
                 }
-            }
-            else
-            {
+            } else {
                 response.status = Http.StatusCode.NOT_FOUND;
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Logger.error(ex, "Failed update record");
             response.status = Http.StatusCode.NOT_FOUND;
         }
     }
 
-    public static void delete(Long id)
-    {
+    public static void delete(Long id) {
         Factura factura = Factura.findById(id);
         notFoundIfNull(factura);
 
@@ -132,28 +105,34 @@ public class FacturaController extends BaseController
         factura.delete();
     }
 
-    public static void stats()
-    {
+    public static void stats() {
         List<FacturiMonthlyStats> stats = FacturiMonthlyStats.find("order by year desc, month desc").fetch(1);
 
         renderJSON(stats);
     }
 
+    public static void latest() {
+        List<Factura> result = Factura.find("order by history.lastUpdated desc").fetch(5);
+        renderJSON(result);
+    }
 
     /**
      * Add factura to statistics
      *
      * @param factura
      */
-    private static void addToStats(Factura factura)
-    {
-        FacturiMonthlyStats stats = getStat(factura);
+    private static void addToStats(Factura factura) {
+        try {
+            FacturiMonthlyStats stats = getStat(factura);
 
-        stats.vat += factura.vat;
-        stats.subtotal += factura.subtotal;
-        stats.total += factura.total;
+            stats.vat += factura.vat;
+            stats.subtotal += factura.subtotal;
+            stats.total += factura.total;
 
-        stats.save();
+            stats.save();
+        } catch (Exception ex) {
+            Logger.error(ex, "addToStats");
+        }
     }
 
     /**
@@ -161,15 +140,18 @@ public class FacturaController extends BaseController
      *
      * @param factura
      */
-    private static void removeFromStats(Factura factura)
-    {
-        FacturiMonthlyStats stats = getStat(factura);
+    private static void removeFromStats(Factura factura) {
+        try {
+            FacturiMonthlyStats stats = getStat(factura);
 
-        stats.vat -= factura.vat;
-        stats.subtotal -= factura.subtotal;
-        stats.total -= factura.total;
+            stats.vat -= factura.vat;
+            stats.subtotal -= factura.subtotal;
+            stats.total -= factura.total;
 
-        stats.save();
+            stats.save();
+        } catch (Exception ex) {
+            Logger.error(ex, "removeFromStats");
+        }
     }
 
     /**
@@ -178,8 +160,7 @@ public class FacturaController extends BaseController
      * @param factura
      * @return
      */
-    private static FacturiMonthlyStats getStat(Factura factura)
-    {
+    private static FacturiMonthlyStats getStat(Factura factura) {
         Date date = factura.docDate;
         Calendar c = GregorianCalendar.getInstance();
         c.setTime(date);
@@ -189,8 +170,7 @@ public class FacturaController extends BaseController
 
         FacturiMonthlyStats stats = FacturiMonthlyStats.find("byMonthAndYear", month, year).first();
 
-        if (stats == null)
-        {
+        if (stats == null) {
             stats = new FacturiMonthlyStats();
             stats.month = month;
             stats.year = year;
@@ -198,21 +178,15 @@ public class FacturaController extends BaseController
         return stats;
     }
 
-
-    private static void incrementSeries(Factura factura, String seriesId)
-    {
-        try
-        {
+    private static void incrementSeries(Factura factura, String seriesId) {
+        try {
             //Series series = Series.find("byId",Long.getLong(seriesId)).first();
             Long id = Long.parseLong(seriesId);
             Series series = Series.findById(id);
-            if (series != null)
-            {
+            if (series != null) {
                 factura.docNo = series.getNextSeries();
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Logger.error(ex, "Failed to increase series");
         }
     }

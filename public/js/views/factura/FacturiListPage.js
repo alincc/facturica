@@ -2,12 +2,14 @@ define([
     'text!tpl/factura/List.html',
 
     'models/factura/FacturiStatsCollection',
+    'models/factura/FacturiLatestCollection',
     'models/factura/FacturaModel',
 
     'views/factura/FacturaListView',
-    'views/factura/FacturiListStatsView'
+    'views/factura/FacturiListStatsView',
+    'views/factura/FacturiLatestView'
 ],
-    function (listTemplate, FacturiStatsCollection, FacturaModel, FacturiListView, FacturiListStatsView)
+    function (listTemplate, FacturiStatsCollection, FacturiLatestCollection, FacturaModel, FacturiListView, FacturiListStatsView, FacturiLatestView)
     {
 
         var FacturiListPage = Backbone.View.extend({
@@ -57,6 +59,22 @@ define([
                             console.log('Error loading FacturiStatsCollection');
                         }
                     });
+
+                    var facturiLatestCollection = new FacturiLatestCollection();
+                    facturiLatestCollection.fetch({
+                        success:function (a)
+                        {
+                            new FacturiLatestView({
+                                el:$("#latest", me.el),
+                                model:a
+                            }).render();
+                        },
+                        error:function ()
+                        {
+                            console.log('Error loading FacturiLatestCollection');
+                        }
+                    });
+
 
                     $(me.el).find("#selectAll").click(me.handleSelectAll);
                 }

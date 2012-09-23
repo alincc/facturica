@@ -13,6 +13,7 @@ PUT     /api/facturi/{<\d+>id}                  FacturaController.update
 DELETE  /api/facturi/{<\d+>id}                  FacturaController.delete
 
 GET     /api/facturi/stats                      FacturaController.stats
+GET     /api/facturi/latest                     FacturaController.latest
 
 # Clients
 GET     /api/clients/search                     ClientsController.search

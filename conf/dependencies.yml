@@ -2,5 +2,7 @@
 
 require:
     - play -> less 0.9
-     - com.google.code.gson -> gson 2.1:
+        exclude:
+          - play -> gson 1.6
+    - com.google.code.gson -> gson 2.2.2:
           force: true
